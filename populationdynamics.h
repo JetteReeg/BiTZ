@@ -11,6 +11,12 @@ public:
     void dyn_function(int PopSize, int K, double r){
     };
 
+    //Lists for each FT population
+    struct population
+    {
+    int Ntnew, Ntold, Kt, Immigrants, Emmigrants;
+    };
+
 
 signals:
 

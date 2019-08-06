@@ -16,10 +16,10 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         analyses.cpp \
-        init.cpp \
+        gridenvironment.cpp \
         main.cpp \
         populationdynamics.cpp \
-        update.cpp
+        runparameter.cpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -28,6 +28,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     analyses.h \
-    init.h \
+    gridenvironment.h \
     populationdynamics.h \
-    update.h
+    runparameter.h

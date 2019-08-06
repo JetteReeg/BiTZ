@@ -1,43 +1,52 @@
 #include <QCoreApplication>
 #include <iostream>
-#include <init.h>
+#include <runparameter.h>
+#include <gridenvironment.h>
 #include <populationdynamics.h>
 #include <analyses.h>
-#include <update.h>
+
 using namespace std;
 
-// global functions
-void one_run (void){
+// global parameters?
+
+// global functions?
 
 
-}
 
-void one_step (void){
-
-}
 
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
+    if (argc>=2) {
+            // handle arguments of the model
+    }
+
+    SRunPara::RunPara.NamePftFile="Test.txt";
+    SRunPara::RunPara.NameLandscapeFile="C:/Users/JetteR/ownCloud/Bibs/BiTZ/branches/Initialize-Model/300x300Bsp.txt";
+    SRunPara::RunPara.t_max=100;
+    SRunPara::RunPara.xmax=14;
+    SRunPara::RunPara.ymax=14;
+
+    GridEnvironment Envir;
+
+    vector <int> tmp = Envir.readLandscape();
+
+    for (int i=0; i<tmp.size(); i++)
+            SGridPara::GridPara.land_use_id.push_back(tmp[i]);
+
+
+
+
+
+
     //link to other classes
-    //init class
-    Init* Init;
     //population dynamic class
-    Populationdynamics* PopDyn;
+    //Populationdynamics* PopDyn;
     //analyses
-    Analyses* Analyse;
-    //updates
-    Update* update;
+    //Analyses* Analyse;
 
 
-    Init->years=5;
-    Init->year=0;
-    Init->filename_landscape="Blubb.asc";
-    //initialize model
-    Init->readLandscape(Init->filename_landscape);
 
-    //start one run
-    one_run();
 
     //analyse and output results
 
