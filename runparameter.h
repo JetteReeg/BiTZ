@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include <map>
 
 using namespace std;
 
@@ -22,12 +23,17 @@ public:
 
 };
 
+
+
 //! Structure for all environmental grid parameters
 struct SGridPara
 {
 public:
-    //!
-    static SGridPara GridPara;
+    // location within the grid:
+
+    vector<int> x;
+    vector<int> y;
+
     //! land use class
     vector<std::string> land_use;
 
@@ -35,18 +41,16 @@ public:
     vector<int> land_use_id;
 
     //! distance to other land use classes
-    vector<int> distance_LU;
+    vector<map<int, double> > distance_LU;
 
     //! capacity
     vector<int> sumCap;
 
     SGridPara();
 
-    //SGridPara Grid;
-
 };
 
-SGridPara Grid;
+extern SGridPara Grid;
 
 //! Structure for all population grid parameters
 struct SPopGridPara
@@ -87,6 +91,8 @@ public:
     int t_max;
     //! grid size
     int unsigned xmax, ymax;
+    //! number of land use classes
+    int nb_LU;
 
     //! constructor
     SRunPara();

@@ -8,13 +8,9 @@ std::string SRunPara::NameLandscapeFile="Landscape.asc";
 //! parameters of specific run
 SRunPara SRunPara::RunPara=SRunPara();
 
-SRunPara::SRunPara():t_max(100), xmax(100),ymax(100)
+SRunPara::SRunPara():t_max(100), xmax(100),ymax(100), nb_LU(4)
 {}
 
-//! parameters of specific run
-SGridPara SGridPara::GridPara=SGridPara();
-
-SGridPara::SGridPara():land_use(), land_use_id(), distance_LU(), sumCap()
-{}
+SGridPara::SGridPara(){;}
 
 //eof  ---------------------------------------------------------------------
