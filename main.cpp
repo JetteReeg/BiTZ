@@ -2,6 +2,7 @@
 #include <iostream>
 #include <runparameter.h>
 #include <gridenvironment.h>
+#include <runtimeenvironment.h>
 #include <populationdynamics.h>
 #include <analyses.h>
 #include <cmath>

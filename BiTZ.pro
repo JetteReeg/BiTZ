@@ -19,7 +19,8 @@ SOURCES += \
         gridenvironment.cpp \
         main.cpp \
         populationdynamics.cpp \
-        runparameter.cpp
+        runparameter.cpp \
+        runtimeenvironment.cpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -30,4 +31,5 @@ HEADERS += \
     analyses.h \
     gridenvironment.h \
     populationdynamics.h \
-    runparameter.h
+    runparameter.h \
+    runtimeenvironment.h

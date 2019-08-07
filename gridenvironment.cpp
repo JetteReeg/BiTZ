@@ -45,7 +45,7 @@ std::map<int, double> GridEnvironment::get_distance_LU(int location){
     std::map<int, double> distances;
     // for each LU
     for (int i=0;i<SRunPara::RunPara.nb_LU;i++) {
-        // but only if LU is not the LU of the current cell
+        // but only if LU is not the LU of the target cell
         if (i!=Grid.land_use_id[location]){
             //go through each entry in Grid vector
             // check if LU is the current i
@@ -54,6 +54,7 @@ std::map<int, double> GridEnvironment::get_distance_LU(int location){
 
             // cell is the current location in the Grid vector
             for (int cell=0; cell<(int) Grid.land_use_id.size(); cell++){
+                // if land use of the current cell is the current land use
                 if (i==Grid.land_use_id[cell]){
                     // now calculate the distance
                     int i1,i2,j1,j2;
@@ -63,12 +64,15 @@ std::map<int, double> GridEnvironment::get_distance_LU(int location){
                     j2 = Grid.y[cell]; // current cell
                     dist_curr = sqrt((pow(i2-i1,2)-pow(j2-j1,2)));
                     dist_min = min(dist_min, dist_curr);
-                }
-            }
+                }// end if target land use class
+            }// end for loop over all cells
             distances.insert(std::pair<int,double>(i,dist_min));
-        }
+        } else {
+            // set distance for the same land use class to zero
+            distances.insert(std::pair<int,double>(i,0.0));
+        }// end if-else
 
-    }
+    }// end for loop over all LU classes
 
     return distances;
 }
