@@ -6,9 +6,13 @@ class RuntimeEnvironment
 {
 public:
     RuntimeEnvironment();
-    void one_year();
-    void one_run();
-    void init();
+    static int year;
+    static void one_year();
+    static void one_run();
+    static void init();
+    static void init_landscape();
+    static void init_FTs();
+    static void init_populations();
 };
 
 #endif // RUNTIMEENVIRONMENT_H

@@ -1,7 +1,7 @@
 #include "runparameter.h"
 
 //! trait file for functional types
-std::string SRunPara::NamePftFile="FuncTypeDef.txt";
+std::string SRunPara::NameFtFile="FuncTypeDef.txt";
 //! landscape file
 std::string SRunPara::NameLandscapeFile="Landscape.asc";
 

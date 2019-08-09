@@ -2,7 +2,7 @@
 #define POPULATIONDYNAMICS_H
 
 
-class Populationdynamics : public QObject
+class Populationdynamics
 {
 public:
     Populationdynamics();

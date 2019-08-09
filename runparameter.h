@@ -8,23 +8,6 @@
 using namespace std;
 
 
-//! structure for all population dynamic parameters
-struct SPopPara
-{
-public:
-    //! growth rate
-    double R;
-    double b;
-    double c;
-    double mu;
-    double omega;
-    double alpha;
-    double D;
-
-};
-
-
-
 //! Structure for all environmental grid parameters
 struct SGridPara
 {
@@ -83,7 +66,7 @@ public:
 
     //Input Files
     //! Filename of PftTrait-File
-    static std::string NamePftFile;
+    static std::string NameFtFile;
     //! Filename of Landscape file
     static std::string NameLandscapeFile;
 

@@ -13,7 +13,7 @@ GridEnvironment::GridEnvironment()
 {
 }
 
-vector <int> GridEnvironment::readLandscape(){
+    vector <int> GridEnvironment::readLandscape(){
     //Open Landscape file
     const char* name=SRunPara::NameLandscapeFile.c_str();
     string line;

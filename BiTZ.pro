@@ -16,6 +16,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         analyses.cpp \
+        ft_pop.cpp \
+        ft_traits.cpp \
         gridenvironment.cpp \
         main.cpp \
         populationdynamics.cpp \
@@ -29,6 +31,8 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     analyses.h \
+    ft_pop.h \
+    ft_traits.h \
     gridenvironment.h \
     populationdynamics.h \
     runparameter.h \
