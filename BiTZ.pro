@@ -15,12 +15,12 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-        analyses.cpp \
+        cell.cpp \
         ft_pop.cpp \
         ft_traits.cpp \
         gridenvironment.cpp \
+        lcg.cpp \
         main.cpp \
-        populationdynamics.cpp \
         runparameter.cpp \
         runtimeenvironment.cpp
 
@@ -30,10 +30,10 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
-    analyses.h \
+    cell.h \
     ft_pop.h \
     ft_traits.h \
     gridenvironment.h \
-    populationdynamics.h \
+    lcg.h \
     runparameter.h \
     runtimeenvironment.h

@@ -11,6 +11,4 @@ SRunPara SRunPara::RunPara=SRunPara();
 SRunPara::SRunPara():t_max(100), xmax(100),ymax(100), nb_LU(4)
 {}
 
-SGridPara::SGridPara(){;}
-
 //eof  ---------------------------------------------------------------------

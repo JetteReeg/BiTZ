@@ -7,57 +7,6 @@
 
 using namespace std;
 
-
-//! Structure for all environmental grid parameters
-struct SGridPara
-{
-public:
-    // location within the grid:
-
-    vector<int> x;
-    vector<int> y;
-
-    //! land use class
-    vector<std::string> land_use;
-
-    //! numerical land use class
-    vector<int> land_use_id;
-
-    //! distance to other land use classes
-    vector<map<int, double> > distance_LU;
-
-    //! capacity
-    vector<int> sumCap;
-
-    SGridPara();
-
-};
-
-extern SGridPara Grid;
-
-//! Structure for all population grid parameters
-struct SPopGridPara
-{
-public:
-    //! capacity for each population
-    int popCap;
-
-    //! transition zone effect
-    double trans_effect;
-
-    //!current population size
-    int Pt;
-
-    //! new population size
-    int Pt1;
-
-    //! emmigrants
-    int Emmigrants;
-
-    //! immigrants
-    int Immigrants;
-};
-
 //! Structure with all static scenario parameters
 struct SRunPara
 {

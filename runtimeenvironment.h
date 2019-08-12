@@ -1,8 +1,13 @@
 #ifndef RUNTIMEENVIRONMENT_H
 #define RUNTIMEENVIRONMENT_H
 
+#include <gridenvironment.h>
+#include <LCG.h>
+#include "runparameter.h"
+#include "ft_traits.h"
+#include <cell.h>
 
-class RuntimeEnvironment
+class RuntimeEnvironment: public GridEnvironment
 {
 public:
     RuntimeEnvironment();
@@ -13,6 +18,8 @@ public:
     static void init_landscape();
     static void init_FTs();
     static void init_populations();
+    static void InitFTpop(shared_ptr <FT_traits> traits, int n);
+    inline static int nrand(int n){return combinedLCG()*n;}
 };
 
 #endif // RUNTIMEENVIRONMENT_H

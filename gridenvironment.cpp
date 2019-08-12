@@ -1,5 +1,6 @@
 #include "gridenvironment.h"
 #include "runparameter.h"
+#include <runtimeenvironment.h>
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -9,11 +10,13 @@
 
 using namespace std;
 
+GridEnvironment CoreGrid;
+
 GridEnvironment::GridEnvironment()
 {
 }
 
-    vector <int> GridEnvironment::readLandscape(){
+void GridEnvironment::readLandscape(){
     //Open Landscape file
     const char* name=SRunPara::NameLandscapeFile.c_str();
     string line;
@@ -29,50 +32,51 @@ GridEnvironment::GridEnvironment()
         LandscapeFile >> tmp;
         v_tmp.push_back(tmp);
     }
-    //return dummi vector
-    return v_tmp;
+
+    int index;
+    // loop over all gridcells
+    for (int x=0; x< (int) SRunPara::RunPara.xmax; x++){
+        for (int y=0; y< (int) SRunPara::RunPara.ymax; y++){
+            index=x*(int) SRunPara::RunPara.xmax+y;
+            // set land use IDs in each cell object
+            CCell* cell = new CCell(index,x,y,v_tmp[index]);
+            CoreGrid.CellList.push_back(cell);
+        }
+    }// end loop over all gridcells
 }
 
-std::tuple<int, int> GridEnvironment::set_coordinates(int location){
-    int y,x;
-    y = (int) ceil(location/ SRunPara::RunPara.xmax);
-    x = (int) location % SRunPara::RunPara.xmax;
-    return std::make_tuple(x,y);
-}
+void GridEnvironment::calculate_distance_LU(){
+    // go through each location of the grid
+    for (unsigned int location=0; location<SRunPara::RunPara.GetSumCells(); ++location){
+        // for each LU
+        for (int i=0;i<SRunPara::RunPara.nb_LU;i++) {
+            // but only if LU is not the LU of the target cell
+            if (i!=CoreGrid.CellList[location]->LU_id){
+                // go through each entry CellList[]
+                // check if LU of the cell is the current i
+                // and calculate the distance; keep the min. distance
+                double dist_min=SRunPara::RunPara.GetSumCells(), dist_curr=0.0;
 
-std::map<int, double> GridEnvironment::get_distance_LU(int location){
-
-    std::map<int, double> distances;
-    // for each LU
-    for (int i=0;i<SRunPara::RunPara.nb_LU;i++) {
-        // but only if LU is not the LU of the target cell
-        if (i!=Grid.land_use_id[location]){
-            //go through each entry in Grid vector
-            // check if LU is the current i
-            // and calculate the distance; keep the min. distance
-            double dist_min=SRunPara::RunPara.GetSumCells(), dist_curr=0.0;
-
-            // cell is the current location in the Grid vector
-            for (int cell=0; cell<(int) Grid.land_use_id.size(); cell++){
-                // if land use of the current cell is the current land use
-                if (i==Grid.land_use_id[cell]){
-                    // now calculate the distance
-                    int i1,i2,j1,j2;
-                    i1 = Grid.x[location]; //target cell
-                    i2 = Grid.x[cell]; // current cell
-                    j1 = Grid.y[location]; // target cell
-                    j2 = Grid.y[cell]; // current cell
-                    dist_curr = sqrt((pow(i2-i1,2)-pow(j2-j1,2)));
-                    dist_min = min(dist_min, dist_curr);
-                }// end if target land use class
-            }// end for loop over all cells
-            distances.insert(std::pair<int,double>(i,dist_min));
-        } else {
-            // set distance for the same land use class to zero
-            distances.insert(std::pair<int,double>(i,0.0));
-        }// end if-else
-
-    }// end for loop over all LU classes
-
-    return distances;
+                // cell is the current location in the CellList
+                for (unsigned int i=0; i<SRunPara::RunPara.GetSumCells(); ++i){
+                        // link to cell
+                        CCell* cell = CoreGrid.CellList[i];
+                        if (i==cell->LU_id){
+                            // now calculate the distance
+                            int i1,i2,j1,j2;
+                            i1 = CoreGrid.CellList[location]->x; //target cell
+                            i2 = cell->x; // current cell
+                            j1 = CoreGrid.CellList[location]->y; // target cell
+                            j2 = cell->y; // current cell
+                            dist_curr = sqrt((pow(i2-i1,2)-pow(j2-j1,2)));
+                            dist_min = min(dist_min, dist_curr);
+                        }// end if target land use class
+                }// end inner loop over grid
+                CoreGrid.CellList[location]->distance_LU.insert(std::pair<int,double>(i,dist_min));
+            } else {
+                // set distance for the same land use class to zero
+                CoreGrid.CellList[location]->distance_LU.insert(std::pair<int,double>(i,0.0));
+            }// end if-else
+        }// end for loop over all LU classes
+    }// end loop over grid
 }

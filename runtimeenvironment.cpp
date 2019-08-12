@@ -1,11 +1,10 @@
 #include "runtimeenvironment.h"
-#include "runparameter.h"
-#include "gridenvironment.h"
-#include "ft_traits.h"
+#include <gridenvironment.h>
+#include <iostream>
 
 int RuntimeEnvironment::year=0;
 
-RuntimeEnvironment::RuntimeEnvironment()
+RuntimeEnvironment::RuntimeEnvironment():GridEnvironment ()
 {
 
 }
@@ -33,29 +32,15 @@ void RuntimeEnvironment::init(){
     SRunPara::RunPara.ymax=300;
     SRunPara::RunPara.nb_LU=5;
 
+
     init_landscape();
     init_FTs();
     init_populations();
 }
 
 void RuntimeEnvironment::init_landscape(){
-    vector <int> tmp = GridEnvironment::readLandscape();
-    //! set land use ID
-    for (int i=0; i<(int) tmp.size(); i++){
-        Grid.land_use_id.push_back(tmp[i]);
-        //set coordinates
-        int x,y;
-        tie(x, y) = GridEnvironment::set_coordinates(i);
-        Grid.x.push_back(x);
-        Grid.y.push_back(y);
-    }
-    //! calculate the distance to each other LU class
-    for (int i=0; i<(int) Grid.land_use_id.size(); i++){
-        //set closest distance to other land use class
-        std::map <int, double> distance_LU_tmp;
-        distance_LU_tmp = GridEnvironment::get_distance_LU(i);
-        Grid.distance_LU.push_back(distance_LU_tmp);
-    }
+    readLandscape();
+   // GridEnvironment::calculate_distance_LU();
 }
 
 void RuntimeEnvironment::init_FTs(){
@@ -69,13 +54,41 @@ void RuntimeEnvironment::init_populations(){
             var != FT_traits::FtLinkList.end(); ++var) {
         // variable trait stores the trait values
         shared_ptr<FT_traits> traits=var->second;
-        // go through the grid
-        for (int i=0; i<(int) Grid.land_use_id.size(); i++){
-
-            }
+        // init new FT populations
+        int init_pop = 10;
+        InitFTpop(traits, init_pop);
     }
-    // go through the grid
 
+    // check if there are FT_pop's in cells:
+    /*for (int location=0; location < CoreGrid.CellList.size();
+            ++location) {
+            CCell* cell = CoreGrid.CellList[location];
+
+            cout<<"x: "<<cell->x <<"y: "<<cell->y  <<"PFT: ";
+            if (!cell->FT_pop_sizes.empty()){
+                int ID=cell->FT_pop_sizes.begin()->first;
+                 cout << ID;
+    }
+                  else cout <<"empty"<<endl;
+    }*/
     // calculate trans_effect for each FT
 
+}
+
+void RuntimeEnvironment::InitFTpop(shared_ptr <FT_traits> traits, int n){
+    int x,y;
+    int x_cell=SRunPara::RunPara.xmax;
+    int y_cell=SRunPara::RunPara.ymax;
+    // for each FT population
+    for (int i=0; i<n; ++i){
+        // find cell
+        x=nrand(x_cell);
+        y=nrand(y_cell);
+        // set population in cell
+        CCell* cell = CoreGrid.CellList[x*x_cell+y];
+        int start_size = nrand(100);
+        FT_pop* FTpop = new FT_pop(traits,cell,start_size);
+        cell->FT_pop_List.push_back(FTpop);
+        cell->FT_pop_sizes.insert(std::make_pair(traits->FT_ID, start_size));
+       }//for each seed to disperse
 }

@@ -1,21 +1,12 @@
 #include <QCoreApplication>
 #include <iostream>
 #include <runparameter.h>
-#include <gridenvironment.h>
 #include <runtimeenvironment.h>
-#include <populationdynamics.h>
-#include <analyses.h>
 #include <cmath>
 
 using namespace std;
 
-// global parameters?
-    SGridPara Grid;
-    GridEnvironment Envir;
-    //population dynamic class
-    Populationdynamics PopDyn;
-    //analyses
-    //Analyses* Analyse;
+//GridEnvironment* Envir=new GridEnvironment;
 // global functions?
 
 
@@ -28,6 +19,9 @@ int main(int argc, char *argv[])
     if (argc>=2) {
             // handle arguments of the model
     }
+    // global parameters?
+
+
 
     RuntimeEnvironment::init();
     RuntimeEnvironment::one_run();

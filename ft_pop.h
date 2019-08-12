@@ -4,38 +4,47 @@
 #include <memory>
 #include <ft_traits.h>
 
-
+class CCell;
 
 class FT_pop
 {
+protected:
+    //! cell where the FT population is in
+    CCell* cell;
 public:
+    //! constructor
     FT_pop();
-
-    //! FT Traits
+    //! constructor for plant objects
+    FT_pop(shared_ptr<FT_traits> Traits, CCell* cell, int n);
+    //! FT Trait container
     shared_ptr<FT_traits> Traits;
 
     //! current location
-    double xcoord;
-    //! current location
-    double ycoord;
+    int xcoord;
 
-    //! capacity for each population -> where to calculate?
+    //! current location
+    int ycoord;
+
+    //! capacity for each FT population in the cell
     int popCap;
 
-        //! transition zone effect
-        double trans_effect;
+    //! transition zone effect
+    double trans_effect;
 
-        //!current population size
-        int Pt;
+    //!current population size
+    int Pt;
 
-        //! new population size
-        int Pt1;
+    //! new population size
+    int Pt1;
 
-        //! emmigrants
-        int Emmigrants;
+    //! emmigrants
+    int Emmigrants;
 
-        //! immigrants
-        int Immigrants;
+    //! immigrants
+    int Immigrants;
+
+    //! functions
+    void setCell(CCell* cell);
 };
 
 #endif // FT_POP_H
