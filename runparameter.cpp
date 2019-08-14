@@ -4,6 +4,8 @@
 std::string SRunPara::NameFtFile="FuncTypeDef.txt";
 //! landscape file
 std::string SRunPara::NameLandscapeFile="Landscape.asc";
+//! suitability file
+std::string SRunPara::NameSuitabilityFile="LU_suitability.txt";
 
 //! parameters of specific run
 SRunPara SRunPara::RunPara=SRunPara();

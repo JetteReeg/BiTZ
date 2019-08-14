@@ -2,7 +2,7 @@
 #define RUNTIMEENVIRONMENT_H
 
 #include <gridenvironment.h>
-#include <LCG.h>
+#include <lcg.h>
 #include "runparameter.h"
 #include "ft_traits.h"
 #include <cell.h>

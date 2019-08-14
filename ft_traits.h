@@ -24,6 +24,7 @@ public:
     double R;
     double b;
     double c;
+    double trans_effect;
 
     // dispersal parameters
     double mu;
@@ -31,7 +32,10 @@ public:
     double alpha;
     double D;
 
+    map <int, double> LU_suitability;
+
     static void ReadFTDef(const string file);
+    static void ReadSuitability(const string file);
 };
 
 #endif // FT_TRAITS_H

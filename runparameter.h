@@ -18,6 +18,8 @@ public:
     static std::string NameFtFile;
     //! Filename of Landscape file
     static std::string NameLandscapeFile;
+    //! Filename of LU suitability file
+    static std::string NameSuitabilityFile;
 
     //! maximal time
     int t_max;
@@ -32,6 +34,7 @@ public:
     //! sum of grid cells
     inline int unsigned GetSumCells() const {return xmax*ymax;}
 };
+
 
 
 

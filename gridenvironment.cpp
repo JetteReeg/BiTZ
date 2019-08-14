@@ -55,7 +55,8 @@ void GridEnvironment::calculate_distance_LU(){
                 // go through each entry CellList[]
                 // check if LU of the cell is the current i
                 // and calculate the distance; keep the min. distance
-                double dist_min=SRunPara::RunPara.GetSumCells(), dist_curr=0.0;
+                double dist_max = sqrt((pow(SRunPara::RunPara.xmax,2)+pow(SRunPara::RunPara.ymax,2)));
+                double dist_min=dist_max, dist_curr=0.0;
 
                 // cell is the current location in the CellList
                 for (unsigned int i=0; i<SRunPara::RunPara.GetSumCells(); ++i){
@@ -68,15 +69,17 @@ void GridEnvironment::calculate_distance_LU(){
                             i2 = cell->x; // current cell
                             j1 = CoreGrid.CellList[location]->y; // target cell
                             j2 = cell->y; // current cell
-                            dist_curr = sqrt((pow(i2-i1,2)-pow(j2-j1,2)));
+                            dist_curr = sqrt((pow(i2-i1,2)+pow(j2-j1,2)));
                             dist_min = min(dist_min, dist_curr);
                         }// end if target land use class
                 }// end inner loop over grid
+                dist_min = dist_min/dist_max;
                 CoreGrid.CellList[location]->distance_LU.insert(std::pair<int,double>(i,dist_min));
-            } else {
-                // set distance for the same land use class to zero
+            }
+            /*else {
+                // set distance for the same land use class to zero TODO: do I really need this
                 CoreGrid.CellList[location]->distance_LU.insert(std::pair<int,double>(i,0.0));
-            }// end if-else
+            }// end if-else*/
         }// end for loop over all LU classes
     }// end loop over grid
 }
