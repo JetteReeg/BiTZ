@@ -69,22 +69,29 @@ void FT_pop::growth(FT_pop* pop){
     double trans_effect = pop->trans_effect;
     double cj=pop->Traits->c;
     double bj = pop->Traits->b;
+    int K = pop->popCap;
     double C=20.0;
+    double LU_suitability=pop->Traits->LU_suitability.find(cell->LU_id)->second;
     // result
     double Nt1j;
 
     //sum over all FT_pop_List
     double sum=0.0;
-    for (unsigned i=0; i < curr_FT_list.size(); i++) {
-        FT_pop* curr_Pop=curr_FT_list.at(i);
-        if(curr_Pop->Traits->FT_ID!=pop->Traits->FT_ID){
-            double ci=curr_Pop->Traits->c;
-            int Ni = curr_Pop->Pt;
-            sum=+(1+(cj-ci)/C*Ni);
+    if(!curr_FT_list.empty()){
+        for (unsigned i=0; i < curr_FT_list.size(); i++) {
+            FT_pop* curr_Pop=curr_FT_list.at(i);
+            if(curr_Pop->Traits->FT_ID!=pop->Traits->FT_ID){
+                double ci=curr_Pop->Traits->c;
+                int Ni = curr_Pop->Pt;
+                double to_add=(1+((cj-ci)/C))*Ni;
+                cout<<"sum of other FTs: "<<to_add<<endl;
+                sum+=to_add;
+            }
         }
     }
     //check function!
-    Nt1j=(Ntj*Rj*trans_effect)/(1+(Rj-1)*pow((Ntj+sum),bj));
+    Nt1j=(Ntj*Rj*(1-trans_effect)*LU_suitability)/(1+((Rj-1)*pow(((Ntj+sum)/K),bj)));
+    cout << "Nt: "<<Ntj<< " and Nt+1: " <<Nt1j<<endl;
     //update Pt1 value of Pop
     pop->Pt1=(int) Nt1j;
 }

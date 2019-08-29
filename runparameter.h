@@ -16,8 +16,10 @@ public:
     //Input Files
     //! Filename of PftTrait-File
     static std::string NameFtFile;
-    //! Filename of Landscape file
-    static std::string NameLandscapeFile;
+    //! Filename of Landscape file with land use classes
+    static std::string NameLandscapeClassFile;
+    //! Filename of Landscape file with patch IDs
+    static std::string NameLandscapePatchFile;
     //! Filename of LU suitability file
     static std::string NameSuitabilityFile;
 

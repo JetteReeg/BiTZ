@@ -31,12 +31,15 @@ void RuntimeEnvironment::one_year(){
                 FT_pop::growth(curr_Pop);
             }
     }
+    // summarize values for the year to be stored
+
     year++;
 }
 
 void RuntimeEnvironment::init(){
     SRunPara::RunPara.NameFtFile="C:/Users/JetteR/ownCloud/Bibs/BiTZ/branches/Initialize-Model/Input/FT_Definitions.txt";
-    SRunPara::RunPara.NameLandscapeFile="C:/Users/JetteR/ownCloud/Bibs/BiTZ/branches/Initialize-Model/Input/300x300Bsp.asc";
+    SRunPara::RunPara.NameLandscapeClassFile="C:/Users/JetteR/ownCloud/Bibs/BiTZ/branches/Initialize-Model/Input/Agroscapelab_10m_300x300_gerastert.asc";
+    SRunPara::RunPara.NameLandscapePatchFile="C:/Users/JetteR/ownCloud/Bibs/BiTZ/branches/Initialize-Model/Input/Agroscapelab_10m_300x300_gerastert.asc";
     SRunPara::RunPara.NameSuitabilityFile="C:/Users/JetteR/ownCloud/Bibs/BiTZ/branches/Initialize-Model/Input/LU_FT_suitability.txt";
     SRunPara::RunPara.t_max=5;
     SRunPara::RunPara.xmax=300;
@@ -111,4 +114,21 @@ void RuntimeEnvironment::InitFTpop(shared_ptr <FT_traits> traits, int n){
         }
 
        }//for each seed to disperse
+}
+
+void RuntimeEnvironment::analyse(){
+    // for each FT
+    for (auto var = FT_traits::FtLinkList.begin();
+            var != FT_traits::FtLinkList.end(); ++var) {
+            int pop_size=0;
+            int FT_ID=var->second->FT_ID;
+            for (unsigned int cell_i=0; cell_i<SRunPara::RunPara.GetSumCells(); ++cell_i){
+                    // link to cell
+                    CCell* cell = CoreGrid.CellList[cell_i];
+                    // iterating over FT_pops in cell
+                    pop_size=+cell->FT_pop_sizes.find(FT_ID)->second;
+            }
+
+
+    }
 }

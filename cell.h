@@ -17,6 +17,8 @@ public:
     int y;
     //! Land use ID
     int LU_id;
+    //! Patch ID
+    int pa_id;
     //! distance to other land use classes
     map<int, double> distance_LU;
     //! capacity

@@ -2,8 +2,10 @@
 
 //! trait file for functional types
 std::string SRunPara::NameFtFile="FuncTypeDef.txt";
-//! landscape file
-std::string SRunPara::NameLandscapeFile="Landscape.asc";
+//! landscape class file
+std::string SRunPara::NameLandscapeClassFile="Landscape.asc";
+//! landscape patch file
+std::string SRunPara::NameLandscapePatchFile="Landscape.asc";
 //! suitability file
 std::string SRunPara::NameSuitabilityFile="LU_suitability.txt";
 

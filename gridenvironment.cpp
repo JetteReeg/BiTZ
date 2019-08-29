@@ -17,32 +17,64 @@ GridEnvironment::GridEnvironment()
 }
 
 void GridEnvironment::readLandscape(){
-    //Open Landscape file
-    const char* name=SRunPara::NameLandscapeFile.c_str();
-    string line;
-    ifstream LandscapeFile(name);
+//    //Open Landscape class file
+//    const char* name_cl=SRunPara::NameLandscapeClassFile.c_str();
+//    string line_cl;
+//    ifstream LandscapeClassFile(name_cl);
+//    //check if file exists
+//    if (!LandscapeClassFile.good()) { cerr<<("Error while opening landscape file");exit(3); }
+//    //dummi vector for storage
+//    int tmp;
+//    vector <int> v_tmp;
+//    // copy data
+//    while(LandscapeClassFile.good())
+//    {
+//        LandscapeClassFile >> tmp;
+//        v_tmp.push_back(tmp);
+//    }
+
+//    int index;
+//    // loop over all gridcells
+//    for (int x=0; x< (int) SRunPara::RunPara.xmax; x++){
+//        for (int y=0; y< (int) SRunPara::RunPara.ymax; y++){
+//            index=x*(int) SRunPara::RunPara.xmax+y;
+//            // set land use IDs in each cell object
+//            CCell* cell = new CCell(index,x,y,v_tmp[index]);
+//            CoreGrid.CellList.push_back(cell);
+//        }
+//    }// end loop over all gridcells
+
+        // read patch id definitions
+
+    //Open Landscape patch file
+    const char* name_pa=SRunPara::NameLandscapePatchFile.c_str();
+    string line_pa1;
+    ifstream LandscapePatchFile(name_pa);
     //check if file exists
-    if (!LandscapeFile.good()) { cerr<<("Error while opening landscape file");exit(3); }
+    if (!LandscapePatchFile.good()) { cerr<<("Error while opening landscape file");exit(3); }
     //dummi vector for storage
-    int tmp;
-    vector <int> v_tmp;
+    int tmp_pa;
+    vector <int> v_tmp_pa;
     // copy data
-    while(LandscapeFile.good())
+    while(LandscapePatchFile.good())
     {
-        LandscapeFile >> tmp;
-        v_tmp.push_back(tmp);
+        LandscapePatchFile >> tmp_pa;
+        v_tmp_pa.push_back(tmp_pa);
     }
 
-    int index;
+    int index_pa;
     // loop over all gridcells
     for (int x=0; x< (int) SRunPara::RunPara.xmax; x++){
         for (int y=0; y< (int) SRunPara::RunPara.ymax; y++){
-            index=x*(int) SRunPara::RunPara.xmax+y;
-            // set land use IDs in each cell object
-            CCell* cell = new CCell(index,x,y,v_tmp[index]);
+            index_pa=x*(int) SRunPara::RunPara.xmax+y;
+            // set patch ID in each cell object
+            CCell* cell = new CCell(index_pa,x,y,v_tmp_pa[index_pa]);
             CoreGrid.CellList.push_back(cell);
         }
     }// end loop over all gridcells
+
+
+
 }
 
 void GridEnvironment::calculate_distance_LU(){
