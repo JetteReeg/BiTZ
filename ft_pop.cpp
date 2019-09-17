@@ -38,18 +38,32 @@ void FT_pop::set_trans_effect(CCell* cell){
     // get minimal distance to a different LU_class
     pair<size_t,float> min = *min_element(cell->distance_LU.begin(), cell->distance_LU.end
     (), pairCompare );
-    // get sum of distances
-    double sum_distance=0.0;
-    for (auto const& x : cell->distance_LU)
-    {
-        sum_distance+=x.second;
-    }
-    //cout<<"min_distance "<<min.second;
-    //cout <<"sum distance "<<sum_distance<<endl;
-    // Option 1: sum_distance * FT_trait trans_effect
-    //this->trans_effect=sum_distance*Traits->trans_effect;
+    //go through the map distance_LU
+    for (auto var = cell->distance_LU.begin();
+            var != cell->distance_LU.end(); ++var) {
+        // check if distance is smaller than FT_trait Traits->trans_effect
+        if (var->second<Traits->trans_effect){
+            //calculate trans_effect in cell for FT_pop
+            double patch_size, patch_shape, patch_size_neighbour, patch_shape_neighbour;
+            //Wie groß und welche Form hat der aktuelle patch? --> je größer und gleichmäßiger, desto geringer der Effekt? (kleinerer SHAPE + größere AREA = kleinerer Effekt)
+            patch_size=cell->PID_def.Area;
+            patch_shape=cell->PID_def.Shape;
+            //Wie groß und welche Form hat der andere patch? --> je größer und gleichmäßiger desto stärker der Effekt? (kleinere SHAPE + größere AREA = größerer Effekt)
 
-    // Option 2: minimal distance * FT_trait trans_effect
+            //Je geeigneter die andere LU Klasse, desto geringer der Effekt
+            double land_use_suitability=Traits->LU_suitability.find(cell->LU_id)->second;
+
+        }
+    }
+
+
+
+
+
+
+
+
+//--> combine the resulting effs in one variable
     this->trans_effect=min.second*Traits->trans_effect;
 }
 

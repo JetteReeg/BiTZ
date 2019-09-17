@@ -4,6 +4,7 @@
 #include <map>
 #include <vector>
 #include <ft_pop.h>
+
 using namespace std;
 
 class CCell
@@ -19,6 +20,27 @@ public:
     int LU_id;
     //! Patch ID
     int pa_id;
+
+    struct Patch_ID_Definitions
+    {
+        // identifier
+        int PID;
+        // patch type
+        string Type;
+        // patch area
+        double Area;
+        //
+        double Area_CSD;
+        double Area_LSD;
+        double Perim;
+        double Perim_csd;
+        double Perim_cps;
+        double Perim_lsd;
+        double Gyrate;
+        double Para;
+        double Shape;
+    };
+    Patch_ID_Definitions PID_def;
     //! distance to other land use classes
     map<int, double> distance_LU;
     //! capacity
@@ -29,7 +51,7 @@ public:
     map <int, int> FT_pop_sizes;
     //! constructors
     CCell();
-    CCell(int index, int xx,int yy, int LU_id);
+    CCell(int index, int xx,int yy, int pa_id);
     //! functions
     //! set LU classes in cell
     void Set_lu_classes();

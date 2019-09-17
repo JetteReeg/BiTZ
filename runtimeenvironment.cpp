@@ -38,8 +38,8 @@ void RuntimeEnvironment::one_year(){
 
 void RuntimeEnvironment::init(){
     SRunPara::RunPara.NameFtFile="C:/Users/JetteR/ownCloud/Bibs/BiTZ/branches/Initialize-Model/Input/FT_Definitions.txt";
-    SRunPara::RunPara.NameLandscapeClassFile="C:/Users/JetteR/ownCloud/Bibs/BiTZ/branches/Initialize-Model/Input/Agroscapelab_10m_300x300_gerastert.asc";
-    SRunPara::RunPara.NameLandscapePatchFile="C:/Users/JetteR/ownCloud/Bibs/BiTZ/branches/Initialize-Model/Input/Agroscapelab_10m_300x300_gerastert.asc";
+    SRunPara::RunPara.NameLandscapePatchFile="C:/Users/JetteR/ownCloud/Bibs/BiTZ/branches/Initialize-Model/Input/Agroscapelab_10m_300x300_gerastert_Fragstats_id4_2.asc";
+    SRunPara::RunPara.NamePatchDefFile="C:/Users/JetteR/ownCloud/Bibs/BiTZ/branches/Initialize-Model/Input/Patch_ID_definitions.txt";
     SRunPara::RunPara.NameSuitabilityFile="C:/Users/JetteR/ownCloud/Bibs/BiTZ/branches/Initialize-Model/Input/LU_FT_suitability.txt";
     SRunPara::RunPara.t_max=5;
     SRunPara::RunPara.xmax=300;
@@ -60,6 +60,7 @@ void RuntimeEnvironment::init(){
 }
 
 void RuntimeEnvironment::init_landscape(){
+    readPatchID_def(SRunPara::RunPara.NamePatchDefFile);
     readLandscape();
     calculate_distance_LU();
 }

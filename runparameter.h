@@ -16,12 +16,12 @@ public:
     //Input Files
     //! Filename of PftTrait-File
     static std::string NameFtFile;
-    //! Filename of Landscape file with land use classes
-    static std::string NameLandscapeClassFile;
     //! Filename of Landscape file with patch IDs
     static std::string NameLandscapePatchFile;
     //! Filename of LU suitability file
     static std::string NameSuitabilityFile;
+    //! Filename of patch definition file
+    static std::string NamePatchDefFile;
 
     //! maximal time
     int t_max;
