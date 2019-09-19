@@ -13,7 +13,7 @@ using namespace std;
 GridEnvironment CoreGrid;
 map< int, shared_ptr<Patch_def> > GridEnvironment::Patch_defList = map< int, shared_ptr<Patch_def> >();
 
-GridEnvironment::GridEnvironment()
+GridEnvironment::GridEnvironment(): CCell()
 {
 }
 
@@ -39,7 +39,7 @@ void GridEnvironment::readLandscape(){
     for (int x=0; x< (int) SRunPara::RunPara.xmax; x++){
         for (int y=0; y< (int) SRunPara::RunPara.ymax; y++){
             index_pa=x*(int) SRunPara::RunPara.xmax+y;
-            cout<<"currently at patch ID: "<<v_tmp_pa[index_pa]<<endl;
+            //cout<<"currently at patch ID: "<<v_tmp_pa[index_pa]<<endl;
             // set patch ID in each cell object
             CCell* cell = new CCell(index_pa,x,y,v_tmp_pa[index_pa]);
             //if patch ID exists in Patch_defList map
@@ -123,6 +123,13 @@ void GridEnvironment::calculate_distance_LU(){
                 //minimal distance
                 double dist_min=dist_max, dist_curr=0.0;
 
+               min_dist_cell tmp_storage_cell;
+                tmp_storage_cell.Area=0.0;
+                tmp_storage_cell.Para=0.0;
+                tmp_storage_cell.dist=dist_min;
+                tmp_storage_cell.Perim=0.0;
+                tmp_storage_cell.Shape=0.0;
+
                 // go through the CellList[]
                 for (unsigned int i=0; i<SRunPara::RunPara.GetSumCells(); ++i){
                         // link to cell
@@ -137,19 +144,23 @@ void GridEnvironment::calculate_distance_LU(){
                             j2 = cell->y; // 'neighbour' cell
                             //current distance of the two cells
                             dist_curr = sqrt((pow(i2-i1,2)+pow(j2-j1,2)));
-                            //minimal distance
-                            dist_min = min(dist_min, dist_curr);
+                            //TODO save also characteristics of the patch!
+                            if (dist_curr<dist_min){
+                                tmp_storage_cell.dist=dist_curr;
+                                tmp_storage_cell.Area=cell->PID_def.Area;
+                                tmp_storage_cell.Shape=cell->PID_def.Shape;
+                                tmp_storage_cell.Perim=cell->PID_def.Perim;
+                                tmp_storage_cell.Para=cell->PID_def.Para;
+                                dist_min=dist_curr;
+                            }
                         }// end if target land use class
                 }// end inner loop over grid
                 // set minimal distance in reference to the maximal distance
-                dist_min = dist_min/dist_max;
+                tmp_storage_cell.dist = tmp_storage_cell.dist/dist_max;
                 // set the minimal calculated distance to each other LU for the current cell [location]
-                CoreGrid.CellList[location]->distance_LU.insert(std::pair<int,double>(lu,dist_min));
+
+                CoreGrid.CellList[location]->distance_LU.insert(std::pair<int,min_dist_cell> (lu,tmp_storage_cell));
             }
-            /*else {
-                // set distance for the same land use class to zero TODO: do I really need this
-                CoreGrid.CellList[location]->distance_LU.insert(std::pair<int,double>(i,0.0));
-            }// end if-else*/
         }// end for loop over all LU classes
     }// end loop over grid
 }

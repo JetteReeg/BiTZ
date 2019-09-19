@@ -42,7 +42,15 @@ public:
     };
     Patch_ID_Definitions PID_def;
     //! distance to other land use classes
-    map<int, double> distance_LU;
+    struct min_dist_cell{
+        double dist=0.0;
+        double Area=0.0;
+        double Shape=0.0;
+        double Para=0.0;
+        double Perim=0.0;
+    };
+
+    map<int, min_dist_cell> distance_LU;
     //! capacity
     int sumCap;
     //! List of all FT populations in cell

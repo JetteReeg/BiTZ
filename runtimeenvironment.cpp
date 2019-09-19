@@ -8,20 +8,34 @@ RuntimeEnvironment::RuntimeEnvironment():GridEnvironment ()
 {
 
 }
-
+/**
+ * @brief RuntimeEnvironment::one_run
+ * This function initializes one simulation run and afterwards start a while loop over the number of simulated years.
+ * @param year: current year
+ * @param SRunPara::RunPara.t_max: number of maximal simulated years
+ */
 void RuntimeEnvironment::one_run(){
+    cout<<"Start one simulation run..."<<endl;
+    cout<<" Initialize..."<<endl;
     init();
-
+    cout<<"Initialization finished..."<<endl;
+    cout << "Start with year one..."<<endl;
     while(year<SRunPara::RunPara.t_max) {
         //if necessary, reset or update values for each year
         //Popdynamics
         one_year();
     }
 }
-
+/**
+ * @brief RuntimeEnvironment::one_year
+ * This function simulates one year. Functions called within are: growth, update, dispersal
+ * @param year: current year
+ * functions called: FT_pop::growth, FT_pop::update_pop, FT_pop::dispersal
+ */
 void RuntimeEnvironment::one_year(){
     //go through the whole grid and all Pops in cell
     //iterating over cells
+    cout << "current year: "<< year<<endl;
     for (unsigned int cell_i=0; cell_i<SRunPara::RunPara.GetSumCells(); ++cell_i){
             // link to cell
             CCell* cell = CoreGrid.CellList[cell_i];
@@ -31,11 +45,37 @@ void RuntimeEnvironment::one_year(){
                 FT_pop::growth(curr_Pop);
             }
     }
+    cout << "growth completed!"<<endl;
+
+    for (unsigned int cell_i=0; cell_i<SRunPara::RunPara.GetSumCells(); ++cell_i){
+            // link to cell
+            CCell* cell = CoreGrid.CellList[cell_i];
+            // iterating over FT_pops in cell
+            for (unsigned pop_i=0; pop_i < cell->FT_pop_List.size(); pop_i++){
+                FT_pop* curr_Pop=cell->FT_pop_List.at(pop_i);
+                FT_pop::update_pop(curr_Pop);
+            }
+    }
+    cout<< "update completed!"<<endl;
+
+    for (unsigned int cell_i=0; cell_i<SRunPara::RunPara.GetSumCells(); ++cell_i){
+            // link to cell
+            CCell* cell = CoreGrid.CellList[cell_i];
+            // iterating over FT_pops in cell
+            for (unsigned pop_i=0; pop_i < cell->FT_pop_List.size(); pop_i++){
+                FT_pop* curr_Pop=cell->FT_pop_List.at(pop_i);
+                FT_pop::dispersal(curr_Pop);
+            }
+    }
+    cout<< "migration completed!"<<endl;
     // summarize values for the year to be stored
 
     year++;
 }
-
+/**
+ * @brief RuntimeEnvironment::init
+ * Initializes one simulation run; sets the initial conditions, calls init_landscape, init_FTs, init_populations
+ */
 void RuntimeEnvironment::init(){
     SRunPara::RunPara.NameFtFile="C:/Users/JetteR/ownCloud/Bibs/BiTZ/branches/Initialize-Model/Input/FT_Definitions.txt";
     SRunPara::RunPara.NameLandscapePatchFile="C:/Users/JetteR/ownCloud/Bibs/BiTZ/branches/Initialize-Model/Input/Agroscapelab_10m_300x300_gerastert_Fragstats_id4_2.asc";
@@ -45,31 +85,36 @@ void RuntimeEnvironment::init(){
     SRunPara::RunPara.xmax=300;
     SRunPara::RunPara.ymax=300;
     SRunPara::RunPara.nb_LU=5;
-
-
+    //initialise the landscape
     init_landscape();
+    //initialise the functional types
     init_FTs();
+    //initialise the populations
     init_populations();
-
-    while(year<SRunPara::RunPara.t_max) {
-        cout<<"year: "<<year<<endl;
-        //if necessary, reset or update values for each year
-        //Popdynamics
-        one_year();
-    }
 }
-
+/**
+ * @brief RuntimeEnvironment::init_landscape
+ * initialises the landscape: reads in the patch ID definitions, the landscape patch file and calculates the smallest distances to other land use classes
+ */
 void RuntimeEnvironment::init_landscape(){
     readPatchID_def(SRunPara::RunPara.NamePatchDefFile);
     readLandscape();
     calculate_distance_LU();
+    cout << "Initialization of landscape finished..."<<endl;
 }
-
+/**
+ * @brief RuntimeEnvironment::init_FTs
+ * initialises the functional types: reads in the FT definitions and LU suitabilities of the FTs
+ */
 void RuntimeEnvironment::init_FTs(){
     FT_traits::ReadFTDef(SRunPara::RunPara.NameFtFile);
     FT_traits::ReadSuitability(SRunPara::RunPara.NameSuitabilityFile);
+    cout << "Initialization of FTs finished..."<<endl;
 }
-
+/**
+ * @brief RuntimeEnvironment::init_populations
+ * initialises the first populations in the landscape
+ */
 void RuntimeEnvironment::init_populations(){
     // set start populations for each grid cell
     // for each FT
@@ -84,11 +129,13 @@ void RuntimeEnvironment::init_populations(){
 
     // Check for consistency:
     // Ft populations were initialized! Ft_pop_sizes hold the initial pop sizes; several FTs in cell
-    cout<<"initialisation finished"<<endl;
-
-
+    cout << "Initialization of FT_pops finished..."<<endl;
 }
-
+/**
+ * @brief RuntimeEnvironment::InitFTpop
+ * @param traits Trait set of the specific FT
+ * @param n pop size to be inizialised
+ */
 void RuntimeEnvironment::InitFTpop(shared_ptr <FT_traits> traits, int n){
     int x,y;
     int x_cell=SRunPara::RunPara.xmax;
@@ -116,20 +163,23 @@ void RuntimeEnvironment::InitFTpop(shared_ptr <FT_traits> traits, int n){
 
        }//for each seed to disperse
 }
-
+/**
+ * @brief RuntimeEnvironment::analyse
+ */
 void RuntimeEnvironment::analyse(){
     // for each FT
     for (auto var = FT_traits::FtLinkList.begin();
             var != FT_traits::FtLinkList.end(); ++var) {
             int pop_size=0;
             int FT_ID=var->second->FT_ID;
+            //for all cells
             for (unsigned int cell_i=0; cell_i<SRunPara::RunPara.GetSumCells(); ++cell_i){
                     // link to cell
                     CCell* cell = CoreGrid.CellList[cell_i];
                     // iterating over FT_pops in cell
-                    pop_size=+cell->FT_pop_sizes.find(FT_ID)->second;
+                    pop_size+=cell->FT_pop_sizes.find(FT_ID)->second;
             }
-
+            //now safe somewhere pop_size:
 
     }
 }

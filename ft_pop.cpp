@@ -29,47 +29,43 @@ void FT_pop::setCell(CCell* cell){
     if (this->cell==NULL){
         // define cell as cell
         this->cell=cell;
-        this->xcoord=cell->x;
-        this->ycoord=cell->y;
+        xcoord=cell->x;
+        ycoord=cell->y;
+        cout<<"Coordinates for type "<<Traits->FT_type<<": "<<xcoord<<"  "<<ycoord<<endl;
     }// end if not defined
 }//end setCell
 
 void FT_pop::set_trans_effect(CCell* cell){
-    // get minimal distance to a different LU_class
-    pair<size_t,float> min = *min_element(cell->distance_LU.begin(), cell->distance_LU.end
-    (), pairCompare );
     //go through the map distance_LU
     for (auto var = cell->distance_LU.begin();
             var != cell->distance_LU.end(); ++var) {
         // check if distance is smaller than FT_trait Traits->trans_effect
-        if (var->second<Traits->trans_effect){
+        if (var->second.dist<Traits->trans_effect){
             //calculate trans_effect in cell for FT_pop
             double patch_size, patch_shape, patch_size_neighbour, patch_shape_neighbour;
+            double land_use_suitability;
+            double neighbour_patch_effect;
+            double local_patch_effect;
             //Wie groß und welche Form hat der aktuelle patch? --> je größer und gleichmäßiger, desto geringer der Effekt? (kleinerer SHAPE + größere AREA = kleinerer Effekt)
             patch_size=cell->PID_def.Area;
             patch_shape=cell->PID_def.Shape;
+            local_patch_effect=patch_size/(patch_size+patch_shape);
             //Wie groß und welche Form hat der andere patch? --> je größer und gleichmäßiger desto stärker der Effekt? (kleinere SHAPE + größere AREA = größerer Effekt)
-
+            patch_size_neighbour=var->second.Area;
+            patch_shape_neighbour=var->second.Shape;
+            neighbour_patch_effect=patch_shape_neighbour/(patch_size_neighbour+patch_shape_neighbour);
             //Je geeigneter die andere LU Klasse, desto geringer der Effekt
-            double land_use_suitability=Traits->LU_suitability.find(cell->LU_id)->second;
-
+            land_use_suitability=Traits->LU_suitability.find(cell->LU_id)->second;
+            trans_effect+=var->second.dist*local_patch_effect*neighbour_patch_effect*land_use_suitability;
+            cout<<"trans_effect for type "<<Traits->FT_type<<": "<<trans_effect<<endl;
         }
     }
-
-
-
-
-
-
-
-
-//--> combine the resulting effs in one variable
-    this->trans_effect=min.second*Traits->trans_effect;
 }
 
 void FT_pop::set_popCap(CCell* cell){
     int x = nrand(1000);
-    this->popCap=x;
+    popCap=x;
+    cout<<"popCap for type "<<Traits->FT_type<<": "<<popCap<<endl;
 }
 
 void FT_pop::growth(FT_pop* pop){
@@ -111,7 +107,13 @@ void FT_pop::growth(FT_pop* pop){
 }
 
 void FT_pop::dispersal(FT_pop* pop){
+    //get the
 
+}
+
+void FT_pop::update_pop(FT_pop* pop){
+    pop->Pt=pop->Pt1;
+    pop->Pt1=0;
 }
 
 bool pairCompare( pair<size_t,int> i, pair<size_t,int> j)

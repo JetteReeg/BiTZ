@@ -24,7 +24,7 @@ struct Patch_def{
     double Shape;
     };
 
-class GridEnvironment
+class GridEnvironment: public CCell
 {
 public:
     //! List of all cells
