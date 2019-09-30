@@ -1,8 +1,11 @@
 #include "runtimeenvironment.h"
 #include <gridenvironment.h>
 #include <iostream>
+#include <fstream>
+#include <sstream>
 
 int RuntimeEnvironment::year=0;
+vector <SFTout*> Output::FToutdata;
 
 RuntimeEnvironment::RuntimeEnvironment():GridEnvironment ()
 {
@@ -25,6 +28,8 @@ void RuntimeEnvironment::one_run(){
         //Popdynamics
         one_year();
     }
+    //write output
+    WriteOfFile();
 }
 /**
  * @brief RuntimeEnvironment::one_year
@@ -35,7 +40,7 @@ void RuntimeEnvironment::one_run(){
 void RuntimeEnvironment::one_year(){
     //go through the whole grid and all Pops in cell
     //iterating over cells
-    cout << "current year: "<< year<<endl;
+    cout << "current year: "<< year+1 <<endl;
     for (unsigned int cell_i=0; cell_i<SRunPara::RunPara.GetSumCells(); ++cell_i){
             // link to cell
             CCell* cell = CoreGrid.CellList[cell_i];
@@ -68,8 +73,29 @@ void RuntimeEnvironment::one_year(){
             }
     }
     cout<< "migration completed!"<<endl;
-    // summarize values for the year to be stored
 
+    for (unsigned int cell_i=0; cell_i<SRunPara::RunPara.GetSumCells(); ++cell_i){
+            // link to cell
+            CCell* cell = CoreGrid.CellList[cell_i];
+            // iterating over FT_pops in cell
+            for (unsigned pop_i=0; pop_i < cell->FT_pop_List.size(); pop_i++){
+                FT_pop* curr_Pop=cell->FT_pop_List.at(pop_i);
+                FT_pop::update_pop_dispersal(curr_Pop);
+            }
+    }
+    cout<< "update after migration completed!"<<endl;
+
+    // summarize values for the year to be stored
+    //for each FT type ID
+    for (auto var = FT_traits::FtLinkList.begin();
+            var != FT_traits::FtLinkList.end(); ++var) {
+        // for each LU_ID
+        for (int lu=0;lu<SRunPara::RunPara.nb_LU;lu++) {
+            SFTout* tmp=Output::GetOutput(year, var->second->FT_ID, lu);
+            Output::FToutdata.push_back(tmp);
+        }
+    }
+    cout<< "yearly output completed!"<<endl;
     year++;
 }
 /**
@@ -77,14 +103,14 @@ void RuntimeEnvironment::one_year(){
  * Initializes one simulation run; sets the initial conditions, calls init_landscape, init_FTs, init_populations
  */
 void RuntimeEnvironment::init(){
-    SRunPara::RunPara.NameFtFile="C:/Users/JetteR/ownCloud/Bibs/BiTZ/branches/Initialize-Model/Input/FT_Definitions.txt";
-    SRunPara::RunPara.NameLandscapePatchFile="C:/Users/JetteR/ownCloud/Bibs/BiTZ/branches/Initialize-Model/Input/Agroscapelab_10m_300x300_gerastert_Fragstats_id4_2.asc";
-    SRunPara::RunPara.NamePatchDefFile="C:/Users/JetteR/ownCloud/Bibs/BiTZ/branches/Initialize-Model/Input/Patch_ID_definitions.txt";
-    SRunPara::RunPara.NameSuitabilityFile="C:/Users/JetteR/ownCloud/Bibs/BiTZ/branches/Initialize-Model/Input/LU_FT_suitability.txt";
+    SRunPara::RunPara.NameFtFile="W:/ownCloud/Bibs/BiTZ/branches/Initialize-Model/Input/FT_Definitions.txt";
+    SRunPara::RunPara.NameLandscapePatchFile="W:/ownCloud/Bibs/BiTZ/branches/Initialize-Model/Input/Agroscapelab_10m_300x300_gerastert_Fragstats_id4_2.asc";
+    SRunPara::RunPara.NamePatchDefFile="W:/ownCloud/Bibs/BiTZ/branches/Initialize-Model/Input/Patch_ID_definitions.txt";
+    SRunPara::RunPara.NameSuitabilityFile="W:/ownCloud/Bibs/BiTZ/branches/Initialize-Model/Input/LU_FT_suitability.txt";
     SRunPara::RunPara.t_max=5;
     SRunPara::RunPara.xmax=300;
     SRunPara::RunPara.ymax=300;
-    SRunPara::RunPara.nb_LU=5;
+    SRunPara::RunPara.nb_LU=6;
     //initialise the landscape
     init_landscape();
     //initialise the functional types
@@ -164,22 +190,32 @@ void RuntimeEnvironment::InitFTpop(shared_ptr <FT_traits> traits, int n){
        }//for each seed to disperse
 }
 /**
- * @brief RuntimeEnvironment::analyse
+ * @brief RuntimeEnvironment::WriteOfFile
  */
-void RuntimeEnvironment::analyse(){
-    // for each FT
-    for (auto var = FT_traits::FtLinkList.begin();
-            var != FT_traits::FtLinkList.end(); ++var) {
-            int pop_size=0;
-            int FT_ID=var->second->FT_ID;
-            //for all cells
-            for (unsigned int cell_i=0; cell_i<SRunPara::RunPara.GetSumCells(); ++cell_i){
-                    // link to cell
-                    CCell* cell = CoreGrid.CellList[cell_i];
-                    // iterating over FT_pops in cell
-                    pop_size+=cell->FT_pop_sizes.find(FT_ID)->second;
-            }
-            //now safe somewhere pop_size:
+void RuntimeEnvironment::WriteOfFile(){
+    string NameGridOutFile= "W:/ownCloud/Bibs/BiTZ/branches/Initialize-Model/GridOut.txt";
+    ofstream myfile(NameGridOutFile.c_str(),ios::app);
+    if (!myfile.good()) {cerr<<("Error while opening Output File");exit(3); }
+    // write header
+    myfile.seekp(0, ios::end);
+    long size=myfile.tellp();
+    // header of the file
+    if (size==0){
+        myfile<<"Year\t"
+                  <<"FT_ID\t"
+                  <<"LU_ID\t"
+                  <<"Popsize"
+                  ;
+            myfile<<"\n";
+        }
 
-    }
+    // get values for each year
+    for (vector <SFTout>::size_type i=0; i<Output::FToutdata.size(); ++i){
+        myfile<<Output::FToutdata[i]->year
+                 <<'\t'<<Output::FToutdata[i]->FT_ID
+                 <<'\t'<<Output::FToutdata[i]->LU_ID
+                 <<'\t'<<Output::FToutdata[i]->popsize
+              <<"\n";
+    }// end for each year
+    myfile.close();
 }

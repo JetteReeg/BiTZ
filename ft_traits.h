@@ -30,7 +30,8 @@ public:
     double mu;
     double omega;
     double alpha;
-    double D;
+    double dispsd;
+    double dispmean;
 
     map <int, double> LU_suitability;
 

@@ -53,6 +53,7 @@ public:
     static void growth(FT_pop* pop);
     static void dispersal(FT_pop* pop);
     static void update_pop(FT_pop* pop);
+    static void update_pop_dispersal(FT_pop* pop);
 };
 
     bool pairCompare( pair<size_t,int> i, pair<size_t,int> j);

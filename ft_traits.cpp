@@ -33,7 +33,7 @@ void FT_traits::ReadFTDef(const string file){
             shared_ptr<FT_traits> traits = make_shared<FT_traits>();
             ss >> traits->FT_type >> traits->FT_ID >> traits->R
                     >> traits->b >> traits->c >> traits ->mu
-                    >> traits->omega >> traits->D >> traits->alpha >> traits->trans_effect;
+                    >> traits->omega >> traits->dispsd >>traits->dispmean >> traits->alpha >> traits->trans_effect;
             // add a new PFT to the list of PFTs
             FT_traits::FtLinkList.insert(std::make_pair(traits->FT_type, traits));
         }// end read all trait data for PFTs
@@ -47,18 +47,19 @@ void FT_traits::ReadSuitability(const string file){
             exit(3);
         }
     string line;
-    // copy data
+    // copy the first line of the file
     getline(SuitabilityFile, line);
     //create vector of maps to store suitablity of LU classes for each FT
     std::stringstream ss(line);
     //skip first column
     string dummi;
+    string dummi2;
     ss>>dummi;
     vector <string> nb_FT;
     //int count=0;
-    while(ss){
-        ss >> dummi;
-        nb_FT.push_back(dummi);
+    while(!ss.eof()){
+        ss >> dummi2;
+        nb_FT.push_back(dummi2);
         //count++;
     }
     // create a vector or maps for  all nb_FT
@@ -73,7 +74,7 @@ void FT_traits::ReadSuitability(const string file){
         //first column holds the LU_ID; key for the maps that are created
         ss >> LU_ID;
         string curr_FT;
-        while(ss){
+        while(!ss.eof()){
             //set the FT_type
             curr_FT=nb_FT.at(count2);
             // get the value
@@ -83,6 +84,7 @@ void FT_traits::ReadSuitability(const string file){
             auto var = FT_traits::FtLinkList.find(curr_FT);
             shared_ptr<FT_traits> traits=var->second;
             traits->LU_suitability.insert(std::make_pair(LU_ID, suitability));
+            count2++;
         }
     }// end read suitability
 }
