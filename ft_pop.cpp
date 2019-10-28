@@ -66,7 +66,7 @@ void FT_pop::set_trans_effect(CCell* cell){
 
 void FT_pop::set_popCap(CCell* cell){
     int x = nrand(1000);
-    popCap=x;
+    popCap=floor(x*this->Traits->LU_suitability.find(cell->LU_id)->second);
     //cout<<"popCap for type "<<Traits->FT_type<<": "<<popCap<<endl;
 }
 
@@ -83,7 +83,7 @@ void FT_pop::growth(FT_pop* pop){
     double cj=pop->Traits->c;
     double bj = pop->Traits->b;
     int K = pop->popCap;
-    double C=20.0;
+    double C=28.0;
     double LU_suitability=pop->Traits->LU_suitability.find(cell->LU_id)->second;
     // result
     double Nt1j;

@@ -103,11 +103,11 @@ void RuntimeEnvironment::one_year(){
  * Initializes one simulation run; sets the initial conditions, calls init_landscape, init_FTs, init_populations
  */
 void RuntimeEnvironment::init(){
-    SRunPara::RunPara.NameFtFile="W:/ownCloud/Bibs/BiTZ/branches/Initialize-Model/Input/FT_Definitions.txt";
-    SRunPara::RunPara.NameLandscapePatchFile="W:/ownCloud/Bibs/BiTZ/branches/Initialize-Model/Input/Agroscapelab_10m_300x300_gerastert_Fragstats_id4_2.asc";
-    SRunPara::RunPara.NamePatchDefFile="W:/ownCloud/Bibs/BiTZ/branches/Initialize-Model/Input/Patch_ID_definitions.txt";
-    SRunPara::RunPara.NameSuitabilityFile="W:/ownCloud/Bibs/BiTZ/branches/Initialize-Model/Input/LU_FT_suitability.txt";
-    SRunPara::RunPara.t_max=5;
+    SRunPara::RunPara.NameFtFile="C:/Users/JetteR/ownCloud/Bibs/BiTZ/branches/Initialize-Model/Input/FT_Definitions.txt";
+    SRunPara::RunPara.NameLandscapePatchFile="C:/Users/JetteR/ownCloud/Bibs/BiTZ/branches/Initialize-Model/Input/Agroscapelab_10m_300x300_gerastert_Fragstats_id4_2.asc";
+    SRunPara::RunPara.NamePatchDefFile="C:/Users/JetteR/ownCloud/Bibs/BiTZ/branches/Initialize-Model/Input/Patch_ID_definitions.txt";
+    SRunPara::RunPara.NameSuitabilityFile="C:/Users/JetteR/ownCloud/Bibs/BiTZ/branches/Initialize-Model/Input/LU_FT_suitability.txt";
+    SRunPara::RunPara.t_max=50;
     SRunPara::RunPara.xmax=300;
     SRunPara::RunPara.ymax=300;
     SRunPara::RunPara.nb_LU=6;
@@ -193,7 +193,7 @@ void RuntimeEnvironment::InitFTpop(shared_ptr <FT_traits> traits, int n){
  * @brief RuntimeEnvironment::WriteOfFile
  */
 void RuntimeEnvironment::WriteOfFile(){
-    string NameGridOutFile= "W:/ownCloud/Bibs/BiTZ/branches/Initialize-Model/GridOut.txt";
+    string NameGridOutFile= "C:/Users/JetteR/ownCloud/Bibs/BiTZ/branches/Initialize-Model/GridOut.txt";
     ofstream myfile(NameGridOutFile.c_str(),ios::app);
     if (!myfile.good()) {cerr<<("Error while opening Output File");exit(3); }
     // write header
