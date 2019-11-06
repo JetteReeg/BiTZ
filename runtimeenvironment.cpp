@@ -62,7 +62,7 @@ void RuntimeEnvironment::one_year(){
             }
     }
     cout<< "update completed!"<<endl;
-
+    //TODO: check dispersal function!
     for (unsigned int cell_i=0; cell_i<SRunPara::RunPara.GetSumCells(); ++cell_i){
             // link to cell
             CCell* cell = CoreGrid.CellList[cell_i];
@@ -111,6 +111,7 @@ void RuntimeEnvironment::init(){
     SRunPara::RunPara.xmax=300;
     SRunPara::RunPara.ymax=300;
     SRunPara::RunPara.nb_LU=6;
+    SRunPara::RunPara.TZ_width=1;
     //initialise the landscape
     init_landscape();
     //initialise the functional types

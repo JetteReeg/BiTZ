@@ -20,6 +20,8 @@ public:
     int LU_id;
     //! Patch ID
     int pa_id;
+    //! transition zone cell
+    bool TZ;
 
     struct Patch_ID_Definitions
     {

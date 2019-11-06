@@ -29,6 +29,8 @@ public:
     int unsigned xmax, ymax;
     //! number of land use classes
     int nb_LU;
+    //! width of transition zone
+    int TZ_width;
 
     //! constructor
     SRunPara();
