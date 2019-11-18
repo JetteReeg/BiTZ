@@ -32,6 +32,9 @@ public:
     //! width of transition zone
     int TZ_width;
 
+    //! disturbances
+    double disturbances;
+
     //! constructor
     SRunPara();
 

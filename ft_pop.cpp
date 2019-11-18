@@ -133,7 +133,8 @@ void FT_pop::dispersal(FT_pop* pop){
     //now disperse the individuals within the grid and if FT already exists in the cell: increase Pt1 OR initialise Ft in new cell
     for (emmig; emmig==0; emmig--){
         tries=0;
-        while (tries<10)
+        bool cell_found=false;
+        while (tries<10 && cell_found==false)
             {
             // direction of dispersal
             double alpha=2*3.1415*combinedLCG();
@@ -186,9 +187,10 @@ void FT_pop::dispersal(FT_pop* pop){
                                   }
                               }
                        }// end else
-                    tries=10;
-                } else {tries++;} //else: individual is dying since LU id is not suitable
-            }// end if suitable
+                    cell_found=true;
+                }  //else: individual is dying since LU id is not suitable
+            }
+        tries++;
         }//end while tries <10
     }// end for loop
     pop->Emmigrants=0;//else: individual is outside of the grid or dying
@@ -202,6 +204,13 @@ void FT_pop::update_pop(FT_pop* pop){
 void FT_pop::update_pop_dispersal(FT_pop* pop){
     pop->Pt+=pop->Immigrants;
     pop->Immigrants=0;
+}
+
+void FT_pop::disturbance(FT_pop* pop){
+    // random number for each PFT --> how much is population decreased by the disturbance?
+    double dist_prob_pop=combinedLCG();
+    // todo: disturbances should depend on LU class
+    pop->Pt=pop->Pt*dist_prob_pop;
 }
 
 bool pairCompare( pair<size_t,int> i, pair<size_t,int> j)

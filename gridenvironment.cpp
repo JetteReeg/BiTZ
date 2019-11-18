@@ -159,12 +159,15 @@ void GridEnvironment::calculate_distance_LU(){
                 //tmp_storage_cell.dist = tmp_storage_cell.dist/dist_max;
                 // set the minimal calculated distance to each other LU for the current cell [location]
                 CoreGrid.CellList[location]->distance_LU.insert(std::pair<int,min_dist_cell> (lu,tmp_storage_cell));
-                // test if the current cell is a transition zone cell
-                // the cell is a transition zone cell, if the minimal distance to LU X is < than run paramenter TZ_width
-                if(tmp_storage_cell.dist<=SRunPara::RunPara.TZ_width){
-                    CoreGrid.CellList[location]->TZ=true;
-                }
-            }
+                // test if the current cell becomes a transition zone cell
+                // only if current cell is arable
+                if(CoreGrid.CellList[location]->LU_id==1 && (lu==2 || lu== 3)){
+                    // the cell is a transition zone cell, if the minimal distance to LU X is < than run paramenter TZ_width
+                                    if(tmp_storage_cell.dist<=SRunPara::RunPara.TZ_width){
+                                        CoreGrid.CellList[location]->TZ=true;
+                                    }
+                }// end if lu of location is arable and neighbouring lu is forest or grassland
+            } // end if lu is not lu of location
         }// end for loop over all LU classes
     }// end loop over grid
 }

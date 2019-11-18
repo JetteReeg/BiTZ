@@ -85,6 +85,21 @@ void RuntimeEnvironment::one_year(){
     }
     cout<< "update after migration completed!"<<endl;
 
+    for (unsigned int cell_i=0; cell_i<SRunPara::RunPara.GetSumCells(); ++cell_i){
+            // link to cell
+            CCell* cell = CoreGrid.CellList[cell_i];
+            double dist_prob=combinedLCG();
+            if (dist_prob<SRunPara::RunPara.disturbances){
+                // iterating over FT_pops in cell
+                for (unsigned pop_i=0; pop_i < cell->FT_pop_List.size(); pop_i++){
+                    FT_pop* curr_Pop=cell->FT_pop_List.at(pop_i);
+                    FT_pop::disturbance(curr_Pop);
+                }
+            }
+    }
+    cout<< "disturbance completed!"<<endl;
+
+
     // summarize values for the year to be stored
     //for each FT type ID
     for (auto var = FT_traits::FtLinkList.begin();
@@ -112,6 +127,7 @@ void RuntimeEnvironment::init(){
     SRunPara::RunPara.ymax=300;
     SRunPara::RunPara.nb_LU=6;
     SRunPara::RunPara.TZ_width=1;
+    SRunPara::RunPara.disturbances=0.1;
     //initialise the landscape
     init_landscape();
     //initialise the functional types
