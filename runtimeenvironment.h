@@ -13,6 +13,7 @@ class RuntimeEnvironment: public GridEnvironment
 public:
     RuntimeEnvironment();
     static int year;
+    static double weather_year;
     //static vector <SFTout*> FToutdata;
     static void one_year();
     static void one_run();
@@ -22,6 +23,7 @@ public:
     static void init_populations();
     static void InitFTpop(shared_ptr <FT_traits> traits, int n);
     static void WriteOfFile();
+    static void weather();
     inline static int nrand(int n){return combinedLCG()*n;}
 };
 

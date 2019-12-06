@@ -5,6 +5,7 @@
 #include <sstream>
 
 int RuntimeEnvironment::year=0;
+double RuntimeEnvironment::weather_year=1.0;
 vector <SFTout*> Output::FToutdata;
 
 RuntimeEnvironment::RuntimeEnvironment():GridEnvironment ()
@@ -30,6 +31,10 @@ void RuntimeEnvironment::one_run(){
     }
     //write output
     WriteOfFile();
+
+    //clear old variables
+    CoreGrid.CellList.clear();
+    FT_traits::FtLinkList.clear();
 }
 /**
  * @brief RuntimeEnvironment::one_year
@@ -38,6 +43,8 @@ void RuntimeEnvironment::one_run(){
  * functions called: FT_pop::growth, FT_pop::update_pop, FT_pop::dispersal
  */
 void RuntimeEnvironment::one_year(){
+    // calculate current weather conditions
+    weather();
     //go through the whole grid and all Pops in cell
     //iterating over cells
     cout << "current year: "<< year+1 <<endl;
@@ -47,7 +54,7 @@ void RuntimeEnvironment::one_year(){
             // iterating over FT_pops in cell
             for (unsigned pop_i=0; pop_i < cell->FT_pop_List.size(); pop_i++){
                 FT_pop* curr_Pop=cell->FT_pop_List.at(pop_i);
-                FT_pop::growth(curr_Pop);
+                FT_pop::growth(curr_Pop, weather_year);
             }
     }
     cout << "growth completed!"<<endl;
@@ -128,6 +135,7 @@ void RuntimeEnvironment::init(){
     SRunPara::RunPara.nb_LU=6;
     SRunPara::RunPara.TZ_width=1;
     SRunPara::RunPara.disturbances=0.1;
+    year=0;
     //initialise the landscape
     init_landscape();
     //initialise the functional types
@@ -235,4 +243,24 @@ void RuntimeEnvironment::WriteOfFile(){
               <<"\n";
     }// end for each year
     myfile.close();
+}
+
+/**
+ * @brief RuntimeEnvironment::weather
+ */
+void RuntimeEnvironment::weather(){
+    // int bimodal=random(10);
+    double eps;
+    //if (bimodal<6) eps=my_random_normal(my_mean=-0.3,my_stdev=0.15);
+    //else
+    //normal distribution
+    eps=normcLCG(0.1,0.15);
+
+    /*Unimodal verteilte Klimaeinflüsse*/
+    //double eps=my_random_normal(my_mean,my_stdev=0.15);
+
+    //annual weather randomly fluctuates with eps from [-0.5, 0.5]
+    weather_year= 1.0;
+    weather_year=weather_year*(1+eps);
+    cout<<"weather condition: "<< weather_year << endl;
 }

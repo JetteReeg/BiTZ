@@ -78,7 +78,7 @@ void FT_pop::set_popCap(CCell* cell){
 }
 
 // growth is not doing its thing
-void FT_pop::growth(FT_pop* pop){
+void FT_pop::growth(FT_pop* pop, double weather_year){
     // get the cell of the current population
     CCell* cell=pop->cell;
     vector<FT_pop*> curr_FT_list=cell->FT_pop_List;
@@ -86,7 +86,7 @@ void FT_pop::growth(FT_pop* pop){
     // population function variables and parameters:
     int Ntj=pop->Pt;
     double Rj=pop->Traits->R;
-    double trans_effect = pop->trans_effect;
+    double trans_effect = 1-pop->trans_effect;
     double cj=pop->Traits->c;
     double bj = pop->Traits->b;
     int K = pop->popCap;
@@ -110,7 +110,7 @@ void FT_pop::growth(FT_pop* pop){
         }
     }
     //check function!
-    Nt1j=(Ntj*Rj*(1-trans_effect))/(1+((Rj-1)*pow(((Ntj+sum)/K),bj)));
+    Nt1j=(weather_year*trans_effect*Ntj*Rj)/(1+((Rj-1)*pow(((Ntj+sum)/K),bj)));
     //cout << "Nt: "<<Ntj<< " and Nt+1: " <<Nt1j<<endl;
     //update Pt1 value of Pop
     pop->Pt1=max(0,(int) Nt1j);
