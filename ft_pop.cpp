@@ -15,15 +15,18 @@ FT_pop::FT_pop()
 }
 
 FT_pop::FT_pop(shared_ptr<FT_traits> Traits, CCell* cell, int n):
-  cell(NULL), Traits(Traits), xcoord(0), ycoord(0), popCap(0), trans_effect(0),
+  cell(NULL), Traits(Traits), xcoord(0), ycoord(0), nestCap(0), trans_effect(0),
   Pt(n), Pt1(0), Emmigrants(0), Immigrants(0)
 {
     //establish this FT on cell
     setCell(cell);
     // calculate trans_effect for the pop
     set_trans_effect(cell);
-    // calculate popCap
-    set_popCap(cell);
+    // calculate nesting capacity
+    set_nestCap(cell);
+    // calculate resource capacity
+    set_resCap(cell);
+
 } // end constructor
 
 void FT_pop::setCell(CCell* cell){
@@ -38,6 +41,40 @@ void FT_pop::setCell(CCell* cell){
 }//end setCell
 
 void FT_pop::set_trans_effect(CCell* cell){
+
+    //define if the cell is a transition zone cell
+    if(cell->TZ==true){
+        trans_effect=Traits->trans_effect;
+    }
+
+}
+
+void FT_pop::set_nestCap(CCell* cell){
+    int x = nrand(100);
+    nestCap=floor(x*this->Traits->LU_suitability_nest.find(cell->LU_id)->second);
+    //cout<<"popCap for type "<<Traits->FT_type<<": "<<popCap<<endl;
+}
+
+void FT_pop::set_resCap(CCell* cell){
+    // initialise values
+    double sum_res=0.0;
+    int cell_area=0;
+    //go through all cells on grid
+    for (unsigned int location=0; location<SRunPara::RunPara.GetSumCells(); ++location){
+        // if cell is within foraging distance range --> add LU suitability for foraging and count nb. of cell
+        //1. calculate distance to current cell:
+        int x = CoreGrid.CellList[location]->x;// x location of matrix cell
+        int y = CoreGrid.CellList[location]->y;// y location of matricx cell
+        //distance of the two cells
+        double dist_curr = sqrt((pow(x-cell->x,2)+pow(y-cell->y,2)));
+        if (dist_curr <= this->Traits->dispmean){
+            sum_res+=this->Traits->LU_suitability_forage.find(CoreGrid.CellList[location]->LU_id)->second;
+            cell_area++;
+        }
+    }
+    // output: sum/nb of cells --> foraging capacity in cell for the specific type
+    resCap = sum_res/cell_area;
+
     //go through the map distance_LU
     /*for (auto var = cell->distance_LU.begin();
             var != cell->distance_LU.end(); ++var) {
@@ -64,19 +101,7 @@ void FT_pop::set_trans_effect(CCell* cell){
             //cout<<"trans_effect for type "<<Traits->FT_type<<": "<<trans_effect<<endl;
         }
     }*/
-    //define if the cell is a transition zone cell
-    if(cell->TZ==true){
-        trans_effect=Traits->trans_effect;
-    }
-
 }
-
-void FT_pop::set_popCap(CCell* cell){
-    int x = nrand(1000);
-    popCap=floor(x*this->Traits->LU_suitability.find(cell->LU_id)->second);
-    //cout<<"popCap for type "<<Traits->FT_type<<": "<<popCap<<endl;
-}
-
 // growth is not doing its thing
 void FT_pop::growth(FT_pop* pop, double weather_year){
     // get the cell of the current population
@@ -89,9 +114,9 @@ void FT_pop::growth(FT_pop* pop, double weather_year){
     double trans_effect = 1-pop->trans_effect;
     double cj=pop->Traits->c;
     double bj = pop->Traits->b;
-    int K = pop->popCap;
+    int K = pop->nestCap;
     double C=28.0;
-    double LU_suitability=pop->Traits->LU_suitability.find(cell->LU_id)->second;
+    double foraging_suitability=pop->resCap;
     // result
     double Nt1j;
 
@@ -110,7 +135,7 @@ void FT_pop::growth(FT_pop* pop, double weather_year){
         }
     }
     //check function!
-    Nt1j=(weather_year*trans_effect*Ntj*Rj)/(1+((Rj-1)*pow(((Ntj+sum)/K),bj)));
+    Nt1j=(foraging_suitability*weather_year*trans_effect*Ntj*Rj)/(1+((Rj-1)*pow(((Ntj+sum)/K),bj)));
     //cout << "Nt: "<<Ntj<< " and Nt+1: " <<Nt1j<<endl;
     //update Pt1 value of Pop
     pop->Pt1=max(0,(int) Nt1j);
@@ -121,7 +146,7 @@ void FT_pop::dispersal(FT_pop* pop){
     double fract;
     double P_disp_t; //Percent of dispersing individuals
     //int Disp_t; //number of dispersing individuals
-    fract=(1.0*pop->Pt)/(1.0*pop->popCap);
+    fract=(1.0*pop->Pt)/(1.0*pop->nestCap);
     P_disp_t=min(0.9, pop->Traits->mu*pow(fract,pop->Traits->omega));
     //Disp_t stores the number of dispersing individuals
     pop->Emmigrants=(int) floor(P_disp_t*pop->Pt);
@@ -163,7 +188,7 @@ void FT_pop::dispersal(FT_pop* pop){
                 CCell* cell_new = CoreGrid.CellList[new_xcoord*SRunPara::RunPara.xmax+new_ycoord];
                 //check if FT can exist in new cell
                 //get LU suitability of the land use class
-                double LU_suitablity=pop->Traits->LU_suitability.find(cell_new->LU_id)->second;
+                double LU_suitablity=pop->Traits->LU_suitability_nest.find(cell_new->LU_id)->second;
                 //only if suitablity is higher than 0.5
                 if (LU_suitablity>0.5){
                     // check if pop exists in the new cell
@@ -182,7 +207,7 @@ void FT_pop::dispersal(FT_pop* pop){
                         for (unsigned pop_i=0; pop_i < cell_new->FT_pop_List.size(); pop_i++){
                             FT_pop* tmp_Pop=cell_new->FT_pop_List.at(pop_i);
                             // if it's the current FT add individual
-                            if (tmp_Pop->Traits->FT_ID==current_ID && tmp_Pop->Pt<tmp_Pop->popCap){
+                            if (tmp_Pop->Traits->FT_ID==current_ID && tmp_Pop->Pt<tmp_Pop->nestCap){
                                 tmp_Pop->Immigrants++;
                                   }
                               }

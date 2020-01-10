@@ -18,8 +18,10 @@ public:
     static std::string NameFtFile;
     //! Filename of Landscape file with patch IDs
     static std::string NameLandscapePatchFile;
-    //! Filename of LU suitability file
-    static std::string NameSuitabilityFile;
+    //! Filename of LU nest suitability file
+    static std::string NameNestSuitabilityFile;
+    //! Filename of LU forage suitability file
+    static std::string NameForageSuitabilityFile;
     //! Filename of patch definition file
     static std::string NamePatchDefFile;
 

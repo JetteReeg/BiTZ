@@ -128,12 +128,13 @@ void RuntimeEnvironment::init(){
     SRunPara::RunPara.NameFtFile="C:/Users/JetteR/ownCloud/Bibs/BiTZ/branches/Initialize-Model/Input/FT_Definitions.txt";
     SRunPara::RunPara.NameLandscapePatchFile="C:/Users/JetteR/ownCloud/Bibs/BiTZ/branches/Initialize-Model/Input/Agroscapelab_10m_300x300_gerastert_Fragstats_id4_2.asc";
     SRunPara::RunPara.NamePatchDefFile="C:/Users/JetteR/ownCloud/Bibs/BiTZ/branches/Initialize-Model/Input/Patch_ID_definitions.txt";
-    SRunPara::RunPara.NameSuitabilityFile="C:/Users/JetteR/ownCloud/Bibs/BiTZ/branches/Initialize-Model/Input/LU_FT_suitability.txt";
+    SRunPara::RunPara.NameNestSuitabilityFile="C:/Users/JetteR/ownCloud/Bibs/BiTZ/branches/Initialize-Model/Input/LU_FT_suitability_nest.txt";
+    SRunPara::RunPara.NameForageSuitabilityFile="C:/Users/JetteR/ownCloud/Bibs/BiTZ/branches/Initialize-Model/Input/LU_FT_suitability_forage.txt";
     SRunPara::RunPara.t_max=50;
     SRunPara::RunPara.xmax=300;
     SRunPara::RunPara.ymax=300;
     SRunPara::RunPara.nb_LU=6;
-    SRunPara::RunPara.TZ_width=1;
+    SRunPara::RunPara.TZ_width=0;
     SRunPara::RunPara.disturbances=0.1;
     year=0;
     //initialise the landscape
@@ -159,7 +160,8 @@ void RuntimeEnvironment::init_landscape(){
  */
 void RuntimeEnvironment::init_FTs(){
     FT_traits::ReadFTDef(SRunPara::RunPara.NameFtFile);
-    FT_traits::ReadSuitability(SRunPara::RunPara.NameSuitabilityFile);
+    FT_traits::ReadNestSuitability(SRunPara::RunPara.NameNestSuitabilityFile);
+    FT_traits::ReadForageSuitability(SRunPara::RunPara.NameForageSuitabilityFile);
     cout << "Initialization of FTs finished..."<<endl;
 }
 /**

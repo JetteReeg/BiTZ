@@ -4,8 +4,10 @@
 std::string SRunPara::NameFtFile="FuncTypeDef.txt";
 //! landscape patch file
 std::string SRunPara::NameLandscapePatchFile="Landscape.asc";
-//! suitability file
-std::string SRunPara::NameSuitabilityFile="LU_suitability.txt";
+//! nest suitability file
+std::string SRunPara::NameNestSuitabilityFile="LU_suitability_nest.txt";
+//! forage suitability file
+std::string SRunPara::NameForageSuitabilityFile="LU_suitability_forage.txt";
 //! patch ID definition file
 std::string SRunPara::NamePatchDefFile="Patch_ID_definitions.txt";
 

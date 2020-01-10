@@ -27,8 +27,11 @@ public:
     //! current location
     int ycoord;
 
-    //! capacity for each FT population in the cell
-    int popCap;
+    //! nest capacity for each FT population in the cell
+    int nestCap;
+
+    //! foraging capacity for each FT population in the cell
+    double resCap;
 
     //! transition zone effect
     double trans_effect;
@@ -48,7 +51,8 @@ public:
     //! functions
     void setCell(CCell* cell);
     void set_trans_effect(CCell* cell);
-    void set_popCap(CCell* cell);
+    void set_nestCap(CCell* cell);
+    void set_resCap(CCell* cell);
     inline static int nrand(int n){return combinedLCG()*n;}
     static void growth(FT_pop* pop, double weather_year);
     static void dispersal(FT_pop* pop);

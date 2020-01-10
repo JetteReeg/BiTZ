@@ -54,7 +54,7 @@ int main(int argc, char *argv[])
     }
     // global parameters?
     int Sim=0;
-    while (Sim<10){
+    while (Sim<5){
         //start one run
         RuntimeEnvironment::one_run();
         Sim++;

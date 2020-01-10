@@ -33,10 +33,12 @@ public:
     double dispsd;
     double dispmean;
 
-    map <int, double> LU_suitability;
+    map <int, double> LU_suitability_nest;
+    map <int, double> LU_suitability_forage;
 
     static void ReadFTDef(const string file);
-    static void ReadSuitability(const string file);
+    static void ReadNestSuitability(const string file);
+    static void ReadForageSuitability(const string file);
 };
 
 #endif // FT_TRAITS_H
