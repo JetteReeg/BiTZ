@@ -9,6 +9,8 @@
 #include <math.h>
 #include <gridenvironment.h>
 
+using namespace std;
+
 FT_pop::FT_pop()
 {
 
@@ -50,7 +52,7 @@ void FT_pop::set_trans_effect(CCell* cell){
 }
 
 void FT_pop::set_nestCap(CCell* cell){
-    int x = nrand(100);
+    int x = nrand(10);
     nestCap=floor(x*this->Traits->LU_suitability_nest.find(cell->LU_id)->second);
     //cout<<"popCap for type "<<Traits->FT_type<<": "<<popCap<<endl;
 }
@@ -59,21 +61,25 @@ void FT_pop::set_resCap(CCell* cell){
     // initialise values
     double sum_res=0.0;
     int cell_area=0;
-    //go through all cells on grid
-    for (unsigned int location=0; location<SRunPara::RunPara.GetSumCells(); ++location){
-        // if cell is within foraging distance range --> add LU suitability for foraging and count nb. of cell
-        //1. calculate distance to current cell:
-        int x = CoreGrid.CellList[location]->x;// x location of matrix cell
-        int y = CoreGrid.CellList[location]->y;// y location of matricx cell
-        //distance of the two cells
-        double dist_curr = sqrt((pow(x-cell->x,2)+pow(y-cell->y,2)));
-        if (dist_curr <= this->Traits->dispmean){
-            sum_res+=this->Traits->LU_suitability_forage.find(CoreGrid.CellList[location]->LU_id)->second;
-            cell_area++;
-        }
-    }
+    //go through all cells on square around cell
+    int dispersal = floor(this->Traits->dispmean);
+
+    for (int i = std::max<unsigned long>(0,cell->x - dispersal); i < std::min<unsigned long>(cell->x+dispersal, SRunPara::RunPara.xmax); i++)
+      for (int j =  std::max<unsigned long>(0,cell->y - dispersal); j <  std::min<unsigned long>(cell->y + dispersal, SRunPara::RunPara.xmax); j++)
+      {
+          double dist_curr = sqrt((pow(i-cell->x,2)+pow(j-cell->y,2)));
+          if (dist_curr <= this->Traits->dispmean){
+              sum_res+=this->Traits->LU_suitability_forage.find(CoreGrid.CellList[i*SRunPara::RunPara.xmax+j]->LU_id)->second;
+              cell_area++;
+          }
+      }
+    //cout<<"sum of resources"<<sum_res<<endl;
+    //cout<<"cell number"<<cell_area<<endl;
     // output: sum/nb of cells --> foraging capacity in cell for the specific type
-    resCap = sum_res/cell_area;
+    if (cell_area!=0){
+        resCap = sum_res/cell_area;
+    } else resCap=0;
+
 
     //go through the map distance_LU
     /*for (auto var = cell->distance_LU.begin();
@@ -115,7 +121,14 @@ void FT_pop::growth(FT_pop* pop, double weather_year){
     double cj=pop->Traits->c;
     double bj = pop->Traits->b;
     int K = pop->nestCap;
-    double C=28.0;
+    //calculate C: sum of cs of FTs in cell
+    // go through FT_pop_List
+    double C=0;
+    for (unsigned i=0; i < curr_FT_list.size(); i++) {
+        FT_pop* curr_Pop=curr_FT_list.at(i);
+    // for each FT -> get Traits->c and calculate sum --> this is C
+        C=C+curr_Pop->Traits->c;
+    }
     double foraging_suitability=pop->resCap;
     // result
     double Nt1j;
@@ -188,9 +201,11 @@ void FT_pop::dispersal(FT_pop* pop){
                 CCell* cell_new = CoreGrid.CellList[new_xcoord*SRunPara::RunPara.xmax+new_ycoord];
                 //check if FT can exist in new cell
                 //get LU suitability of the land use class
-                double LU_suitablity=pop->Traits->LU_suitability_nest.find(cell_new->LU_id)->second;
-                //only if suitablity is higher than 0.5
-                if (LU_suitablity>0.5){
+                double LU_suitability=pop->Traits->LU_suitability_nest.find(cell_new->LU_id)->second;
+                //probability of nest building depend on LU suitability for nesting
+                // generate random number
+                double random=combinedLCG();
+                if (LU_suitability !=0.0 & random<LU_suitability){
                     // check if pop exists in the new cell
                     // if cell doesn't include a population of the current FT yet...
                     // Check if FT exists already in cell

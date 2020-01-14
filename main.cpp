@@ -53,12 +53,8 @@ int main(int argc, char *argv[])
             // handle arguments of the model
     }
     // global parameters?
-    int Sim=0;
-    while (Sim<5){
-        //start one run
-        RuntimeEnvironment::one_run();
-        Sim++;
-    }
+    //start one run
+    RuntimeEnvironment::one_run();
 
 
 

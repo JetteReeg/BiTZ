@@ -107,7 +107,7 @@ void GridEnvironment::readPatchID_def(const string file){
 }
 
 void GridEnvironment::calculate_distance_LU(){
-    // go through each cell of the grid
+    /*// go through each cell of the grid
     for (unsigned int location=0; location<SRunPara::RunPara.GetSumCells(); ++location){
         //location is the current cell
         // for each LU [lu] that is not the LU of the current cell [location]
@@ -169,5 +169,27 @@ void GridEnvironment::calculate_distance_LU(){
                 }// end if lu of location is arable and neighbouring lu is forest or grassland
             } // end if lu is not lu of location
         }// end for loop over all LU classes
-    }// end loop over grid
-}
+    }// end loop over grid*/
+
+    // go through each cell of the grid
+    for (unsigned int location=0; location<SRunPara::RunPara.GetSumCells(); ++location){
+        //location is the current cell
+        //if LU in the current cell is 1
+        if (CoreGrid.CellList[location]->LU_id==1){
+            //go through neighboring cells within radius of RunPara.TZ_width
+            for (int i=std::max<unsigned long>(0,CoreGrid.CellList[location]->x-SRunPara::RunPara.TZ_width);
+                 i<std::min<unsigned long>(SRunPara::RunPara.xmax,CoreGrid.CellList[location]->x+SRunPara::RunPara.TZ_width);
+                 i++){
+                for (int j=std::max<unsigned long>(0,CoreGrid.CellList[location]->y-SRunPara::RunPara.TZ_width);
+                     j<std::min<unsigned long>(SRunPara::RunPara.ymax,CoreGrid.CellList[location]->y+SRunPara::RunPara.TZ_width);
+                     j++){
+                    // and check if lu class of these cells is either 2 or 3
+                    if(CoreGrid.CellList[i*SRunPara::RunPara.xmax+j]->LU_id==2 || CoreGrid.CellList[i*SRunPara::RunPara.xmax+j]->LU_id==2 ){
+                        // if so --> set cell to TZ_cell
+                        CoreGrid.CellList[location]->TZ=true;
+                        }//  end if lu 2 or 3
+                    }// end j loop
+                }// end i loop
+        }// end if lu 1
+    }// end cell loop
+}// end calculate distance

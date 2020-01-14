@@ -22,19 +22,37 @@ void RuntimeEnvironment::one_run(){
     cout<<"Start one simulation run..."<<endl;
     cout<<" Initialize..."<<endl;
     init();
-    cout<<"Initialization finished..."<<endl;
-    cout << "Start with year one..."<<endl;
-    while(year<SRunPara::RunPara.t_max) {
-        //if necessary, reset or update values for each year
-        //Popdynamics
-        one_year();
-    }
-    //write output
-    WriteOfFile();
+    cout<<"Global initialization finished..."<<endl;
+    int sim=0;
+    while (sim<SRunPara::RunPara.Nrep){
+        cout << "Start with a repetition..."<<endl;
+        cout << "Initialize populations..."<<endl;
+        init_populations();
+        year=0;
+        while(year<SRunPara::RunPara.t_max) {
+            //if necessary, reset or update values for each year
+            //Popdynamics
+            one_year();
+        }
+        //write output
+        cout << "Write output of repetition..."<<endl;
+        WriteOfFile();
 
-    //clear old variables
-    CoreGrid.CellList.clear();
-    FT_traits::FtLinkList.clear();
+        //clear old variables
+        for (unsigned int cell_i=0; cell_i<SRunPara::RunPara.GetSumCells(); ++cell_i){
+                // link to cell
+                CCell* cell = CoreGrid.CellList[cell_i];
+                // iterating over FT_pops in cell
+                cell->FT_pop_List.clear();
+                cell->FT_pop_sizes.clear();
+                cell->distance_LU.clear();
+        }
+        //CoreGrid.CellList.clear();
+        //FT_traits::FtLinkList.clear();
+        Output::FToutdata.clear();
+        cout << "Clear data of repetition..."<<endl;
+    sim++;
+    }
 }
 /**
  * @brief RuntimeEnvironment::one_year
@@ -44,10 +62,11 @@ void RuntimeEnvironment::one_run(){
  */
 void RuntimeEnvironment::one_year(){
     // calculate current weather conditions
+    cout << "current year: "<< year+1 <<endl;
+    cout << "Calculate weather conditions..."<<endl;
     weather();
     //go through the whole grid and all Pops in cell
     //iterating over cells
-    cout << "current year: "<< year+1 <<endl;
     for (unsigned int cell_i=0; cell_i<SRunPara::RunPara.GetSumCells(); ++cell_i){
             // link to cell
             CCell* cell = CoreGrid.CellList[cell_i];
@@ -130,7 +149,8 @@ void RuntimeEnvironment::init(){
     SRunPara::RunPara.NamePatchDefFile="C:/Users/JetteR/ownCloud/Bibs/BiTZ/branches/Initialize-Model/Input/Patch_ID_definitions.txt";
     SRunPara::RunPara.NameNestSuitabilityFile="C:/Users/JetteR/ownCloud/Bibs/BiTZ/branches/Initialize-Model/Input/LU_FT_suitability_nest.txt";
     SRunPara::RunPara.NameForageSuitabilityFile="C:/Users/JetteR/ownCloud/Bibs/BiTZ/branches/Initialize-Model/Input/LU_FT_suitability_forage.txt";
-    SRunPara::RunPara.t_max=50;
+    SRunPara::RunPara.Nrep=5;
+    SRunPara::RunPara.t_max=10;
     SRunPara::RunPara.xmax=300;
     SRunPara::RunPara.ymax=300;
     SRunPara::RunPara.nb_LU=6;
@@ -142,7 +162,7 @@ void RuntimeEnvironment::init(){
     //initialise the functional types
     init_FTs();
     //initialise the populations
-    init_populations();
+    //init_populations();
 }
 /**
  * @brief RuntimeEnvironment::init_landscape
@@ -176,7 +196,7 @@ void RuntimeEnvironment::init_populations(){
         // variable trait stores the trait values
         shared_ptr<FT_traits> traits=var->second;
         // init new FT populations
-        int init_pop = 40000;
+        int init_pop = 400;
         InitFTpop(traits, init_pop);
     }
 
@@ -264,5 +284,5 @@ void RuntimeEnvironment::weather(){
     //annual weather randomly fluctuates with eps from [-0.5, 0.5]
     weather_year= 1.0;
     weather_year=weather_year*(1+eps);
-    cout<<"weather condition: "<< weather_year << endl;
+    //cout<<"weather condition: "<< weather_year << endl;
 }

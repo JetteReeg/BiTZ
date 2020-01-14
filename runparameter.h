@@ -37,6 +37,8 @@ public:
     //! disturbances
     double disturbances;
 
+    //! number of repetitions
+    int Nrep;
     //! constructor
     SRunPara();
 
