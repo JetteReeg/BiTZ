@@ -29,4 +29,4 @@ data[LU_ID==5,LU:="water"]
 data1<-data[,.(mean=mean(Popsize), sd=sd(Popsize)),by=.(Year, FT_ID, LU_ID, LU)]
 g2<-ggplot(data=data1, aes(y=mean, x=Year)) +
   geom_line(aes( color=factor(FT_ID))) +
-  facet_wrap(~LU, scales="free")
+  facet_wrap(~LU)

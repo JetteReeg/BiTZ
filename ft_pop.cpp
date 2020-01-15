@@ -52,7 +52,8 @@ void FT_pop::set_trans_effect(CCell* cell){
 }
 
 void FT_pop::set_nestCap(CCell* cell){
-    int x = nrand(10);
+    //int x = nrand(100);
+    int x=100;
     nestCap=floor(x*this->Traits->LU_suitability_nest.find(cell->LU_id)->second);
     //cout<<"popCap for type "<<Traits->FT_type<<": "<<popCap<<endl;
 }
@@ -63,13 +64,21 @@ void FT_pop::set_resCap(CCell* cell){
     int cell_area=0;
     //go through all cells on square around cell
     int dispersal = floor(this->Traits->dispmean);
+    //start cell of dispersal area
+    int zi = cell->x - dispersal;
+    if (zi<0) zi=0;
+    int zimax = std::min<unsigned long>(cell->x+dispersal, SRunPara::RunPara.xmax);
 
-    for (int i = std::max<unsigned long>(0,cell->x - dispersal); i < std::min<unsigned long>(cell->x+dispersal, SRunPara::RunPara.xmax); i++)
-      for (int j =  std::max<unsigned long>(0,cell->y - dispersal); j <  std::min<unsigned long>(cell->y + dispersal, SRunPara::RunPara.xmax); j++)
+    int zj = cell->y - dispersal;
+    if (zj<0) zj=0;
+    int zjmax = std::min<unsigned long>(cell->y + dispersal, SRunPara::RunPara.xmax);
+
+    for (zi; zi < zimax; zi++)
+      for (zj; zj < zjmax ; zj++)
       {
-          double dist_curr = sqrt((pow(i-cell->x,2)+pow(j-cell->y,2)));
+          double dist_curr = sqrt((pow(zi-cell->x,2)+pow(zj-cell->y,2)));
           if (dist_curr <= this->Traits->dispmean){
-              sum_res+=this->Traits->LU_suitability_forage.find(CoreGrid.CellList[i*SRunPara::RunPara.xmax+j]->LU_id)->second;
+              sum_res+=this->Traits->LU_suitability_forage.find(CoreGrid.CellList[zi*SRunPara::RunPara.xmax+zj]->LU_id)->second;
               cell_area++;
           }
       }
@@ -78,7 +87,7 @@ void FT_pop::set_resCap(CCell* cell){
     // output: sum/nb of cells --> foraging capacity in cell for the specific type
     if (cell_area!=0){
         resCap = sum_res/cell_area;
-    } else resCap=0;
+    } else resCap=0.0;
 
 
     //go through the map distance_LU
@@ -129,6 +138,7 @@ void FT_pop::growth(FT_pop* pop, double weather_year){
     // for each FT -> get Traits->c and calculate sum --> this is C
         C=C+curr_Pop->Traits->c;
     }
+    // C is now sum of Trait c of FTs in cell
     double foraging_suitability=pop->resCap;
     // result
     double Nt1j;
