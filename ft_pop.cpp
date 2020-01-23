@@ -164,6 +164,7 @@ void FT_pop::growth(std::shared_ptr<FT_pop> pop, double weather_year){
     //cout << "Nt: "<<Ntj<< " and Nt+1: " <<Nt1j<<endl;
     //update Pt1 value of Pop
     pop->Pt1=max(0,int(floor(Nt1j)));
+    cell->FT_pop_sizes.find(pop->Traits->FT_ID)->second=pop->Pt;
 }
 
 void FT_pop::dispersal(std::shared_ptr<FT_pop> pop){
@@ -254,18 +255,23 @@ void FT_pop::dispersal(std::shared_ptr<FT_pop> pop){
 void FT_pop::update_pop(std::shared_ptr<FT_pop> pop){
     pop->Pt=pop->Pt1;
     pop->Pt1=0;
+    shared_ptr<CCell> cell=pop->cell;
+    cell->FT_pop_sizes.find(pop->Traits->FT_ID)->second=pop->Pt;
 }
 
 void FT_pop::update_pop_dispersal(std::shared_ptr<FT_pop> pop){
     pop->Pt+=pop->Immigrants;
     pop->Immigrants=0;
+    shared_ptr<CCell> cell=pop->cell;
+    cell->FT_pop_sizes.find(pop->Traits->FT_ID)->second=pop->Pt;
 }
 
 void FT_pop::disturbance(std::shared_ptr<FT_pop> pop){
     // depends on susceptibility
     if (combinedLCG()<pop->Traits->dist_eff) pop->Pt=0;
     // pop->Pt=int(floor(pop->Pt*dist_prob_pop));
-
+    shared_ptr<CCell> cell=pop->cell;
+    cell->FT_pop_sizes.find(pop->Traits->FT_ID)->second=pop->Pt;
 }
 
 bool pairCompare( pair<size_t,int> i, pair<size_t,int> j)

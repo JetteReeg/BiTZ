@@ -7,6 +7,7 @@
 int RuntimeEnvironment::year=0;
 double RuntimeEnvironment::weather_year=1.0;
 vector <shared_ptr<SFTout>> Output::FToutdata;
+vector <shared_ptr<SComout>> Output::Comoutdata;
 
 RuntimeEnvironment::RuntimeEnvironment():GridEnvironment ()
 {
@@ -90,6 +91,7 @@ void RuntimeEnvironment::one_run(){
         //CoreGrid.CellList.clear();
         //FT_traits::FtLinkList.clear();
         Output::FToutdata.clear();
+        Output::Comoutdata.clear();
         cout << "Clear data of repetition..."<<endl;
     rep++;
     }
@@ -196,10 +198,14 @@ void RuntimeEnvironment::one_year(){
             var != FT_traits::FtLinkList.end(); ++var) {
         // for each LU_ID
         for (int lu=0;lu<SRunPara::RunPara.nb_LU;lu++) {
-            shared_ptr <SFTout> tmp=Output::GetOutput(year, var->second->FT_ID, lu);
+            shared_ptr <SFTout> tmp=Output::GetOutput_FT(year, var->second->FT_ID, lu);
             Output::FToutdata.push_back(tmp);
         }
     }
+    for (int lu=0;lu<SRunPara::RunPara.nb_LU;lu++) {
+                shared_ptr <SComout> tmp=Output::GetOutput_Com(year, lu);
+                Output::Comoutdata.push_back(tmp);
+            }
     cout<< "yearly output completed!"<<endl;
     year++;
 }
@@ -305,6 +311,7 @@ void RuntimeEnvironment::InitFTpop(shared_ptr <FT_traits> traits, int n){
  * @brief RuntimeEnvironment::WriteOfFile
  */
 void RuntimeEnvironment::WriteOfFile(){
+    //FToutdata
     stringstream strd;
     //strd<<GetCurrentWorkingDir()<<"/Output/GridOut_"<<SRunPara::RunPara.SimNb<<".txt";
     strd<<"Output/GridOut_"<<SRunPara::RunPara.SimNb<<".txt";
@@ -333,6 +340,35 @@ void RuntimeEnvironment::WriteOfFile(){
               <<"\n";
     }// end for each year
     myfile.close();
+    //Comoutdata
+    //strd<<GetCurrentWorkingDir()<<"/Output/GridOut_"<<SRunPara::RunPara.SimNb<<".txt";
+    strd.str(std::string());
+    strd<<"Output/ComOut_"<<SRunPara::RunPara.SimNb<<".txt";
+    string NameComOutFile=strd.str();
+    ofstream Comfile(NameComOutFile.c_str(),ios::app);
+    if (!Comfile.good()) {cerr<<("Error while opening Output File");exit(3); }
+    // write header
+    Comfile.seekp(0, ios::end);
+    long size_com=Comfile.tellp();
+    // header of the file
+    if (size_com==0){
+        Comfile<<"Year\t"
+                  <<"LU_ID\t"
+                  <<"nb_FT"
+                  <<"diversity"
+                  ;
+            Comfile<<"\n";
+        }
+
+    // get values for each year
+    for (vector <SComout>::size_type i=0; i<Output::Comoutdata.size(); ++i){
+        Comfile<<Output::Comoutdata[i]->year
+                 <<'\t'<<Output::Comoutdata[i]->LU_ID
+                 <<'\t'<<Output::Comoutdata[i]->nb_FT
+                   <<'\t'<<Output::Comoutdata[i]->diversity
+              <<"\n";
+    }// end for each year
+    Comfile.close();
 }
 
 /**
