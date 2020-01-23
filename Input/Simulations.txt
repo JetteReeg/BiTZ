@@ -1,0 +1,13 @@
+SimNb	NameFtFile	NameLandscapePatchFile	NamePatchDefFile	NameNestSuitabilityFile	NameForageSuitabilityFile	Nrep	t_max	ymax	xmax	nb_LU	TZ_width	disturbances
+1	Input/FT_Definitions.txt	Input/Agroscapelab_10m_300x300_gerastert_Fragstats_id4_2.asc	Input/Patch_ID_definitions.txt	Input/LU_FT_suitability_nest.txt	Input/LU_FT_suitability_forage.txt	10	50	300	300	6	0	0.1
+2	Input/FT_Definitions.txt	Input/Agroscapelab_10m_300x300_gerastert_Fragstats_id4_2.asc	Input/Patch_ID_definitions.txt	Input/LU_FT_suitability_nest.txt	Input/LU_FT_suitability_forage.txt	10	50	300	300	6	2	0.1
+3	Input/FT_Definitions.txt	Input/Agroscapelab_10m_300x300_gerastert_Fragstats_id4_2.asc	Input/Patch_ID_definitions.txt	Input/LU_FT_suitability_nest.txt	Input/LU_FT_suitability_forage.txt	10	50	300	300	6	4	0.1
+4	Input/FT_Definitions.txt	Input/Agroscapelab_10m_300x300_gerastert_Fragstats_id4_2.asc	Input/Patch_ID_definitions.txt	Input/LU_FT_suitability_nest.txt	Input/LU_FT_suitability_forage.txt	10	50	300	300	6	6	0.1
+5	Input/FT_Definitions.txt	Input/Agroscapelab_10m_300x300_gerastert_Fragstats_id4_2.asc	Input/Patch_ID_definitions.txt	Input/LU_FT_suitability_nest.txt	Input/LU_FT_suitability_forage.txt	10	50	300	300	6	0	0.3
+6	Input/FT_Definitions.txt	Input/Agroscapelab_10m_300x300_gerastert_Fragstats_id4_2.asc	Input/Patch_ID_definitions.txt	Input/LU_FT_suitability_nest.txt	Input/LU_FT_suitability_forage.txt	10	50	300	300	6	2	0.3
+7	Input/FT_Definitions.txt	Input/Agroscapelab_10m_300x300_gerastert_Fragstats_id4_2.asc	Input/Patch_ID_definitions.txt	Input/LU_FT_suitability_nest.txt	Input/LU_FT_suitability_forage.txt	10	50	300	300	6	4	0.3
+8	Input/FT_Definitions.txt	Input/Agroscapelab_10m_300x300_gerastert_Fragstats_id4_2.asc	Input/Patch_ID_definitions.txt	Input/LU_FT_suitability_nest.txt	Input/LU_FT_suitability_forage.txt	10	50	300	300	6	6	0.3
+9	Input/FT_Definitions.txt	Input/Agroscapelab_10m_300x300_gerastert_Fragstats_id4_2.asc	Input/Patch_ID_definitions.txt	Input/LU_FT_suitability_nest.txt	Input/LU_FT_suitability_forage.txt	10	50	300	300	6	0	0.5
+10	Input/FT_Definitions.txt	Input/Agroscapelab_10m_300x300_gerastert_Fragstats_id4_2.asc	Input/Patch_ID_definitions.txt	Input/LU_FT_suitability_nest.txt	Input/LU_FT_suitability_forage.txt	10	50	300	300	6	2	0.5
+11	Input/FT_Definitions.txt	Input/Agroscapelab_10m_300x300_gerastert_Fragstats_id4_2.asc	Input/Patch_ID_definitions.txt	Input/LU_FT_suitability_nest.txt	Input/LU_FT_suitability_forage.txt	10	50	300	300	6	4	0.5
+12	Input/FT_Definitions.txt	Input/Agroscapelab_10m_300x300_gerastert_Fragstats_id4_2.asc	Input/Patch_ID_definitions.txt	Input/LU_FT_suitability_nest.txt	Input/LU_FT_suitability_forage.txt	10	50	300	300	6	6	0.5
