@@ -1,6 +1,6 @@
 #include "gridenvironment.h"
 #include "runparameter.h"
-#include <runtimeenvironment.h>
+#include "runtimeenvironment.h"
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -41,7 +41,7 @@ void GridEnvironment::readLandscape(){
             index_pa=x*(int) SRunPara::RunPara.xmax+y;
             //cout<<"currently at patch ID: "<<v_tmp_pa[index_pa]<<endl;
             // set patch ID in each cell object
-            CCell* cell = new CCell(index_pa,x,y,v_tmp_pa[index_pa]);
+            shared_ptr<CCell> cell = make_shared<CCell>(index_pa,x,y,v_tmp_pa[index_pa]);
             //if patch ID exists in Patch_defList map
             if(GridEnvironment::Patch_defList.count(v_tmp_pa[index_pa])>0){
                 // set patch_def for each cell
@@ -65,6 +65,7 @@ void GridEnvironment::readLandscape(){
                 if (cell->PID_def.Type=="grassland") cell->LU_id=3;
                 if (cell->PID_def.Type=="urban") cell->LU_id=4;
                 if (cell->PID_def.Type=="water") cell->LU_id=5;
+                if (cell->PID_def.Type=="notdefined") cell->LU_id=6;
             } else {
                 cout<<"Patch ID "<<v_tmp_pa[index_pa]<<" not found!"<<endl;
                 exit(3);
@@ -172,19 +173,19 @@ void GridEnvironment::calculate_distance_LU(){
     }// end loop over grid*/
 
     // go through each cell of the grid
-    for (unsigned int location=0; location<SRunPara::RunPara.GetSumCells(); ++location){
+    for (int location=0; location<SRunPara::RunPara.GetSumCells(); ++location){
         //location is the current cell
         //if LU in the current cell is 1
         if (CoreGrid.CellList[location]->LU_id==1){
             //go through neighboring cells within radius of RunPara.TZ_width
-            for (int i=std::max<unsigned long>(0,CoreGrid.CellList[location]->x-SRunPara::RunPara.TZ_width);
-                 i<std::min<unsigned long>(SRunPara::RunPara.xmax,CoreGrid.CellList[location]->x+SRunPara::RunPara.TZ_width);
+            for (int i=std::max(0,CoreGrid.CellList[location]->x-SRunPara::RunPara.TZ_width);
+                 i<std::min(SRunPara::RunPara.xmax,CoreGrid.CellList[location]->x+SRunPara::RunPara.TZ_width);
                  i++){
-                for (int j=std::max<unsigned long>(0,CoreGrid.CellList[location]->y-SRunPara::RunPara.TZ_width);
-                     j<std::min<unsigned long>(SRunPara::RunPara.ymax,CoreGrid.CellList[location]->y+SRunPara::RunPara.TZ_width);
+                for (int j=std::max(0,CoreGrid.CellList[location]->y-SRunPara::RunPara.TZ_width);
+                     j<std::min(SRunPara::RunPara.ymax,CoreGrid.CellList[location]->y+SRunPara::RunPara.TZ_width);
                      j++){
                     // and check if lu class of these cells is either 2 or 3
-                    if(CoreGrid.CellList[i*SRunPara::RunPara.xmax+j]->LU_id==2 || CoreGrid.CellList[i*SRunPara::RunPara.xmax+j]->LU_id==2 ){
+                    if(CoreGrid.CellList[i*SRunPara::RunPara.xmax+j]->LU_id==2 || CoreGrid.CellList[i*SRunPara::RunPara.xmax+j]->LU_id==3 ){
                         // if so --> set cell to TZ_cell
                         CoreGrid.CellList[location]->TZ=true;
                         }//  end if lu 2 or 3

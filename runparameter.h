@@ -25,10 +25,13 @@ public:
     //! Filename of patch definition file
     static std::string NamePatchDefFile;
 
+    // simulation number
+    int SimNb;
+
     //! maximal time
     int t_max;
     //! grid size
-    int unsigned xmax, ymax;
+    int xmax, ymax;
     //! number of land use classes
     int nb_LU;
     //! width of transition zone
@@ -43,7 +46,7 @@ public:
     SRunPara();
 
     //! sum of grid cells
-    inline int unsigned GetSumCells() const {return xmax*ymax;}
+    inline int GetSumCells() const {return xmax*ymax;}
 };
 
 

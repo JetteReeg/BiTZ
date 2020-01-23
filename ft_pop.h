@@ -2,8 +2,8 @@
 #define FT_POP_H
 
 #include <memory>
-#include <ft_traits.h>
-#include <lcg.h>
+#include "ft_traits.h"
+#include "lcg.h"
 
 
 class CCell;
@@ -12,12 +12,12 @@ class FT_pop
 {
 protected:
     //! cell where the FT population is in
-    CCell* cell;
+    shared_ptr<CCell> cell;
 public:
     //! constructor
     FT_pop();
     //! constructor for plant objects
-    FT_pop(shared_ptr<FT_traits> Traits, CCell* cell, int n);
+    FT_pop(shared_ptr<FT_traits> Traits, shared_ptr<CCell> cell, int n);
     //! FT Trait container
     shared_ptr<FT_traits> Traits;
 
@@ -49,16 +49,16 @@ public:
     int Immigrants;
 
     //! functions
-    void setCell(CCell* cell);
-    void set_trans_effect(CCell* cell);
-    void set_nestCap(CCell* cell);
-    void set_resCap(CCell* cell);
+    void setCell(shared_ptr<CCell> cell);
+    void set_trans_effect(shared_ptr<CCell> cell);
+    void set_nestCap(shared_ptr<CCell> cell);
+    void set_resCap(shared_ptr<CCell> cell);
     inline static int nrand(int n){return combinedLCG()*n;}
-    static void growth(FT_pop* pop, double weather_year);
-    static void dispersal(FT_pop* pop);
-    static void update_pop(FT_pop* pop);
-    static void update_pop_dispersal(FT_pop* pop);
-    static void disturbance(FT_pop* pop);
+    static void growth(std::shared_ptr<FT_pop> pop, double weather_year);
+    static void dispersal(std::shared_ptr<FT_pop> pop);
+    static void update_pop(std::shared_ptr<FT_pop> pop);
+    static void update_pop_dispersal(std::shared_ptr<FT_pop> pop);
+    static void disturbance(std::shared_ptr<FT_pop> pop);
 };
 
     bool pairCompare( pair<size_t,int> i, pair<size_t,int> j);

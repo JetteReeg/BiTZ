@@ -33,7 +33,7 @@ void FT_traits::ReadFTDef(const string file){
             shared_ptr<FT_traits> traits = make_shared<FT_traits>();
             ss >> traits->FT_type >> traits->FT_ID >> traits->R
                     >> traits->b >> traits->c >> traits ->mu
-                    >> traits->omega >> traits->dispsd >>traits->dispmean >> traits->alpha >> traits->trans_effect;
+                    >> traits->omega >> traits->dispsd >>traits->dispmean >> traits->dist_eff >> traits->trans_effect;
             // add a new PFT to the list of PFTs
             FT_traits::FtLinkList.insert(std::make_pair(traits->FT_type, traits));
         }// end read all trait data for PFTs

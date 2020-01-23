@@ -1,12 +1,14 @@
 #ifndef RUNTIMEENVIRONMENT_H
 #define RUNTIMEENVIRONMENT_H
 
-#include <gridenvironment.h>
-#include <lcg.h>
+#include "gridenvironment.h"
+#include "lcg.h"
 #include "runparameter.h"
 #include "ft_traits.h"
-#include <output.h>
-#include <cell.h>
+#include "output.h"
+#include "cell.h"
+
+
 
 class RuntimeEnvironment: public GridEnvironment
 {
@@ -14,7 +16,7 @@ public:
     RuntimeEnvironment();
     static int year;
     static double weather_year;
-    //static vector <SFTout*> FToutdata;
+    static void readSimDef(const string file);
     static void one_year();
     static void one_run();
     static void init();

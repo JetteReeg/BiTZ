@@ -1,8 +1,9 @@
-#include <QCoreApplication>
 #include <iostream>
-#include <runparameter.h>
-#include <runtimeenvironment.h>
+#include <sstream>
+#include "runparameter.h"
+#include "runtimeenvironment.h"
 #include <cmath>
+#include <stdio.h>
 
 #ifdef _WIN32
 #include <windows.h>
@@ -22,16 +23,9 @@
 
 using namespace std;
 
-//GridEnvironment* Envir=new GridEnvironment;
-// global functions?
-
-
-
-
 
 int main(int argc, char *argv[])
 {
-    QCoreApplication a(argc, argv);
     #ifdef _WIN32
     DWORD pid=GetCurrentProcessId();
     #endif
@@ -52,9 +46,16 @@ int main(int argc, char *argv[])
     if (argc>=2) {
             // handle arguments of the model
     }
-    // global parameters?
-    //start one run
-    RuntimeEnvironment::one_run();
+    // read in simulation parameters
+    // for each line/SimNb start one run
+    // output file should be named according to SimNb
+
+    stringstream strd;
+    strd<<"Input/Simulations.txt";
+    cout<<strd.str()<<endl;
+    static std::string NameSimFile=strd.str();
+    cout<<NameSimFile<<endl;
+    RuntimeEnvironment::readSimDef(NameSimFile);
 
 
 

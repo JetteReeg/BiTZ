@@ -24,14 +24,14 @@ public:
     double R;
     double b;
     double c;
-    double trans_effect;
+    double trans_effect;// how much resources get the FT in a transition zone?
 
     // dispersal parameters
-    double mu;
-    double omega;
-    double alpha;
-    double dispsd;
-    double dispmean;
+    double mu; // how many individuals will disperse?
+    double omega; // how strong is the effect if population is beyond the capacity?
+    double dist_eff; // susceptibility for disturbances
+    double dispsd; // standard deviation of dispersal distance
+    double dispmean; // mean of dispersal distance
 
     map <int, double> LU_suitability_nest;
     map <int, double> LU_suitability_forage;

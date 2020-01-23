@@ -3,7 +3,7 @@
 
 #include <map>
 #include <vector>
-#include <ft_pop.h>
+#include "ft_pop.h"
 
 using namespace std;
 
@@ -56,7 +56,7 @@ public:
     //! capacity
     int sumCap;
     //! List of all FT populations in cell
-    vector<FT_pop*> FT_pop_List;
+    vector<std::shared_ptr<FT_pop>> FT_pop_List;
     //! Map of all population sizes of FT in cell
     map <int, int> FT_pop_sizes;
     //! constructors

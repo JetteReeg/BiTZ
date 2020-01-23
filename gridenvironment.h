@@ -2,7 +2,7 @@
 #define GRIDENVIRONMENT_H
 
 #include "runparameter.h"
-#include <cell.h>
+#include "cell.h"
 using namespace std;
 
 struct Patch_def{
@@ -28,7 +28,7 @@ class GridEnvironment: public CCell
 {
 public:
     //! List of all cells
-    vector <CCell*> CellList;
+    vector <shared_ptr<CCell>> CellList;
     //! constructor
     GridEnvironment();
 

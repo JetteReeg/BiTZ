@@ -1,17 +1,52 @@
 #include "runtimeenvironment.h"
-#include <gridenvironment.h>
+#include "gridenvironment.h"
 #include <iostream>
 #include <fstream>
 #include <sstream>
 
 int RuntimeEnvironment::year=0;
 double RuntimeEnvironment::weather_year=1.0;
-vector <SFTout*> Output::FToutdata;
+vector <shared_ptr<SFTout>> Output::FToutdata;
 
 RuntimeEnvironment::RuntimeEnvironment():GridEnvironment ()
 {
 
 }
+
+void RuntimeEnvironment::readSimDef(const string file){
+    // read patch ID definitions
+    //Open InitFile
+    ifstream DefFile(file.c_str());
+        if (!DefFile.good()) {
+            cerr << ("Error while opening Simulation File");
+            exit(3);
+        }
+        // read the header line and skip it
+        string line;
+        getline(DefFile, line);
+        while (getline(DefFile, line))
+        {
+            // get simulation parameter
+            std::stringstream ss(line);
+            //string SimNb;
+            //first column
+            ss >> SRunPara::RunPara.SimNb;
+            ss >> SRunPara::RunPara.NameFtFile;
+            ss >> SRunPara::RunPara.NameLandscapePatchFile;
+            ss >> SRunPara::RunPara.NamePatchDefFile;
+            ss >> SRunPara::RunPara.NameNestSuitabilityFile;
+            ss >> SRunPara::RunPara.NameForageSuitabilityFile;
+            ss >> SRunPara::RunPara.Nrep;
+            ss >> SRunPara::RunPara.t_max;
+            ss >> SRunPara::RunPara.ymax;
+            ss >> SRunPara::RunPara.xmax;
+            ss >> SRunPara::RunPara.nb_LU;
+            ss >> SRunPara::RunPara.TZ_width;
+            ss >> SRunPara::RunPara.disturbances;
+            one_run();
+        }// end read simulation file
+}
+
 /**
  * @brief RuntimeEnvironment::one_run
  * This function initializes one simulation run and afterwards start a while loop over the number of simulated years.
@@ -23,8 +58,8 @@ void RuntimeEnvironment::one_run(){
     cout<<" Initialize..."<<endl;
     init();
     cout<<"Global initialization finished..."<<endl;
-    int sim=0;
-    while (sim<SRunPara::RunPara.Nrep){
+    int rep=0;
+    while (rep<SRunPara::RunPara.Nrep){
         cout << "Start with a repetition..."<<endl;
         cout << "Initialize populations..."<<endl;
         init_populations();
@@ -41,17 +76,22 @@ void RuntimeEnvironment::one_run(){
         //clear old variables
         for (unsigned int cell_i=0; cell_i<SRunPara::RunPara.GetSumCells(); ++cell_i){
                 // link to cell
-                CCell* cell = CoreGrid.CellList[cell_i];
+                shared_ptr<CCell> cell = CoreGrid.CellList[cell_i];
                 // iterating over FT_pops in cell
+                for (unsigned pop_i=0; pop_i < cell->FT_pop_List.size(); pop_i++){
+                    std::shared_ptr<FT_pop> curr_Pop=cell->FT_pop_List.at(pop_i);
+                    //delete curr_Pop;
+                }
                 cell->FT_pop_List.clear();
                 cell->FT_pop_sizes.clear();
                 cell->distance_LU.clear();
         }
+
         //CoreGrid.CellList.clear();
         //FT_traits::FtLinkList.clear();
         Output::FToutdata.clear();
         cout << "Clear data of repetition..."<<endl;
-    sim++;
+    rep++;
     }
 }
 /**
@@ -69,10 +109,10 @@ void RuntimeEnvironment::one_year(){
     //iterating over cells
     for (unsigned int cell_i=0; cell_i<SRunPara::RunPara.GetSumCells(); ++cell_i){
             // link to cell
-            CCell* cell = CoreGrid.CellList[cell_i];
+            shared_ptr<CCell> cell = CoreGrid.CellList[cell_i];
             // iterating over FT_pops in cell
             for (unsigned pop_i=0; pop_i < cell->FT_pop_List.size(); pop_i++){
-                FT_pop* curr_Pop=cell->FT_pop_List.at(pop_i);
+                std::shared_ptr<FT_pop> curr_Pop=cell->FT_pop_List.at(pop_i);
                 FT_pop::growth(curr_Pop, weather_year);
             }
     }
@@ -80,10 +120,10 @@ void RuntimeEnvironment::one_year(){
 
     for (unsigned int cell_i=0; cell_i<SRunPara::RunPara.GetSumCells(); ++cell_i){
             // link to cell
-            CCell* cell = CoreGrid.CellList[cell_i];
+            shared_ptr<CCell> cell = CoreGrid.CellList[cell_i];
             // iterating over FT_pops in cell
             for (unsigned pop_i=0; pop_i < cell->FT_pop_List.size(); pop_i++){
-                FT_pop* curr_Pop=cell->FT_pop_List.at(pop_i);
+                std::shared_ptr<FT_pop> curr_Pop=cell->FT_pop_List.at(pop_i);
                 FT_pop::update_pop(curr_Pop);
             }
     }
@@ -91,10 +131,10 @@ void RuntimeEnvironment::one_year(){
     //TODO: check dispersal function!
     for (unsigned int cell_i=0; cell_i<SRunPara::RunPara.GetSumCells(); ++cell_i){
             // link to cell
-            CCell* cell = CoreGrid.CellList[cell_i];
+            shared_ptr<CCell> cell = CoreGrid.CellList[cell_i];
             // iterating over FT_pops in cell
             for (unsigned pop_i=0; pop_i < cell->FT_pop_List.size(); pop_i++){
-                FT_pop* curr_Pop=cell->FT_pop_List.at(pop_i);
+                std::shared_ptr<FT_pop> curr_Pop=cell->FT_pop_List.at(pop_i);
                 FT_pop::dispersal(curr_Pop);
             }
     }
@@ -102,10 +142,10 @@ void RuntimeEnvironment::one_year(){
 
     for (unsigned int cell_i=0; cell_i<SRunPara::RunPara.GetSumCells(); ++cell_i){
             // link to cell
-            CCell* cell = CoreGrid.CellList[cell_i];
+            shared_ptr<CCell> cell = CoreGrid.CellList[cell_i];
             // iterating over FT_pops in cell
             for (unsigned pop_i=0; pop_i < cell->FT_pop_List.size(); pop_i++){
-                FT_pop* curr_Pop=cell->FT_pop_List.at(pop_i);
+                std::shared_ptr<FT_pop> curr_Pop=cell->FT_pop_List.at(pop_i);
                 FT_pop::update_pop_dispersal(curr_Pop);
             }
     }
@@ -113,13 +153,37 @@ void RuntimeEnvironment::one_year(){
 
     for (unsigned int cell_i=0; cell_i<SRunPara::RunPara.GetSumCells(); ++cell_i){
             // link to cell
-            CCell* cell = CoreGrid.CellList[cell_i];
-            double dist_prob=combinedLCG();
-            if (dist_prob<SRunPara::RunPara.disturbances){
-                // iterating over FT_pops in cell
-                for (unsigned pop_i=0; pop_i < cell->FT_pop_List.size(); pop_i++){
-                    FT_pop* curr_Pop=cell->FT_pop_List.at(pop_i);
-                    FT_pop::disturbance(curr_Pop);
+            shared_ptr<CCell> cell = CoreGrid.CellList[cell_i];
+            // only if cell is no TZ cell
+            if(!cell->TZ){
+                double dist_prob=combinedLCG();
+                if (dist_prob<SRunPara::RunPara.disturbances){
+                    // iterating over FT_pops in cell
+                    for (unsigned pop_i=0; pop_i < cell->FT_pop_List.size(); pop_i++){
+                        std::shared_ptr<FT_pop> curr_Pop=cell->FT_pop_List.at(pop_i);
+                        // depending on LU class + susceptibility
+                        // if arable
+                        if (cell->LU_id==1){
+                            if (combinedLCG()<1.0) FT_pop::disturbance(curr_Pop);
+                        }
+                        // if urban
+                        if (cell->LU_id==4){
+                            if (combinedLCG()<0.8) FT_pop::disturbance(curr_Pop);
+                        }
+                        // if grassland
+                        if (cell->LU_id==3){
+                            if (combinedLCG()<0.5) FT_pop::disturbance(curr_Pop);
+                        }
+                        // if forest
+                        if (cell->LU_id==2){
+                            if (combinedLCG()<0.1) FT_pop::disturbance(curr_Pop);
+                        }
+                        // if bare
+                        if (cell->LU_id==0){
+                            if (combinedLCG()<0.5) FT_pop::disturbance(curr_Pop);
+                        }
+
+                    }
                 }
             }
     }
@@ -132,7 +196,7 @@ void RuntimeEnvironment::one_year(){
             var != FT_traits::FtLinkList.end(); ++var) {
         // for each LU_ID
         for (int lu=0;lu<SRunPara::RunPara.nb_LU;lu++) {
-            SFTout* tmp=Output::GetOutput(year, var->second->FT_ID, lu);
+            shared_ptr <SFTout> tmp=Output::GetOutput(year, var->second->FT_ID, lu);
             Output::FToutdata.push_back(tmp);
         }
     }
@@ -144,18 +208,18 @@ void RuntimeEnvironment::one_year(){
  * Initializes one simulation run; sets the initial conditions, calls init_landscape, init_FTs, init_populations
  */
 void RuntimeEnvironment::init(){
-    SRunPara::RunPara.NameFtFile="C:/Users/JetteR/ownCloud/Bibs/BiTZ/branches/Initialize-Model/Input/FT_Definitions_bsp.txt";
-    SRunPara::RunPara.NameLandscapePatchFile="C:/Users/JetteR/ownCloud/Bibs/BiTZ/branches/Initialize-Model/Input/Bsp_klein.txt";
+    /*SRunPara::RunPara.NameFtFile="C:/Users/JetteR/ownCloud/Bibs/BiTZ/branches/Initialize-Model/Input/FT_Definitions.txt";
+    SRunPara::RunPara.NameLandscapePatchFile="C:/Users/JetteR/ownCloud/Bibs/BiTZ/branches/Initialize-Model/Input/Agroscapelab_10m_300x300_gerastert_Fragstats_id4_2.asc";
     SRunPara::RunPara.NamePatchDefFile="C:/Users/JetteR/ownCloud/Bibs/BiTZ/branches/Initialize-Model/Input/Patch_ID_definitions.txt";
-    SRunPara::RunPara.NameNestSuitabilityFile="C:/Users/JetteR/ownCloud/Bibs/BiTZ/branches/Initialize-Model/Input/LU_FT_suitability_nest_bsp.txt";
-    SRunPara::RunPara.NameForageSuitabilityFile="C:/Users/JetteR/ownCloud/Bibs/BiTZ/branches/Initialize-Model/Input/LU_FT_suitability_forage_bsp.txt";
+    SRunPara::RunPara.NameNestSuitabilityFile="C:/Users/JetteR/ownCloud/Bibs/BiTZ/branches/Initialize-Model/Input/LU_FT_suitability_nest.txt";
+    SRunPara::RunPara.NameForageSuitabilityFile="C:/Users/JetteR/ownCloud/Bibs/BiTZ/branches/Initialize-Model/Input/LU_FT_suitability_forage.txt";
     SRunPara::RunPara.Nrep=5;
-    SRunPara::RunPara.t_max=10;
-    SRunPara::RunPara.xmax=4;
-    SRunPara::RunPara.ymax=4;
+    SRunPara::RunPara.t_max=50;
+    SRunPara::RunPara.xmax=300;
+    SRunPara::RunPara.ymax=300;
     SRunPara::RunPara.nb_LU=6;
-    SRunPara::RunPara.TZ_width=0;
-    SRunPara::RunPara.disturbances=0.0;
+    SRunPara::RunPara.TZ_width=1;
+    SRunPara::RunPara.disturbances=0.1;// todo add trait for susceptibility for disturbances*/
     year=0;
     //initialise the landscape
     init_landscape();
@@ -196,7 +260,7 @@ void RuntimeEnvironment::init_populations(){
         // variable trait stores the trait values
         shared_ptr<FT_traits> traits=var->second;
         // init new FT populations
-        int init_pop = 1;
+        int init_pop = 1000;
         InitFTpop(traits, init_pop);
     }
 
@@ -220,28 +284,31 @@ void RuntimeEnvironment::InitFTpop(shared_ptr <FT_traits> traits, int n){
         x=nrand(x_cell);
         y=nrand(y_cell);
         // set population in cell
-        CCell* cell = CoreGrid.CellList[x*x_cell+y];
+        shared_ptr<CCell> cell = CoreGrid.CellList[x*x_cell+y];
         // if cell doesn't include a FT pop yet...
         // Check if FT exists already in cell
         map <int, int> existing_FT_pop = cell->FT_pop_sizes;
         int current_ID = traits->FT_ID;
         auto search = existing_FT_pop.find(current_ID);
         if(search == existing_FT_pop.end()){
-            //int start_size = nrand(100)+1;
-            int start_size=1;
-            FT_pop* FTpop_tmp = new FT_pop(traits,cell,start_size);
+            int start_size = nrand(10)+1;
+            //int start_size=1;
+            std::shared_ptr<FT_pop> FTpop_tmp = std::make_shared< FT_pop >(traits,cell,start_size);
             cell->FT_pop_List.push_back(FTpop_tmp);
             cell->FT_pop_sizes.insert(std::make_pair(traits->FT_ID, start_size));
             i++;
         }
 
-       }//for each seed to disperse
+       }//for each start population
 }
 /**
  * @brief RuntimeEnvironment::WriteOfFile
  */
 void RuntimeEnvironment::WriteOfFile(){
-    string NameGridOutFile= "C:/Users/JetteR/ownCloud/Bibs/BiTZ/branches/Initialize-Model/GridOut.txt";
+    stringstream strd;
+    //strd<<GetCurrentWorkingDir()<<"/Output/GridOut_"<<SRunPara::RunPara.SimNb<<".txt";
+    strd<<"Output/GridOut_"<<SRunPara::RunPara.SimNb<<".txt";
+    string NameGridOutFile=strd.str();
     ofstream myfile(NameGridOutFile.c_str(),ios::app);
     if (!myfile.good()) {cerr<<("Error while opening Output File");exit(3); }
     // write header
@@ -277,13 +344,13 @@ void RuntimeEnvironment::weather(){
     //if (bimodal<6) eps=my_random_normal(my_mean=-0.3,my_stdev=0.15);
     //else
     //normal distribution
-    eps=normcLCG(0.1,0.15);
+    eps=normcLCG(0.0,0.15);
 
     /*Unimodal verteilte Klimaeinflüsse*/
     //double eps=my_random_normal(my_mean,my_stdev=0.15);
 
     //annual weather randomly fluctuates with eps from [-0.5, 0.5]
     weather_year= 1.0;
-    // weather_year=weather_year*(1+eps);
+    weather_year=weather_year*(1+eps);
     //cout<<"weather condition: "<< weather_year << endl;
 }

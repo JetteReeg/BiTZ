@@ -16,8 +16,8 @@ class Output
 {
 public:
     Output();
-    static std::vector <SFTout*> FToutdata;
-    static SFTout* GetOutput(int year, int FT_ID, int lu);
+    static std::vector <std::shared_ptr<SFTout>> FToutdata;
+    static std::shared_ptr<SFTout> GetOutput(int year, int FT_ID, int lu);
 };
 
 #endif // OUTPUT_H
