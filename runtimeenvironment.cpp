@@ -43,6 +43,8 @@ void RuntimeEnvironment::readSimDef(const string file){
             ss >> SRunPara::RunPara.xmax;
             ss >> SRunPara::RunPara.nb_LU;
             ss >> SRunPara::RunPara.TZ_width;
+            ss >> SRunPara::RunPara.TZ_percentage;
+            ss >> SRunPara::RunPara.size_order;
             ss >> SRunPara::RunPara.disturbances;
             one_run();
         }// end read simulation file
@@ -241,7 +243,7 @@ void RuntimeEnvironment::init(){
 void RuntimeEnvironment::init_landscape(){
     readPatchID_def(SRunPara::RunPara.NamePatchDefFile);
     readLandscape();
-    calculate_distance_LU();
+    calculate_TZ();
     cout << "Initialization of landscape finished..."<<endl;
 }
 /**

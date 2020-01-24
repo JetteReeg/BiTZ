@@ -10,6 +10,8 @@ std::string SRunPara::NameNestSuitabilityFile="LU_suitability_nest.txt";
 std::string SRunPara::NameForageSuitabilityFile="LU_suitability_forage.txt";
 //! patch ID definition file
 std::string SRunPara::NamePatchDefFile="Patch_ID_definitions.txt";
+//! size order
+std::string SRunPara::size_order="ascending";
 
 //! parameters of specific run
 SRunPara SRunPara::RunPara=SRunPara();

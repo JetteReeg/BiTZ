@@ -3,7 +3,7 @@
   source: http://www.c-plusplus.de/forum/39335-full (posted by Mady 12:54:00 15.12.2002)
 */
 
-#include "LCG.h"
+#include "lcg.h"
 #include <math.h>
 #include <random>
 //---------------------------------------------------------------------------

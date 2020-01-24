@@ -29,6 +29,7 @@ public:
 
     //! nest capacity for each FT population in the cell
     int nestCap;
+    double MaxNestSuitability;
 
     //! foraging capacity for each FT population in the cell
     double resCap;

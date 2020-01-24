@@ -35,7 +35,7 @@ public:
     //! read the lanscape
     static void readLandscape();
     //! calculate the closest distance to other land use class
-    static void calculate_distance_LU();
+    static void calculate_TZ();
     //! links of Patches used
     static map<int,shared_ptr<Patch_def>> Patch_defList; //TODO: muss es ein shared_ptr sein?
     //! read Patch ID definition file

@@ -22,6 +22,8 @@ public:
     int pa_id;
     //! transition zone cell
     bool TZ;
+    //! potential transition zone cell
+    bool TZ_pot;
 
     struct Patch_ID_Definitions
     {

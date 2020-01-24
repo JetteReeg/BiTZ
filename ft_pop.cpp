@@ -57,6 +57,27 @@ void FT_pop::set_nestCap(shared_ptr<CCell> cell){
     int x=100; //todo check how many nests could be within 10x10m
     nestCap=int(floor(x*this->Traits->LU_suitability_nest.find(cell->LU_id)->second));
     //cout<<"popCap for type "<<Traits->FT_type<<": "<<popCap<<endl;
+    // initialise values
+    double max_nestcap=0.0;
+    int dispersal = int(floor(this->Traits->dispmean));
+    //start cell of dispersal area
+    int zi_start = cell->x - dispersal;
+    if (zi_start<0) zi_start=0;
+    int zimax = std::min(cell->x+dispersal, SRunPara::RunPara.xmax);
+    int zj_start = cell->y - dispersal;
+    if (zj_start<0) zj_start=0;
+    int zjmax = std::min(cell->y + dispersal, SRunPara::RunPara.xmax);
+    //
+    for (int zi=zi_start; zi < zimax; zi++)
+      for (int zj=zj_start; zj < zjmax ; zj++)
+      {
+          double dist_curr = sqrt((pow(zi-cell->x,2)+pow(zj-cell->y,2)));
+          if (dist_curr <= this->Traits->dispmean){
+              max_nestcap=max(this->Traits->LU_suitability_nest.find(CoreGrid.CellList[zi*SRunPara::RunPara.xmax+zj]->LU_id)->second, max_nestcap);
+              //if(cell->TZ) sum_res+=this->trans_effect;
+          }
+      }
+    MaxNestSuitability=max_nestcap;
 }
 
 void FT_pop::set_resCap(shared_ptr<CCell> cell){
@@ -90,34 +111,6 @@ void FT_pop::set_resCap(shared_ptr<CCell> cell){
     if (cell_area!=0){
         resCap = sum_res/cell_area;
     } else resCap=0.0;
-
-
-    //go through the map distance_LU
-    /*for (auto var = cell->distance_LU.begin();
-            var != cell->distance_LU.end(); ++var) {
-        // check if distance is smaller than FT_trait Traits->trans_effect
-        if (var->second.dist<Traits->trans_effect){
-            //calculate trans_effect in cell for FT_pop
-            double patch_size, patch_shape, patch_size_neighbour, patch_shape_neighbour;
-            double land_use_suitability;
-            double land_use_suitability_neighbour;
-            double neighbour_patch_effect;
-            double local_patch_effect;
-            //Wie groß und welche Form hat der aktuelle patch? --> je größer und gleichmäßiger, desto geringer der Effekt? (kleinerer SHAPE + größere AREA = kleinerer Effekt)
-            patch_size=cell->PID_def.Area;
-            patch_shape=cell->PID_def.Shape;
-            local_patch_effect=patch_size/(patch_size+patch_shape);
-            //Wie groß und welche Form hat der andere patch? --> je größer und gleichmäßiger desto stärker der Effekt? (kleinere SHAPE + größere AREA = größerer Effekt)
-            patch_size_neighbour=var->second.Area;
-            patch_shape_neighbour=var->second.Shape;
-            neighbour_patch_effect=patch_size_neighbour/(patch_size_neighbour+patch_shape_neighbour);
-            //Je geeigneter die andere LU Klasse, desto geringer der Effekt
-            land_use_suitability=Traits->LU_suitability.find(cell->LU_id)->second;
-            land_use_suitability_neighbour=Traits->LU_suitability.find(var->first)->second;
-            trans_effect+=var->second.dist*local_patch_effect*land_use_suitability*neighbour_patch_effect*land_use_suitability_neighbour;
-            //cout<<"trans_effect for type "<<Traits->FT_type<<": "<<trans_effect<<endl;
-        }
-    }*/
 }
 
 void FT_pop::growth(std::shared_ptr<FT_pop> pop, double weather_year){
@@ -183,24 +176,23 @@ void FT_pop::dispersal(std::shared_ptr<FT_pop> pop){
     int emmigrants=pop->Emmigrants;
     //now disperse the individuals within the grid and if FT already exists in the cell: increase Pt1 OR initialise Ft in new cell
     for (int emmig=emmigrants; emmig>0; emmig--){
-        tries=0;
+        // highest potential nest capacity:
+        double max_nest_suit=pop->MaxNestSuitability;
         bool cell_found=false;
-        while (tries<10 && cell_found==false)
-            {
+        int max_tries=1000;
+        while (cell_found==false && tries < max_tries){
+            // get a cell to disperse to
             // direction of dispersal
             double alpha=2*3.1415*combinedLCG();
             //double random=combinedLCG();
             double d; //distance
             int dx, dy;
             int new_xcoord, new_ycoord;
-
-            //while (random==0.0) {random=combinedLCG();}  //random shall not be 0
-
+            // distance
             double sigma=sqrt(log((pop->Traits->dispsd/pop->Traits->dispmean)*(pop->Traits->dispsd/pop->Traits->dispmean)+1));
             double mu=log(pop->Traits->dispmean)-0.5*sigma;
             d=exp(normcLCG(mu,sigma));
-
-            //d=-(pop->Traits->D*log(random));
+            // resulting cell
             dx=int(floor(sin(alpha)*d));
             dy=int(floor(cos(alpha)*d));
             // new cell
@@ -212,13 +204,10 @@ void FT_pop::dispersal(std::shared_ptr<FT_pop> pop){
                     && new_xcoord>=0 && new_ycoord>=0) {
                 //pointer to cell
                 shared_ptr<CCell> cell_new = CoreGrid.CellList[new_xcoord*SRunPara::RunPara.xmax+new_ycoord];
-                //check if FT can exist in new cell
-                //get LU suitability of the land use class
+                //check if LU suitability for nesting is max_nest_cap
                 double LU_suitability=pop->Traits->LU_suitability_nest.find(cell_new->LU_id)->second;
-                //probability of nest building depend on LU suitability for nesting
-                // generate random number
-                double random=combinedLCG();
-                if ((LU_suitability !=0.0) & (random<LU_suitability)){
+                // if the cells land use suitability is the same or higher as the maximal nest suitability --> immigrate
+                if (LU_suitability>=max_nest_suit){
                     // check if pop exists in the new cell
                     // if cell doesn't include a population of the current FT yet...
                     // Check if FT exists already in cell
@@ -233,23 +222,57 @@ void FT_pop::dispersal(std::shared_ptr<FT_pop> pop){
                         //FT_pop* FTpop_tmp = new FT_pop(pop->Traits,cell_new,start_size);
                         cell_new->FT_pop_List.push_back(FTpop_tmp);
                         cell_new->FT_pop_sizes.insert(std::make_pair(FTpop_tmp->Traits->FT_ID, start_size));
-                        //delete FTpop_tmp;
+                        cell_found=true;
                       } else {// if yes and if capacity is not reached yet: add it
                         for (unsigned pop_i=0; pop_i < cell_new->FT_pop_List.size(); pop_i++){
                             std::shared_ptr<FT_pop> tmp_Pop=cell_new->FT_pop_List.at(pop_i);
                             // if it's the current FT add individual
                             if (tmp_Pop->Traits->FT_ID==current_ID && tmp_Pop->Pt<tmp_Pop->nestCap){
                                 tmp_Pop->Immigrants++;
-                                  }
-                              }
-                       }// end else
-                    cell_found=true;
-                }  //else: individual is dying since LU id is not suitable
-            }
-        tries++;
-        }//end while tries <10
-    }// end for loop
-    pop->Emmigrants=0;//else: individual is outside of the grid or dying
+                                cell_found=true;
+                                }
+                        }// add immigrant only if capacity is not reached yet; else search for new cell
+                     }// end else
+                } else {// end if cell is one of the most suitable cells
+                    // with increasing probability individuals also excepts less suitable cell for immigration
+                    double prob_take_less = tries/max_tries;
+                    double lesser = LU_suitability/max_nest_suit;
+                    // generate random number
+                    double random=combinedLCG();
+                    if ((LU_suitability !=0.0) & (random<prob_take_less*lesser)){
+                        // check if pop exists in the new cell
+                        // if cell doesn't include a population of the current FT yet...
+                        // Check if FT exists already in cell
+                        map <int, int> existing_FT_pop = cell_new->FT_pop_sizes;
+                        int current_ID = pop->Traits->FT_ID;
+                        auto search = existing_FT_pop.find(current_ID);
+                        // if not found initialize a new Pop of this FT
+                        if(search == existing_FT_pop.end()){
+                            int start_size = 1;
+                            std::shared_ptr<FT_pop> FTpop_tmp = std::make_shared< FT_pop >(pop->Traits,cell_new,start_size);
+                            //FT_pop* FTpop_tmp = new FT_pop();
+                            //FT_pop* FTpop_tmp = new FT_pop(pop->Traits,cell_new,start_size);
+                            cell_new->FT_pop_List.push_back(FTpop_tmp);
+                            cell_new->FT_pop_sizes.insert(std::make_pair(FTpop_tmp->Traits->FT_ID, start_size));
+                            cell_found=true;
+                          } else {// end if individual takes a less suitable patch
+                            // if FT already exists and capacity is not reached yet: add it
+                            for (unsigned pop_i=0; pop_i < cell_new->FT_pop_List.size(); pop_i++){
+                                std::shared_ptr<FT_pop> tmp_Pop=cell_new->FT_pop_List.at(pop_i);
+                                // if it's the current FT add individual
+                                if (tmp_Pop->Traits->FT_ID==current_ID && tmp_Pop->Pt<tmp_Pop->nestCap){
+                                    tmp_Pop->Immigrants++;
+                                    cell_found=true;
+                                      }// end if capacity is not yet reached
+                                  }// end loop over all FTs in cell
+                           }// end else (if FT exists)
+                    }  //end if individual takes a less suitable cell (only if capacity is not yet reached; otherwise search new
+                    }// end else (if not suitable and does not take a less suitable cell)
+                }// one try; end if random cell is within grid
+            tries++;
+        }// end while after max tries --> individual dies
+    }// end for all emmigrants
+    pop->Emmigrants=0;//else: individual is outside of the grid or dying as not finding a nesting site
 }
 
 void FT_pop::update_pop(std::shared_ptr<FT_pop> pop){

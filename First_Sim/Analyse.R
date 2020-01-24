@@ -61,28 +61,42 @@ data3[,relPop:=mean/cumArea]
 data4<-merge(data.com, landscape_proportions)
 data4[,relPop:=mean/cumArea]
 
-relPop<-ggplot(data=data3[LU!="water"]) +
+relPop1<-ggplot(data=data3[LU!="water"&FT_ID<9]) +
+  theme_few() +
   geom_line(aes(x=Year, y=relPop, colour=factor(TZ_width), linetype=factor(disturbances))) +
   ylab("nb individuals/ha") +
   facet_grid(LU~FT_ID, scales="free")
+ ggsave("relPop1.png", relPop1)
+relPop2<-ggplot(data=data3[LU!="water"&FT_ID>=9]) +
+  theme_few() +
+  geom_line(aes(x=Year, y=relPop, colour=factor(TZ_width), linetype=factor(disturbances))) +
+  ylab("nb individuals/ha") +
+  facet_grid(LU~FT_ID, scales="free")
+ggsave("relPop2.png", relPop2)
 
 div<-ggplot(data=data.com) +
+  theme_few() +
   geom_line(aes(x=Year, y=mean.div, colour=factor(TZ_width), linetype=factor(disturbances))) +
   geom_ribbon(aes(x=Year, ymin=mean.div-sd.div, ymax=mean.div+sd.div, group=factor(TZ_width+disturbances)), alpha=0.1) +
   ylab("mean diversity") +
   facet_wrap(~LU, scales="free")
+ggsave("Shannon.png", div)
 
 nb_FT<-ggplot(data=data.com) +
+  theme_few() +
   geom_line(aes(x=Year, y=mean.nb_FT, colour=factor(TZ_width), linetype=factor(disturbances))) +
   geom_ribbon(aes(x=Year, ymin=mean.nb_FT-sd.nb_FT, ymax=mean.nb_FT+sd.nb_FT, group=factor(TZ_width+disturbances)), alpha=0.1) +
   ylab("mean number of FT") +
   facet_wrap(~LU, scales="free")
+ggsave("NB_FT.png", nb_FT)
 
 totalN<-ggplot(data=data.com) +
+  theme_few() +
   geom_line(aes(x=Year, y=mean.totalN, colour=factor(TZ_width), linetype=factor(disturbances))) +
   geom_ribbon(aes(x=Year, ymin=mean.totalN-sd.totalN, ymax=mean.totalN+sd.totalN, group=factor(TZ_width+disturbances)), alpha=0.1) +
   ylab("mean total N") +
   facet_wrap(~LU, scales="free")
+ggsave("totalN.png", totalN)
 
 
 

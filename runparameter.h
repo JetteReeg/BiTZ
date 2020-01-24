@@ -36,6 +36,8 @@ public:
     int nb_LU;
     //! width of transition zone
     int TZ_width;
+    int TZ_percentage;
+    static std::string size_order;
 
     //! disturbances
     double disturbances;
