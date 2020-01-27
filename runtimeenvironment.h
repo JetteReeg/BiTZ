@@ -24,7 +24,7 @@ public:
     static void init_FTs();
     static void init_populations();
     static void InitFTpop(shared_ptr <FT_traits> traits, int n);
-    static void WriteOfFile();
+    static void WriteOfFile(int nrep);
     static void weather();
     inline static int nrand(int n){return combinedLCG()*n;}
 };

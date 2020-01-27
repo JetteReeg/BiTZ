@@ -74,7 +74,7 @@ void RuntimeEnvironment::one_run(){
         }
         //write output
         cout << "Write output of repetition..."<<endl;
-        WriteOfFile();
+        WriteOfFile(rep);
 
         //clear old variables
         for (unsigned int cell_i=0; cell_i<SRunPara::RunPara.GetSumCells(); ++cell_i){
@@ -312,11 +312,11 @@ void RuntimeEnvironment::InitFTpop(shared_ptr <FT_traits> traits, int n){
 /**
  * @brief RuntimeEnvironment::WriteOfFile
  */
-void RuntimeEnvironment::WriteOfFile(){
+void RuntimeEnvironment::WriteOfFile(int nrep){
     //FToutdata
     stringstream strd;
     //strd<<GetCurrentWorkingDir()<<"/Output/GridOut_"<<SRunPara::RunPara.SimNb<<".txt";
-    strd<<"Output/GridOut_"<<SRunPara::RunPara.SimNb<<".txt";
+    strd<<"Output/GridOut_"<<SRunPara::RunPara.SimNb<<"_"<<SRunPara::RunPara.MC<<".txt";
     string NameGridOutFile=strd.str();
     ofstream myfile(NameGridOutFile.c_str(),ios::app);
     if (!myfile.good()) {cerr<<("Error while opening Output File");exit(3); }
@@ -345,7 +345,7 @@ void RuntimeEnvironment::WriteOfFile(){
     //Comoutdata
     //strd<<GetCurrentWorkingDir()<<"/Output/GridOut_"<<SRunPara::RunPara.SimNb<<".txt";
     strd.str(std::string());
-    strd<<"Output/ComOut_"<<SRunPara::RunPara.SimNb<<".txt";
+    strd<<"Output/ComOut_"<<SRunPara::RunPara.SimNb<<"_"<<SRunPara::RunPara.MC<<".txt";
     string NameComOutFile=strd.str();
     ofstream Comfile(NameComOutFile.c_str(),ios::app);
     if (!Comfile.good()) {cerr<<("Error while opening Output File");exit(3); }

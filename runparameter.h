@@ -27,6 +27,7 @@ public:
 
     // simulation number
     int SimNb;
+    int MC;
 
     //! maximal time
     int t_max;

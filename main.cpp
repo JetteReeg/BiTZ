@@ -45,6 +45,7 @@ int main(int argc, char *argv[])
     initLCG( pid, 3487234);
     if (argc>=2) {
             // handle arguments of the model
+        SRunPara::RunPara.MC=atoi(argv[1]);
     }
     // read in simulation parameters
     // for each line/SimNb start one run
