@@ -133,7 +133,7 @@ void GridEnvironment::calculate_TZ(){
     }
     // get nb of TZ cells do generate
     cout<<"nb border cells "<<nb_bordercells<<endl;
-    int nb_TZ_cells=nb_bordercells*SRunPara::RunPara.TZ_percentage;
+    int nb_TZ_cells=floor(nb_bordercells*SRunPara::RunPara.TZ_percentage);
     cout<<"nb TZ cells "<<nb_TZ_cells<<endl;
     // get from patch id definition file the patch IDs which should be prioritized
     // select randomly a patch ID, which should get TZ
@@ -210,4 +210,30 @@ void GridEnvironment::calculate_TZ(){
             }
         }
     }
+
+    // save grid
+    stringstream strd;
+    strd<<"Output/GridFile_"<<SRunPara::RunPara.SimNb<<"_"<<SRunPara::RunPara.MC<<".txt";
+    string NameGridFile=strd.str();
+    ofstream Gridfile(NameGridFile.c_str(),ios::app);
+    if (!Gridfile.good()) {cerr<<("Error while opening Output File");exit(3); }
+    // write header
+    Gridfile.seekp(0, ios::end);
+    long size=Gridfile.tellp();
+    if (size==0){
+        Gridfile<<"Year\t"
+                  <<"LU_ID\t"
+                  <<"nb_FT\t"
+                  <<"diversity\t"
+                 <<"totalN"
+                  ;
+            Gridfile<<"\n";
+        }
+    for (unsigned int location=0; location<SRunPara::RunPara.GetSumCells(); ++location){
+        int output=0;
+        if(CoreGrid.CellList[location]->TZ==true) output=1;
+        Gridfile<<'\t'<<output;
+        if(CoreGrid.CellList[location]->y==SRunPara::RunPara.ymax) Gridfile<<"\n";
+    }
+    Gridfile.close();
 }// end calculate distance
