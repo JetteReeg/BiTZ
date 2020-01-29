@@ -22,6 +22,7 @@ struct Patch_def{
     double Gyrate;
     double Para;
     double Shape;
+    int nb_bordercells;
     };
 
 class GridEnvironment: public CCell

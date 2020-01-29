@@ -43,6 +43,7 @@ public:
         double Gyrate;
         double Para;
         double Shape;
+        int nb_bordercells;
     };
     Patch_ID_Definitions PID_def;
     //! distance to other land use classes

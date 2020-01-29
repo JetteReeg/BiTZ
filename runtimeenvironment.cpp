@@ -94,6 +94,8 @@ void RuntimeEnvironment::one_run(){
         //FT_traits::FtLinkList.clear();
         Output::FToutdata.clear();
         Output::Comoutdata.clear();
+        GridEnvironment::Patch_defList.clear();
+        CoreGrid.CellList.clear();
         cout << "Clear data of repetition..."<<endl;
     rep++;
     }
