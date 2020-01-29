@@ -52,53 +52,52 @@ shared_ptr <SFTout> Output::GetOutput_FT(int year, int FT_ID, int lu){
 
 shared_ptr <SComout> Output::GetOutput_Com(int year, int lu){
             //create a new struct to add to list
+    //TODO: CHECK output! --> what do I need? nb. FT per cell? per lu class? overall N?
             shared_ptr <SComout> Comyear=make_shared<SComout>();
             Comyear->year=year;
             Comyear->LU_ID=lu;
             Comyear->nb_FT=0;
-            Comyear->diversity=0.0;
+            double nb_FT_in_lu=0;
+            double div_in_lu=0.0;
             //go through each cell
-            int nb_cell=0;
-            int totalN=0;
-            int totalN_tmp=0;
+            int nb_cell=0; // count number of cells of LU
+            int totalNin_LU=0; // total N in LU
+
             for (unsigned int cell_i=0; cell_i<SRunPara::RunPara.GetSumCells(); ++cell_i){
                     // link to cell
                     shared_ptr<CCell> cell = CoreGrid.CellList[cell_i];
                     //if cell LU_ID is lu
                     if (cell->LU_id==lu){
+                        int nb_FT_in_cell=0;
+                        double div_in_cell=0.0;
+                        int totalN_in_cell=0;
+                        nb_cell++;
                         // get nb of FT in cell
                          // total number of individuals
                          for (unsigned pop_i=0; pop_i < cell->FT_pop_List.size(); pop_i++){
                              if(cell->FT_pop_List.at(pop_i)->Pt>0){
-                                 Comyear->nb_FT++;
-                                 totalN=totalN+cell->FT_pop_List.at(pop_i)->Pt;
-                                 totalN_tmp=totalN_tmp+cell->FT_pop_List.at(pop_i)->Pt;
+                                 nb_FT_in_cell++; //nb_FT in Zelle
+                                 totalN_in_cell=totalN_in_cell+cell->FT_pop_List.at(pop_i)->Pt;// total N in Zelle
                              }
                          }
-                         if (totalN_tmp>0) nb_cell++;
-                         totalN_tmp=0;
+                         // calculate relative pi
+                         for (unsigned pop_i=0; pop_i < cell->FT_pop_List.size(); pop_i++){
+                             if(cell->FT_pop_List.at(pop_i)->Pt>0){
+                                 double pi = double ((1.0*cell->FT_pop_List.at(pop_i)->Pt)/(1.0*totalN_in_cell));
+                                 div_in_cell= div_in_cell + pi*log(pi);
+                             }
+                         }
+                         div_in_cell=-div_in_cell;
+                         // summarise
+                         nb_FT_in_lu=nb_FT_in_lu+nb_FT_in_cell;
+                         div_in_lu=div_in_lu+div_in_cell;
+                         totalNin_LU=totalNin_LU+totalN_in_cell;
                     }
             }// for each cell
 
-            for (unsigned int cell_i=0; cell_i<SRunPara::RunPara.GetSumCells(); ++cell_i){
-                // link to cell
-                shared_ptr<CCell> cell = CoreGrid.CellList[cell_i];
-                //if cell LU_ID is lu
-                if (cell->LU_id==lu){
-                    // get diversity index
-                    // calculate relative number of individuals in cell and sum it up
-                    for (unsigned pop_i=0; pop_i < cell->FT_pop_List.size(); pop_i++){
-                        if (cell->FT_pop_List.at(pop_i)->Pt>0){
-                            double pi = double ((1.0*cell->FT_pop_List.at(pop_i)->Pt)/(1.0*totalN));
-                            pi= pi*log(pi);
-                            Comyear->diversity=Comyear->diversity+pi;
-                            }
-                        }
-                } // end if LU_ID of cell is lu
-
-            }
-            Comyear->diversity = Comyear->diversity/nb_cell;
-            Comyear->nb_FT = Comyear->nb_FT/nb_cell;
+            Comyear->diversity = div_in_lu/nb_cell;
+            Comyear->nb_FT = nb_FT_in_lu/nb_cell;
+            Comyear->totalN=totalNin_LU;
    return(Comyear);
 }// end get output
 

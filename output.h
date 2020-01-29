@@ -17,6 +17,7 @@ struct SComout{
     int LU_ID;
     double nb_FT;
     double diversity;
+    int totalN;
     SComout();
 };
 

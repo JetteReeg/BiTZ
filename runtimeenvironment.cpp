@@ -176,7 +176,7 @@ void RuntimeEnvironment::one_year(){
                         }
                         // if grassland
                         if (cell->LU_id==3){
-                            if (combinedLCG()<0.5) FT_pop::disturbance(curr_Pop);
+                            if (combinedLCG()<0.3) FT_pop::disturbance(curr_Pop);
                         }
                         // if forest
                         if (cell->LU_id==2){
@@ -356,8 +356,9 @@ void RuntimeEnvironment::WriteOfFile(int nrep){
     if (size_com==0){
         Comfile<<"Year\t"
                   <<"LU_ID\t"
-                  <<"nb_FT"
-                  <<"diversity"
+                  <<"nb_FT\t"
+                  <<"diversity\t"
+                 <<"totalN"
                   ;
             Comfile<<"\n";
         }
@@ -368,6 +369,7 @@ void RuntimeEnvironment::WriteOfFile(int nrep){
                  <<'\t'<<Output::Comoutdata[i]->LU_ID
                  <<'\t'<<Output::Comoutdata[i]->nb_FT
                    <<'\t'<<Output::Comoutdata[i]->diversity
+                     <<'\t'<<Output::Comoutdata[i]->totalN
               <<"\n";
     }// end for each year
     Comfile.close();

@@ -116,11 +116,11 @@ void GridEnvironment::calculate_TZ(){
         int border_cell=0;
          if (CoreGrid.CellList[location]->LU_id==1){
              // go through each surrounding cell
-             for (int i=std::max(0,CoreGrid.CellList[location]->x-SRunPara::RunPara.TZ_width);
-                  i<std::min(SRunPara::RunPara.xmax,CoreGrid.CellList[location]->x+SRunPara::RunPara.TZ_width);
+             for (int i=std::max(0,CoreGrid.CellList[location]->x-1);
+                  i<std::min(SRunPara::RunPara.xmax,CoreGrid.CellList[location]->x+1);
                   i++){
-                 for (int j=std::max(0,CoreGrid.CellList[location]->y-SRunPara::RunPara.TZ_width);
-                      j<std::min(SRunPara::RunPara.ymax,CoreGrid.CellList[location]->y+SRunPara::RunPara.TZ_width);
+                 for (int j=std::max(0,CoreGrid.CellList[location]->y-1);
+                      j<std::min(SRunPara::RunPara.ymax,CoreGrid.CellList[location]->y+1);
                       j++){
                       if(CoreGrid.CellList[i*SRunPara::RunPara.xmax+j]->LU_id==2 || CoreGrid.CellList[i*SRunPara::RunPara.xmax+j]->LU_id==3 ) border_cell++;
                       }
@@ -132,7 +132,9 @@ void GridEnvironment::calculate_TZ(){
         }
     }
     // get nb of TZ cells do generate
+    cout<<"nb border cells "<<nb_bordercells<<endl;
     int nb_TZ_cells=nb_bordercells*SRunPara::RunPara.TZ_percentage;
+    cout<<"nb TZ cells "<<nb_TZ_cells<<endl;
     // get from patch id definition file the patch IDs which should be prioritized
     // select randomly a patch ID, which should get TZ
     // go through the map of patch definitions to get prioritized IDs
@@ -161,6 +163,18 @@ void GridEnvironment::calculate_TZ(){
                 if (cell->TZ_pot==true && cell->pa_id==it->second){
                     // set cell to TZ cell
                     cell->TZ=true;
+                    // set all neighbouring cells within range of TZ_width and lu=1 to TZ
+                    if(SRunPara::RunPara.TZ_width>1){
+                        for (int i=std::max(0,x-SRunPara::RunPara.TZ_width);
+                             i<std::min(SRunPara::RunPara.xmax,x+SRunPara::RunPara.TZ_width);
+                             i++){
+                            for (int j=std::max(0,y-SRunPara::RunPara.TZ_width);
+                                 j<std::min(SRunPara::RunPara.ymax,y+SRunPara::RunPara.TZ_width);
+                                 j++){
+                                 if(CoreGrid.CellList[i*SRunPara::RunPara.xmax+j]->LU_id==1) CoreGrid.CellList[i*SRunPara::RunPara.xmax+j]->TZ=true;
+                                 }
+                           }
+                    }
                     nb_TZ_cells--;
                 }
             }
@@ -179,6 +193,18 @@ void GridEnvironment::calculate_TZ(){
                 if (cell->TZ_pot==true && cell->pa_id==it->second){
                     // set cell to TZ cell
                     cell->TZ=true;
+                    if(SRunPara::RunPara.TZ_width>1){
+                        // set all neighbouring cells within range of TZ_width and lu=1 to TZ
+                        for (int i=std::max(0,x-SRunPara::RunPara.TZ_width);
+                             i<std::min(SRunPara::RunPara.xmax,x+SRunPara::RunPara.TZ_width);
+                             i++){
+                            for (int j=std::max(0,y-SRunPara::RunPara.TZ_width);
+                                 j<std::min(SRunPara::RunPara.ymax,y+SRunPara::RunPara.TZ_width);
+                                 j++){
+                                 if(CoreGrid.CellList[i*SRunPara::RunPara.xmax+j]->LU_id==1) CoreGrid.CellList[i*SRunPara::RunPara.xmax+j]->TZ=true;
+                                 }
+                           }
+                    }
                     nb_TZ_cells--;
                 }
             }
