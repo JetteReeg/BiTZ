@@ -24,7 +24,8 @@ public:
     double R;
     double b;
     double c;
-    double trans_effect;// how much resources get the FT in a transition zone?
+    double trans_effect_nest;// how much does TZ increase nesting site availability?
+    double trans_effect_res; // how much does TZ increase resource availability?
 
     // dispersal parameters
     double mu; // how many individuals will disperse?

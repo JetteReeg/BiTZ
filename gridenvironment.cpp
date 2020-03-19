@@ -67,7 +67,7 @@ void GridEnvironment::readLandscape(){
                 if (cell->PID_def.Type=="grassland") cell->LU_id=3;
                 if (cell->PID_def.Type=="urban") cell->LU_id=4;
                 if (cell->PID_def.Type=="water") cell->LU_id=5;
-                if (cell->PID_def.Type=="notdefined") cell->LU_id=6;
+                if (cell->PID_def.Type=="transition") cell->LU_id=6;
             } else {
                 cout<<"Patch ID "<<v_tmp_pa[index_pa]<<" not found!"<<endl;
                 exit(3);
@@ -171,6 +171,7 @@ void GridEnvironment::calculate_TZ(){
                         if (cell->TZ==false && cell->TZ_pot==true && cell->pa_id==it->second){
                             // set cell to TZ cell
                             cell->TZ=true;
+                            cell->LU_id=6;
                             GridEnvironment::Patch_defList.find(cell->pa_id)->second->nb_bordercells--;
                             nb_TZ_cells--;
                             // set all neighbouring cells within range of TZ_width and lu=1 to TZ
@@ -184,6 +185,7 @@ void GridEnvironment::calculate_TZ(){
                                          if(CoreGrid.CellList[i*SRunPara::RunPara.xmax+j]->LU_id==1) {
                                              if (CoreGrid.CellList[i*SRunPara::RunPara.xmax+j]->TZ==false){
                                                  CoreGrid.CellList[i*SRunPara::RunPara.xmax+j]->TZ=true;
+                                                 CoreGrid.CellList[i*SRunPara::RunPara.xmax+j]->LU_id=6;
                                                  if(CoreGrid.CellList[i*SRunPara::RunPara.xmax+j]->TZ_pot==true
                                                          && CoreGrid.CellList[i*SRunPara::RunPara.xmax+j]->pa_id==it->second)
                                                  {
@@ -220,6 +222,7 @@ void GridEnvironment::calculate_TZ(){
                     if (cell->TZ==false && cell->TZ_pot==true && cell->pa_id==it->second){
                         // set cell to TZ cell
                         cell->TZ=true;
+                        cell->LU_id=6;
                         GridEnvironment::Patch_defList.find(cell->pa_id)->second->nb_bordercells--;
                         nb_TZ_cells--;
                         // set all neighbouring cells within range of TZ_width and lu=1 to TZ
@@ -233,6 +236,7 @@ void GridEnvironment::calculate_TZ(){
                                      if(CoreGrid.CellList[i*SRunPara::RunPara.xmax+j]->LU_id==1) {
                                          if (CoreGrid.CellList[i*SRunPara::RunPara.xmax+j]->TZ==false){
                                              CoreGrid.CellList[i*SRunPara::RunPara.xmax+j]->TZ=true;
+                                             CoreGrid.CellList[i*SRunPara::RunPara.xmax+j]->LU_id=6;
                                              if(CoreGrid.CellList[i*SRunPara::RunPara.xmax+j]->TZ_pot==true
                                                      && CoreGrid.CellList[i*SRunPara::RunPara.xmax+j]->pa_id==it->second)
                                              {

@@ -218,18 +218,6 @@ void RuntimeEnvironment::one_year(){
  * Initializes one simulation run; sets the initial conditions, calls init_landscape, init_FTs, init_populations
  */
 void RuntimeEnvironment::init(){
-    /*SRunPara::RunPara.NameFtFile="C:/Users/JetteR/ownCloud/Bibs/BiTZ/branches/Initialize-Model/Input/FT_Definitions.txt";
-    SRunPara::RunPara.NameLandscapePatchFile="C:/Users/JetteR/ownCloud/Bibs/BiTZ/branches/Initialize-Model/Input/Agroscapelab_10m_300x300_gerastert_Fragstats_id4_2.asc";
-    SRunPara::RunPara.NamePatchDefFile="C:/Users/JetteR/ownCloud/Bibs/BiTZ/branches/Initialize-Model/Input/Patch_ID_definitions.txt";
-    SRunPara::RunPara.NameNestSuitabilityFile="C:/Users/JetteR/ownCloud/Bibs/BiTZ/branches/Initialize-Model/Input/LU_FT_suitability_nest.txt";
-    SRunPara::RunPara.NameForageSuitabilityFile="C:/Users/JetteR/ownCloud/Bibs/BiTZ/branches/Initialize-Model/Input/LU_FT_suitability_forage.txt";
-    SRunPara::RunPara.Nrep=5;
-    SRunPara::RunPara.t_max=50;
-    SRunPara::RunPara.xmax=300;
-    SRunPara::RunPara.ymax=300;
-    SRunPara::RunPara.nb_LU=6;
-    SRunPara::RunPara.TZ_width=1;
-    SRunPara::RunPara.disturbances=0.1;// todo add trait for susceptibility for disturbances*/
     year=0;
     //initialise the landscape
     init_landscape();
@@ -270,7 +258,7 @@ void RuntimeEnvironment::init_populations(){
         // variable trait stores the trait values
         shared_ptr<FT_traits> traits=var->second;
         // init new FT populations
-        int init_pop = 1000;
+        int init_pop = 100;
         InitFTpop(traits, init_pop);
     }
 
@@ -308,7 +296,6 @@ void RuntimeEnvironment::InitFTpop(shared_ptr <FT_traits> traits, int n){
             cell->FT_pop_sizes.insert(std::make_pair(traits->FT_ID, start_size));
             i++;
         }
-
        }//for each start population
 }
 /**

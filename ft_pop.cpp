@@ -17,8 +17,8 @@ FT_pop::FT_pop()
 }
 
 FT_pop::FT_pop(shared_ptr<FT_traits> Traits, shared_ptr<CCell> cell, int n):
-  cell(nullptr), Traits(Traits), xcoord(0), ycoord(0), nestCap(0), trans_effect(0),
-  Pt(0), Pt1(0), Emmigrants(0), Immigrants(0)
+  cell(nullptr), Traits(Traits), xcoord(0), ycoord(0), nestCap(0), trans_effect_nest(0),
+  trans_effect_res(0),  Pt(0), Pt1(0), Emmigrants(0), Immigrants(0)
 {
     //establish this FT on cell
     setCell(cell);
@@ -26,9 +26,11 @@ FT_pop::FT_pop(shared_ptr<FT_traits> Traits, shared_ptr<CCell> cell, int n):
     set_trans_effect(cell);
     // calculate nesting capacity
     set_nestCap(cell);
+    //calculate maximal nesting capacity in dispersal area
+    set_max_nestCap(cell);
     // calculate resource capacity
     set_resCap(cell);
-    Pt=n*nestCap/100;
+    Pt=n*nestCap/100;// was mache ich hier??
 
 } // end constructor
 
@@ -47,7 +49,8 @@ void FT_pop::set_trans_effect(shared_ptr<CCell> cell){
 
     //define if the cell is a transition zone cell
     if(cell->TZ==true){
-        trans_effect=Traits->trans_effect;
+        trans_effect_res=Traits->trans_effect_res;
+        trans_effect_nest=Traits->trans_effect_nest;
     }
 
 }
@@ -55,10 +58,13 @@ void FT_pop::set_trans_effect(shared_ptr<CCell> cell){
 void FT_pop::set_nestCap(shared_ptr<CCell> cell){
     //int x = nrand(100);
     int x=100; //todo check how many nests could be within 10x10m
-    nestCap=int(floor(x*this->Traits->LU_suitability_nest.find(cell->LU_id)->second));
-    //cout<<"popCap for type "<<Traits->FT_type<<": "<<popCap<<endl;
-    // initialise values
-    double max_nestcap=0.0;
+    if(cell->TZ==true){
+        nestCap=int(floor(x*(this->Traits->LU_suitability_nest.find(cell->LU_id)->second+trans_effect_nest)));
+    } else nestCap=int(floor(x*this->Traits->LU_suitability_nest.find(cell->LU_id)->second));
+}
+
+void FT_pop::set_max_nestCap(shared_ptr<CCell> cell){
+    double max_nest_suitability=0.0;
     int dispersal = int(floor(this->Traits->dispmean));
     //start cell of dispersal area
     int zi_start = cell->x - dispersal;
@@ -73,11 +79,12 @@ void FT_pop::set_nestCap(shared_ptr<CCell> cell){
       {
           double dist_curr = sqrt((pow(zi-cell->x,2)+pow(zj-cell->y,2)));
           if (dist_curr <= this->Traits->dispmean){
-              max_nestcap=max(this->Traits->LU_suitability_nest.find(CoreGrid.CellList[zi*SRunPara::RunPara.xmax+zj]->LU_id)->second, max_nestcap);
-              //if(cell->TZ) sum_res+=this->trans_effect;
+              double nest_suitability=this->Traits->LU_suitability_nest.find(CoreGrid.CellList[zi*SRunPara::RunPara.xmax+zj]->LU_id)->second;
+              if (cell->TZ==true) nest_suitability=nest_suitability + trans_effect_nest;
+              max_nest_suitability=max(nest_suitability, max_nest_suitability);
           }
       }
-    MaxNestSuitability=max_nestcap;
+    MaxNestSuitability=max_nest_suitability;
 }
 
 void FT_pop::set_resCap(shared_ptr<CCell> cell){
@@ -100,7 +107,7 @@ void FT_pop::set_resCap(shared_ptr<CCell> cell){
       {
           double dist_curr = sqrt((pow(zi-cell->x,2)+pow(zj-cell->y,2)));
           if (dist_curr <= this->Traits->dispmean){
-              if(cell->TZ) sum_res+=this->trans_effect;
+              if(cell->TZ) sum_res+=this->trans_effect_res;
                 else sum_res+=this->Traits->LU_suitability_forage.find(CoreGrid.CellList[zi*SRunPara::RunPara.xmax+zj]->LU_id)->second;
               cell_area++;
           }
@@ -121,7 +128,6 @@ void FT_pop::growth(std::shared_ptr<FT_pop> pop, double weather_year){
     // population function variables and parameters:
     int Ntj=pop->Pt;
     double Rj=pop->Traits->R;
-    double trans_effect = 1-pop->trans_effect;
     double cj=pop->Traits->c;
     double bj = pop->Traits->b;
     int K = pop->nestCap;
