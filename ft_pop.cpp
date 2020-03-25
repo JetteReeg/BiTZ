@@ -30,7 +30,7 @@ FT_pop::FT_pop(shared_ptr<FT_traits> Traits, shared_ptr<CCell> cell, int n):
     set_max_nestCap(cell);
     // calculate resource capacity
     set_resCap(cell);
-    Pt=n*nestCap/100;// was mache ich hier??
+    Pt=n*nestCap/100;// nest capacity is a int value; 100 is the normal max. nest capacity
 
 } // end constructor
 
@@ -108,7 +108,7 @@ void FT_pop::set_resCap(shared_ptr<CCell> cell){
           double dist_curr = sqrt((pow(zi-cell->x,2)+pow(zj-cell->y,2)));
           if (dist_curr <= this->Traits->dispmean){
               if(cell->TZ) sum_res+=this->trans_effect_res;
-                else sum_res+=this->Traits->LU_suitability_forage.find(CoreGrid.CellList[zi*SRunPara::RunPara.xmax+zj]->LU_id)->second;
+              sum_res+=this->Traits->LU_suitability_forage.find(CoreGrid.CellList[zi*SRunPara::RunPara.xmax+zj]->LU_id)->second;
               cell_area++;
           }
       }
