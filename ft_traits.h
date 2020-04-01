@@ -33,7 +33,7 @@ public:
     double dist_eff; // susceptibility for disturbances
     double dispsd; // standard deviation of dispersal distance
     double dispmean; // mean of dispersal distance
-
+    int flying_period; // period of resource uptake
     map <int, double> LU_suitability_nest;
     map <int, double> LU_suitability_forage;
 

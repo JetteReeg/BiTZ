@@ -57,7 +57,7 @@ void FT_pop::set_trans_effect(shared_ptr<CCell> cell){
 
 void FT_pop::set_nestCap(shared_ptr<CCell> cell){
     //int x = nrand(100);
-    int x=100; //todo check how many nests could be within 10x10m
+    int x=547; //after Potts & Willmer 1997; Halictus rubicundus
     if(cell->TZ==true){
         nestCap=int(floor(x*(this->Traits->LU_suitability_nest.find(cell->LU_id)->second+trans_effect_nest)));
     } else nestCap=int(floor(x*this->Traits->LU_suitability_nest.find(cell->LU_id)->second));
@@ -131,13 +131,16 @@ void FT_pop::growth(std::shared_ptr<FT_pop> pop, double weather_year){
     double cj=pop->Traits->c;
     double bj = pop->Traits->b;
     int K = pop->nestCap;
+    // interspecific competition
     //calculate C: sum of cs of FTs in cell
+    // only count FTs with the same flying period
     // go through FT_pop_List
     double C=0;
     for (unsigned i=0; i < curr_FT_list.size(); i++) {
         std::shared_ptr<FT_pop> curr_Pop=curr_FT_list.at(i);
-    // for each FT -> get Traits->c and calculate sum --> this is C
-        C=C+curr_Pop->Traits->c;
+        // for each FT -> get Traits->c and calculate sum --> this is C; but only for FTs with the same flying period
+        if (pop->Traits->flying_period==3) C=C+curr_Pop->Traits->c;
+        if (curr_Pop->Traits->flying_period == pop->Traits->flying_period || curr_Pop->Traits->flying_period == 3) C=C+curr_Pop->Traits->c;
     }
     // C is now sum of Trait c of FTs in cell
     double foraging_suitability=pop->resCap;
@@ -149,7 +152,17 @@ void FT_pop::growth(std::shared_ptr<FT_pop> pop, double weather_year){
     if(!curr_FT_list.empty()){
         for (unsigned i=0; i < curr_FT_list.size(); i++) {
             std::shared_ptr<FT_pop> curr_Pop=curr_FT_list.at(i);
-            if(curr_Pop->Traits->FT_ID!=pop->Traits->FT_ID){
+            // if pop is flying over the whole year or in both periods; consider all populations in the cell
+            if (pop->Traits->flying_period==3 && curr_Pop->Traits->FT_ID!=pop->Traits->FT_ID) {
+                double ci=curr_Pop->Traits->c;
+                int Ni = curr_Pop->Pt;
+                double to_add=(1+((cj-ci)/C))*Ni;
+                //cout<<"sum of other FTs: "<<to_add<<endl;
+                sum+=to_add;
+            }
+            if(curr_Pop->Traits->FT_ID!=pop->Traits->FT_ID &&
+                    // only consider the populations with the same flying period
+                    (curr_Pop->Traits->flying_period == pop->Traits->flying_period || curr_Pop->Traits->flying_period == 3)){
                 double ci=curr_Pop->Traits->c;
                 int Ni = curr_Pop->Pt;
                 double to_add=(1+((cj-ci)/C))*Ni;
@@ -185,7 +198,7 @@ void FT_pop::dispersal(std::shared_ptr<FT_pop> pop){
         // highest potential nest capacity:
         double max_nest_suit=pop->MaxNestSuitability;
         bool cell_found=false;
-        int max_tries=1000;
+        int max_tries=SRunPara::RunPara.max_search_attempts;
         while (cell_found==false && tries < max_tries){
             // get a cell to disperse to
             // direction of dispersal
@@ -239,7 +252,9 @@ void FT_pop::dispersal(std::shared_ptr<FT_pop> pop){
                                 }
                         }// add immigrant only if capacity is not reached yet; else search for new cell
                      }// end else
-                } else {// end if cell is one of the most suitable cells
+                }
+                // if a new cell wasn't found until now
+                if (cell_found==false){
                     // with increasing probability individuals also excepts less suitable cell for immigration
                     double prob_take_less = tries/max_tries;
                     double lesser = LU_suitability/max_nest_suit;
@@ -273,12 +288,12 @@ void FT_pop::dispersal(std::shared_ptr<FT_pop> pop){
                                   }// end loop over all FTs in cell
                            }// end else (if FT exists)
                     }  //end if individual takes a less suitable cell (only if capacity is not yet reached; otherwise search new
-                    }// end else (if not suitable and does not take a less suitable cell)
+                    }// end if no cell was found in the first try
                 }// one try; end if random cell is within grid
             tries++;
         }// end while after max tries --> individual dies
     }// end for all emmigrants
-    pop->Emmigrants=0;//else: individual is outside of the grid or dying as not finding a nesting site
+    pop->Emmigrants=0;//individuals which haven't found a new cell within the max_search_attempts are dying (or assumed to have migrated outside the grid)
 }
 
 void FT_pop::update_pop(std::shared_ptr<FT_pop> pop){
@@ -297,7 +312,7 @@ void FT_pop::update_pop_dispersal(std::shared_ptr<FT_pop> pop){
 
 void FT_pop::disturbance(std::shared_ptr<FT_pop> pop){
     // depends on susceptibility
-    if (combinedLCG()<pop->Traits->dist_eff) pop->Pt=0;
+    pop->Pt*=(1.0-pop->Traits->dist_eff);
     // pop->Pt=int(floor(pop->Pt*dist_prob_pop));
     shared_ptr<CCell> cell=pop->cell;
     cell->FT_pop_sizes.find(pop->Traits->FT_ID)->second=pop->Pt;

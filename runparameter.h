@@ -40,8 +40,8 @@ public:
     double TZ_percentage;
     static std::string size_order;
 
-    //! disturbances
-    double disturbances;
+    //! maximal search attempts
+    int max_search_attempts;
 
     //! number of repetitions
     int Nrep;

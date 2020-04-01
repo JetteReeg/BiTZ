@@ -1,5 +1,7 @@
 #include "runtimeenvironment.h"
 #include "gridenvironment.h"
+#include <vector>
+#include <algorithm>
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -45,7 +47,7 @@ void RuntimeEnvironment::readSimDef(const string file){
             ss >> SRunPara::RunPara.TZ_width;
             ss >> SRunPara::RunPara.TZ_percentage;
             ss >> SRunPara::RunPara.size_order;
-            ss >> SRunPara::RunPara.disturbances;
+            ss >> SRunPara::RunPara.max_search_attempts;
             one_run();
         }// end read simulation file
 }
@@ -157,42 +159,61 @@ void RuntimeEnvironment::one_year(){
     }
     cout<< "update after migration completed!"<<endl;
 
-    for (unsigned int cell_i=0; cell_i<SRunPara::RunPara.GetSumCells(); ++cell_i){
-            // link to cell
-            shared_ptr<CCell> cell = CoreGrid.CellList[cell_i];
-            // only if cell is no TZ cell
-            if(!cell->TZ){
-                double dist_prob=combinedLCG();
-                if (dist_prob<SRunPara::RunPara.disturbances){
-                    // iterating over FT_pops in cell
-                    for (unsigned pop_i=0; pop_i < cell->FT_pop_List.size(); pop_i++){
-                        std::shared_ptr<FT_pop> curr_Pop=cell->FT_pop_List.at(pop_i);
-                        // depending on LU class + susceptibility
-                        // if arable
-                        if (cell->LU_id==1){
-                            if (combinedLCG()<1.0) FT_pop::disturbance(curr_Pop);
-                        }
-                        // if urban
-                        if (cell->LU_id==4){
-                            if (combinedLCG()<0.8) FT_pop::disturbance(curr_Pop);
-                        }
-                        // if grassland
-                        if (cell->LU_id==3){
-                            if (combinedLCG()<0.3) FT_pop::disturbance(curr_Pop);
-                        }
-                        // if forest
-                        if (cell->LU_id==2){
-                            if (combinedLCG()<0.1) FT_pop::disturbance(curr_Pop);
-                        }
-                        // if bare
-                        if (cell->LU_id==0){
-                            if (combinedLCG()<0.5) FT_pop::disturbance(curr_Pop);
-                        }
+    // disturbances
 
-                    }
+    //go through patch ids and select all patches that are being disturbed
+    vector<int> PID_disturbed;
+    for (auto it = GridEnvironment::Patch_defList.begin(); it!=GridEnvironment::Patch_defList.end(); it++){
+        shared_ptr<Patch_def> tmp = it->second;
+        double probability = combinedLCG();
+        // for arable patches, the probability is 90% for being disturbed within the current year
+        if (tmp->Type=="arable" && probability < 0.9){
+            PID_disturbed.push_back(tmp->PID);
+        }
+        // for grassland patches, the probability is 30% for being disturbed within the current year
+        if (tmp->Type=="grassland" && probability < 0.3){
+            PID_disturbed.push_back(tmp->PID);
+        }
+    }
+    // go through all cells
+    for (unsigned int cell_i=0; cell_i<SRunPara::RunPara.GetSumCells(); ++cell_i){
+        // link to cell
+        shared_ptr<CCell> cell = CoreGrid.CellList[cell_i];
+        // only if cell is no TZ cell
+        if(!cell->TZ){
+            // if the cell belongs to a disturbed arable or grassland patch, all populations are disturbed
+            if (std::find(PID_disturbed.begin(), PID_disturbed.end(), cell->pa_id) != PID_disturbed.end()){
+                for (unsigned pop_i=0; pop_i < cell->FT_pop_List.size(); pop_i++){
+                    std::shared_ptr<FT_pop> curr_Pop=cell->FT_pop_List.at(pop_i);
+                    FT_pop::disturbance(curr_Pop);
+                } // end for all populations in cell
+            }// end if disturbed arable patch
+            // if urban
+            if (cell->LU_id==4 && combinedLCG()<0.5){
+                for (unsigned pop_i=0; pop_i < cell->FT_pop_List.size(); pop_i++){
+                    std::shared_ptr<FT_pop> curr_Pop=cell->FT_pop_List.at(pop_i);
+                    FT_pop::disturbance(curr_Pop);
                 }
             }
-    }
+
+            // if forest
+            if (cell->LU_id==2 && combinedLCG()<0.1){
+                for (unsigned pop_i=0; pop_i < cell->FT_pop_List.size(); pop_i++){
+                    std::shared_ptr<FT_pop> curr_Pop=cell->FT_pop_List.at(pop_i);
+                    FT_pop::disturbance(curr_Pop);
+                }
+            }
+            // if bare
+            if (cell->LU_id==0  && combinedLCG()<0.5){
+                for (unsigned pop_i=0; pop_i < cell->FT_pop_List.size(); pop_i++){
+                    std::shared_ptr<FT_pop> curr_Pop=cell->FT_pop_List.at(pop_i);
+                    FT_pop::disturbance(curr_Pop);
+                }
+            }
+
+        }// end not TZ cell
+   }
+
     cout<< "disturbance completed!"<<endl;
 
 
