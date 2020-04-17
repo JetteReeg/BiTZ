@@ -62,6 +62,7 @@ public:
     vector<std::shared_ptr<FT_pop>> FT_pop_List;
     //! Map of all population sizes of FT in cell
     map <int, int> FT_pop_sizes;
+    map <int, int> FT_pop_sizes_foraging;
     //! constructors
     CCell();
     CCell(int index, int xx,int yy, int pa_id);

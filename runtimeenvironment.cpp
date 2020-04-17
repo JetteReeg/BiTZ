@@ -113,6 +113,26 @@ void RuntimeEnvironment::one_year(){
     cout << "current year: "<< year+1 <<endl;
     cout << "Calculate weather conditions..."<<endl;
     weather();
+    // get updated dispersal range grid
+    cout << "Update dispersal range grid..."<<endl;
+    //clear old lists
+    for (unsigned int cell_i=0; cell_i<SRunPara::RunPara.GetSumCells(); ++cell_i){
+        shared_ptr<CCell> cell = CoreGrid.CellList[cell_i];
+        cell->FT_pop_sizes_foraging.clear();
+    }
+    // iterating over all cells
+    for (unsigned int cell_i=0; cell_i<SRunPara::RunPara.GetSumCells(); ++cell_i){
+        // link to cell
+        shared_ptr<CCell> cell = CoreGrid.CellList[cell_i];
+        // iterating over FT_pops in cell
+        for (unsigned pop_i=0; pop_i < cell->FT_pop_List.size(); pop_i++){
+            // get the current population
+            std::shared_ptr<FT_pop> curr_Pop=cell->FT_pop_List.at(pop_i);
+            // add the population size in all foraging cells to the map FT_pop_sizes_foraging
+            FT_pop::set_foraging_individuals(curr_Pop);
+        }// end for all populations in cell
+    }// end for all cells
+
     //go through the whole grid and all Pops in cell
     //iterating over cells
     for (unsigned int cell_i=0; cell_i<SRunPara::RunPara.GetSumCells(); ++cell_i){

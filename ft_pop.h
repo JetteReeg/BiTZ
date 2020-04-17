@@ -56,6 +56,7 @@ public:
     void set_nestCap(shared_ptr<CCell> cell);
     void set_max_nestCap(shared_ptr<CCell> cell);
     void set_resCap(shared_ptr<CCell> cell);
+    static void set_foraging_individuals(std::shared_ptr<FT_pop> pop);
     inline static int nrand(int n){return combinedLCG()*n;}
     static void growth(std::shared_ptr<FT_pop> pop, double weather_year);
     static void dispersal(std::shared_ptr<FT_pop> pop);

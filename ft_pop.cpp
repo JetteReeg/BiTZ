@@ -30,7 +30,7 @@ FT_pop::FT_pop(shared_ptr<FT_traits> Traits, shared_ptr<CCell> cell, int n):
     set_max_nestCap(cell);
     // calculate resource capacity
     set_resCap(cell);
-    Pt=n*nestCap/100;// nest capacity is a int value; 100 is the normal max. nest capacity
+    Pt=n;// nest capacity is a int value; 100 is the normal max. nest capacity
 
 } // end constructor
 
@@ -120,17 +120,131 @@ void FT_pop::set_resCap(shared_ptr<CCell> cell){
     } else resCap=0.0;
 }
 
+void FT_pop::set_foraging_individuals(std::shared_ptr<FT_pop> pop){
+    //go through all cells on square around cell
+    int dispersal = int(floor(pop->Traits->dispmean));
+    //start cell of dispersal area
+    int zi_start = pop->cell->x - dispersal;
+    if (zi_start<0) zi_start=0;
+    int zimax = std::min(pop->cell->x+dispersal, SRunPara::RunPara.xmax);
+    int zj_start = pop->cell->y - dispersal;
+    if (zj_start<0) zj_start=0;
+    int zjmax = std::min(pop->cell->y + dispersal, SRunPara::RunPara.xmax);
+    for (int zi=zi_start; zi < zimax; zi++)
+      for (int zj=zj_start; zj < zjmax ; zj++)
+      {
+          double dist_curr = sqrt((pow(zi-pop->cell->x,2)+pow(zj-pop->cell->y,2)));
+          // if the cell is within the foraging distance;
+          // add the FT to the FT_pop_sizes_foraging;
+          if (dist_curr <= pop->Traits->dispmean){
+              //pointer to cell
+              shared_ptr<CCell> foraging_cell = CoreGrid.CellList[zi*SRunPara::RunPara.xmax+zj];
+              // new if not existing, or add
+              auto search = foraging_cell->FT_pop_sizes_foraging.find(pop->Traits->FT_ID);
+              if(search == foraging_cell->FT_pop_sizes_foraging.end()){
+                  foraging_cell->FT_pop_sizes_foraging.insert(std::make_pair(pop->Traits->FT_ID, pop->Pt));
+              } else{
+                  foraging_cell->FT_pop_sizes_foraging.find(pop->Traits->FT_ID)->second+=pop->Pt;
+                }
+          }// end if cell is within foraging range
+      } // end for all foraging quadrat cells
+}
+
 void FT_pop::growth(std::shared_ptr<FT_pop> pop, double weather_year){
     // get the cell of the current population
     shared_ptr<CCell> cell=pop->cell;
     vector<std::shared_ptr<FT_pop>> curr_FT_list=cell->FT_pop_List;
-    //
-    // population function variables and parameters:
     int Ntj=pop->Pt;
     double Rj=pop->Traits->R;
     double cj=pop->Traits->c;
     double bj = pop->Traits->b;
     int K = pop->nestCap;
+    //
+    int dispersal = int(floor(pop->Traits->dispmean)); // foraging distance
+    int count_cells=0;// nb of cells within foraging distance
+    double res_comp=0.0; // competition for resources
+    double resource_uptake=0.0;//resource uptake
+    //
+    // within the foraging range of the FT: calculate the interspecific competition for resources in each cell
+    //go through all cells on square around cell
+    //start cell of dispersal area
+    int zi_start = pop->cell->x - dispersal;
+    if (zi_start<0) zi_start=0;
+    int zimax = std::min(pop->cell->x+dispersal, SRunPara::RunPara.xmax);
+    int zj_start = pop->cell->y - dispersal;
+    if (zj_start<0) zj_start=0;
+    int zjmax = std::min(pop->cell->y + dispersal, SRunPara::RunPara.xmax);
+    // loop over foraging distance
+    for (int zi=zi_start; zi < zimax; zi++)
+      for (int zj=zj_start; zj < zjmax ; zj++)
+      {
+          double dist_curr = sqrt((pow(zi-pop->cell->x,2)+pow(zj-pop->cell->y,2)));
+          // if the cell is within the foraging distance;
+          if (dist_curr <= pop->Traits->dispmean){
+              // link to the map
+              //pointer to cell
+              shared_ptr<CCell> foraging_cell = CoreGrid.CellList[zi*SRunPara::RunPara.xmax+zj];
+              // within foraging cell: calculate the resource competition factor and resource uptake
+              double C_res=0; // sum of all c-values
+              // loop over all FT_pop_sizes_foraging entries
+              for(auto it=foraging_cell->FT_pop_sizes_foraging.begin(); it!=foraging_cell->FT_pop_sizes_foraging.end(); it++) {
+                    // get the flying period of the FT
+                    string ID = to_string(it->first);
+                    if(FT_traits::FtLinkList.find(ID)->second->flying_period==3){
+                        C_res+=FT_traits::FtLinkList.find(ID)->second->c;
+                        } else {
+                        if(FT_traits::FtLinkList.find(ID)->second->flying_period == pop->Traits->flying_period ||
+                                FT_traits::FtLinkList.find(ID)->second->flying_period == 3) C_res+=FT_traits::FtLinkList.find(ID)->second->c;
+                        }
+                    }
+               // C_es is now sum of Trait c of all FTs in cell with the same flying period as the current pop FT
+              double sum_res_comp=0.0; // sum of all competition impacts
+              double sum_pop=0.0; // sum of all population sizes
+
+              for(auto it=foraging_cell->FT_pop_sizes_foraging.begin(); it!=foraging_cell->FT_pop_sizes_foraging.end(); it++) {
+                  string ID = to_string(it->first);
+                  // if pop is flying over the whole year or in both periods; consider all populations in the cell
+                  if (pop->Traits->flying_period==3 && it->first!=pop->Traits->FT_ID) {
+                      double ci=FT_traits::FtLinkList.find(ID)->second->c;
+                      int Ni = it->second;
+                      double to_add=((cj-ci)/C_res)*Ni;
+                      //cout<<"sum of other FTs: "<<to_add<<endl;
+                      sum_res_comp+=to_add;
+                      sum_pop+=it->second; // add the population size of the competition FT
+                  }
+                  if(pop->Traits->flying_period!=3 && it->first!=pop->Traits->FT_ID &&
+                          // only consider the populations with the same flying period
+                          (FT_traits::FtLinkList.find(ID)->second->flying_period == pop->Traits->flying_period ||
+                           FT_traits::FtLinkList.find(ID)->second->flying_period == 3)){
+                      double ci=FT_traits::FtLinkList.find(ID)->second->c;
+                      int Ni = it->second;
+                      double to_add=((cj-ci)/C_res)*Ni;
+                      //cout<<"sum of other FTs: "<<to_add<<endl;
+                      sum_res_comp+=to_add;
+                      sum_pop+=it->second;// add the population size of the competition FT
+                  }
+                }
+              // add the whole population size of the same FT ID (no intraspecific competition) to both values
+              sum_res_comp+=foraging_cell->FT_pop_sizes_foraging.find(pop->Traits->FT_ID)->second;
+              sum_pop+=foraging_cell->FT_pop_sizes_foraging.find(pop->Traits->FT_ID)->second;
+              // the relation gives the competition factor for this specific cell
+              if (sum_res_comp>0)res_comp+=(sum_res_comp/sum_pop);
+                else res_comp+=1;
+              // to calculate the competition per cell, multiply by LU suitability for foraging factor and sum it up for all foraging cells
+              if (sum_res_comp>0)resource_uptake+=((sum_res_comp/sum_pop)*pop->Traits->LU_suitability_forage.find(foraging_cell->LU_id)->second);
+                else resource_uptake+=(1*pop->Traits->LU_suitability_forage.find(foraging_cell->LU_id)->second);
+          }
+        count_cells++;
+      }
+
+    // put it in relation to the foraged cells
+    res_comp/=count_cells;
+    resource_uptake/=count_cells;
+
+    cout<<"competition: "<<pop->Traits->c<<" Resource competition: "<<res_comp << "Resource uptake: "<<resource_uptake<<endl;
+    //
+    // population function variables and parameters:
+
     // interspecific competition
     //calculate C: sum of cs of FTs in cell
     // only count FTs with the same flying period
@@ -139,11 +253,14 @@ void FT_pop::growth(std::shared_ptr<FT_pop> pop, double weather_year){
     for (unsigned i=0; i < curr_FT_list.size(); i++) {
         std::shared_ptr<FT_pop> curr_Pop=curr_FT_list.at(i);
         // for each FT -> get Traits->c and calculate sum --> this is C; but only for FTs with the same flying period
-        if (pop->Traits->flying_period==3) C=C+curr_Pop->Traits->c;
-        if (curr_Pop->Traits->flying_period == pop->Traits->flying_period || curr_Pop->Traits->flying_period == 3) C=C+curr_Pop->Traits->c;
+        if (pop->Traits->flying_period==3) {
+            C=C+curr_Pop->Traits->c;
+        } else {
+            if(curr_Pop->Traits->flying_period == pop->Traits->flying_period || curr_Pop->Traits->flying_period == 3) C=C+curr_Pop->Traits->c;
+            }
     }
     // C is now sum of Trait c of FTs in cell
-    double foraging_suitability=pop->resCap;
+    double foraging_suitability=resource_uptake;//pop->resCap;
     // result
     double Nt1j;
 
@@ -160,12 +277,12 @@ void FT_pop::growth(std::shared_ptr<FT_pop> pop, double weather_year){
                 //cout<<"sum of other FTs: "<<to_add<<endl;
                 sum+=to_add;
             }
-            if(curr_Pop->Traits->FT_ID!=pop->Traits->FT_ID &&
+            if(pop->Traits->flying_period!=3 && curr_Pop->Traits->FT_ID!=pop->Traits->FT_ID &&
                     // only consider the populations with the same flying period
                     (curr_Pop->Traits->flying_period == pop->Traits->flying_period || curr_Pop->Traits->flying_period == 3)){
                 double ci=curr_Pop->Traits->c;
                 int Ni = curr_Pop->Pt;
-                double to_add=(1+((cj-ci)/C))*Ni;
+                double to_add=(1+((cj-ci)/C))*Ni; // TODO control if function is correct!
                 //cout<<"sum of other FTs: "<<to_add<<endl;
                 sum+=to_add;
             }

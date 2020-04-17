@@ -46,7 +46,7 @@ void GridEnvironment::readLandscape(){
             //if patch ID exists in Patch_defList map
             if(GridEnvironment::Patch_defList.count(v_tmp_pa[index_pa])>0){
                 // set patch_def for each cell
-                shared_ptr<Patch_def> patch_def=GridEnvironment::Patch_defList.find(v_tmp_pa[index_pa])->second;
+                shared_ptr<Patch_def> patch_def=GridEnvironment::Patch_defList.find(v_tmp_pa[index_pa])->second; // get the parameters of the specific patch
                 cell->PID_def.PID=patch_def->PID;
                 cell->PID_def.Area=patch_def->Area;
                 cell->PID_def.Para=patch_def->Para;
