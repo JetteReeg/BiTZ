@@ -1,4 +1,5 @@
 #include "ft_traits.h"
+#include "runparameter.h"
 
 #include <cstdlib>
 #include <string>
@@ -35,6 +36,11 @@ void FT_traits::ReadFTDef(const string file){
                     >> traits->b >> traits->c >> traits ->mu
                     >> traits->omega >> traits->dispsd >>traits->dispmean >> traits->flying_period >> traits->dist_eff >> traits->trans_effect_nest >> traits->trans_effect_res;
             // add a new PFT to the list of PFTs
+
+            // convert traits to the scaling of the current model run
+            traits->dispsd/=SRunPara::RunPara.scaling;
+            traits->dispmean/=SRunPara::RunPara.scaling;
+
             FT_traits::FtLinkList.insert(std::make_pair(traits->FT_type, traits));
         }// end read all trait data for PFTs
 }

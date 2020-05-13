@@ -1,129 +1,183 @@
 LID 	 PID 	 TYPE 	 AREA 	 AREA_CSD 	 AREA_LSD 	 PERIM 	 PERIM_CSD 	 PERIM_CPS 	 PERIM_LSD 	 GYRATE 	 PARA 	 SHAPE
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	1	 grassland 	43.11	3.209	0.9853	8120	2.0433	96.875	1.9491	395.7357	188.3554	3.0758
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	2	 forest 	0.51	-0.2256	-0.1781	520	-0.2775	60	-0.2152	48.3082	1019.6078	1.7333
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	3	 forest 	0.06	-0.2387	-0.1904	100	-0.43	14.2857	-0.3348	9.1202	1666.6667	1
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	4	 forest 	206.1	5.7559	5.4368	13040	4.2678	100	3.3502	584.4091	63.2703	2.2639
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	5	 grassland 	3.42	-0.1069	-0.0986	780	-0.2425	62.5	-0.1411	73.1942	228.0702	1.0541
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	6	 arable 	0.2	-0.4725	-0.1866	220	-0.4997	33.3333	-0.3006	18.45	1100	1.2222
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	7	 arable 	355.42	2.4417	9.5148	31420	2.4354	100	8.5843	1065.1568	88.4025	4.1561
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	8	 grassland 	0.18	-0.3775	-0.1871	260	-0.4045	40.625	-0.2892	25.203	1444.4444	1.4444
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	9	 urban 	4.57	1.7192	-0.0672	1020	0.2802	75	-0.0728	88.7106	223.1947	1.186
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	10	 grassland 	1.53	-0.2648	-0.1502	920	-0.1989	65.625	-0.1013	75.7144	601.3072	1.84
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	11	 urban 	1.02	-0.3575	-0.1642	640	-0.235	62.5	-0.181	44.2023	627.451	1.5238
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	12	 forest 	0.82	-0.2166	-0.1696	500	-0.2848	57.1429	-0.2209	37.7753	609.7561	1.3158
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	13	 grassland 	0.06	-0.3876	-0.1904	120	-0.4481	12.5	-0.3291	9.937	2000	1.2
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	14	 forest 	1.09	-0.2087	-0.1623	820	-0.1686	74.2857	-0.1298	56.6738	752.2936	1.9524
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	15	 water 	0.23	-0.7578	-0.1857	200	-0.9418	0	-0.3063	18.1753	869.5652	1
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	16	 forest 	0.01	-0.2402	-0.1918	40	-0.4518	0	-0.3519	5	4000	1
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	17	 grassland 	0.37	-0.3617	-0.1819	500	-0.3297	56.25	-0.2209	41.0391	1351.3514	1.9231
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	18	 urban 	0.11	-0.8898	-0.189	180	-0.8588	12.5	-0.312	13.9819	1636.3636	1.2857
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	19	 grassland 	0.13	-0.3817	-0.1885	200	-0.4232	31.25	-0.3063	16.4761	1538.4615	1.25
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	20	 forest 	0.79	-0.2175	-0.1705	860	-0.1541	77.1429	-0.1184	61.6414	1088.6076	2.3889
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	21	 urban 	0.02	-0.9424	-0.1915	60	-1.0215	0	-0.3462	5	3000	1
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	22	 grassland 	0.06	-0.3876	-0.1904	140	-0.4418	18.75	-0.3234	13.7962	2333.3333	1.4
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	23	 water 	1.24	0.1157	-0.1582	540	0.0788	73.3333	-0.2095	45.2774	435.4839	1.1739
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	24	 grassland 	0.37	-0.3617	-0.1819	460	-0.3422	53.125	-0.2323	32.8933	1243.2432	1.7692
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	25	 grassland 	1.55	-0.2631	-0.1497	960	-0.1865	68.75	-0.0899	54.5549	619.3548	1.92
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	26	 forest 	1.07	-0.2093	-0.1628	1120	-0.0597	82.8571	-0.0443	96.177	1046.729	2.6667
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	27	 water 	0.34	-0.6626	-0.1827	300	-0.6416	26.6667	-0.2778	24.0406	882.3529	1.25
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	28	 forest 	0.46	-0.2271	-0.1795	380	-0.3284	40	-0.2551	28.5667	826.087	1.3571
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	29	 grassland 	13.18	0.7085	0.1679	2520	0.2993	87.5	0.3544	156.7561	191.1988	1.726
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	30	 urban 	1.18	-0.2639	-0.1598	520	-0.3978	37.5	-0.2152	43.2198	440.678	1.1818
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	31	 grassland 	1.87	-0.2364	-0.141	960	-0.1865	68.75	-0.0899	58.9922	513.369	1.7143
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	32	 forest 	1.3	-0.2026	-0.1565	600	-0.2485	68.5714	-0.1924	63.3891	461.5385	1.3043
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	33	 bare 	0.46	0.1379	-0.1795	320	-0.1978	57.6923	-0.2721	26.9647	695.6522	1.1429
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	34	 forest 	0.51	-0.2256	-0.1781	380	-0.3284	40	-0.2551	28.4798	745.098	1.2667
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	35	 bare 	1.08	1.3399	-0.1625	1180	1.5034	96.1538	-0.0272	136.3548	1092.5926	2.8095
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	36	 arable 	27.09	-0.2519	0.5478	3160	-0.2231	83.3333	0.5366	221.0765	116.6482	1.5048
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	37	 bare 	0.01	-0.7346	-0.1918	40	-0.7517	0	-0.3519	5	4000	1
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	38	 forest 	0.27	-0.2326	-0.1847	280	-0.3647	22.8571	-0.2835	22.4174	1037.037	1.2727
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	39	 water 	1.07	-0.0313	-0.1628	500	-0.0413	66.6667	-0.2209	41.2856	467.2897	1.1905
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	40	 water 	0.68	-0.3686	-0.1735	420	-0.2814	53.3333	-0.2437	35.1128	617.6471	1.2353
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	41	 grassland 	56.7	4.3443	1.3565	17060	4.8275	100	4.495	432.036	300.8818	5.649
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	42	 water 	4.28	2.7446	-0.0751	1440	2.7803	100	0.0468	108.5481	336.4486	1.7143
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	43	 water 	0.31	-0.6886	-0.1836	240	-0.8217	13.3333	-0.2949	21.2423	774.1935	1
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	44	 grassland 	0.02	-0.3909	-0.1915	60	-0.4668	3.125	-0.3462	5	3000	1
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	45	 forest 	1.18	-0.2061	-0.1598	580	-0.2557	65.7143	-0.1981	43.0259	491.5254	1.3182
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	46	 grassland 	0.14	-0.3809	-0.1882	180	-0.4294	28.125	-0.312	14.4752	1285.7143	1.125
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	47	 forest 	3.92	-0.1264	-0.085	2640	0.4921	91.4286	0.3885	140.5594	673.4694	3.3
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	48	 water 	0.2	-0.7837	-0.1866	280	-0.7016	20	-0.2835	26.797	1400	1.5556
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	49	 water 	1.94	0.721	-0.139	700	0.5591	86.6667	-0.1639	59.2943	360.8247	1.25
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	50	 grassland 	0.93	-0.3149	-0.1666	540	-0.3173	59.375	-0.2095	42.0828	580.6452	1.35
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	51	 grassland 	0.09	-0.3851	-0.1896	200	-0.4232	31.25	-0.3063	22.2222	2222.2222	1.6667
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	52	 grassland 	8.38	0.3075	0.0368	4580	0.9409	93.75	0.941	195.8673	546.5394	3.9483
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	53	 grassland 	6.84	0.1789	-0.0052	4440	0.8973	90.625	0.9011	243.7508	649.1228	4.1887
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	54	 water 	3.27	1.8711	-0.1027	1160	1.9398	93.3333	-0.0329	93.318	354.7401	1.5676
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	55	 water 	0.21	-0.775	-0.1863	220	-0.8817	6.6667	-0.3006	19.6463	1047.619	1.1
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	56	 arable 	17.76	-0.3284	0.293	2600	-0.2758	66.6667	0.3771	177.4983	146.3964	1.5294
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	57	 grassland 	3.54	-0.0968	-0.0953	1280	-0.0868	78.125	0.0012	101.2233	361.5819	1.6842
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	58	 grassland 	0.03	-0.3901	-0.1912	80	-0.4605	6.25	-0.3405	6.6667	2666.6667	1
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	59	 bare 	0.57	0.3511	-0.1765	780	0.7121	84.6154	-0.1411	65.9453	1368.4211	2.4375
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	60	 grassland 	0.01	-0.3917	-0.1918	40	-0.473	0	-0.3519	5	4000	1
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	61	 water 	1.9	0.6864	-0.1401	680	0.499	80	-0.1696	54.5973	357.8947	1.2143
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	62	 forest 	45.97	1.097	1.0635	11200	3.5998	97.1429	2.8262	375.7859	243.6372	4.1176
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	63	 forest 	0.65	-0.2215	-0.1743	400	-0.3211	45.7143	-0.2494	32.4267	615.3846	1.1765
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	64	 grassland 	0.4	-0.3592	-0.1811	400	-0.3609	46.875	-0.2494	32.6229	1000	1.5385
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	65	 bare 	0.02	-0.7152	-0.1915	60	-0.7121	15.3846	-0.3462	5	3000	1
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	66	 bare 	0.06	-0.6377	-0.1904	140	-0.5539	34.6154	-0.3234	15	2333.3333	1.4
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	67	 grassland 	7.01	0.1931	-0.0006	2500	0.2931	84.375	0.3487	132.9922	356.6334	2.3585
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	68	 bare 	0.02	-0.7152	-0.1915	60	-0.7121	15.3846	-0.3462	5	3000	1
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	69	 bare 	0.01	-0.7346	-0.1918	40	-0.7517	0	-0.3519	5	4000	1
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	70	 bare 	0.08	-0.5989	-0.1898	160	-0.5143	38.4615	-0.3177	12.935	2000	1.3333
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	71	 forest 	1.51	-0.1965	-0.1508	720	-0.2049	71.4286	-0.1582	51.2689	476.8212	1.44
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	72	 grassland 	0.12	-0.3826	-0.1888	240	-0.4107	37.5	-0.2949	19.6363	2000	1.7143
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	73	 grassland 	0.03	-0.3901	-0.1912	80	-0.4605	6.25	-0.3405	6.6667	2666.6667	1
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	74	 forest 	0.01	-0.2402	-0.1918	40	-0.4518	0	-0.3519	5	4000	1
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	75	 water 	0.67	-0.3773	-0.1737	380	-0.4015	40	-0.2551	32.0289	567.1642	1.1176
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	76	 bare 	1.86	2.8522	-0.1412	2360	3.8376	100	0.3088	162.3918	1268.8172	4.2143
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	77	 forest 	0.44	-0.2276	-0.18	360	-0.3356	28.5714	-0.2607	27.1158	818.1818	1.2857
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	78	 forest 	0.68	-0.2207	-0.1735	420	-0.3138	51.4286	-0.2437	32.6325	617.6471	1.2353
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	79	 forest 	0.51	-0.2256	-0.1781	560	-0.263	62.8571	-0.2038	40.4026	1098.0392	1.8667
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	80	 grassland 	0.05	-0.3884	-0.1907	120	-0.4481	12.5	-0.3291	9.9211	2400	1.2
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	81	 forest 	0.02	-0.2399	-0.1915	60	-0.4445	11.4286	-0.3462	5	3000	1
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	82	 water 	0.5	-0.5243	-0.1784	380	-0.4015	40	-0.2551	29.0224	760	1.2667
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	83	 forest 	0.21	-0.2343	-0.1863	240	-0.3792	20	-0.2949	18.6426	1142.8571	1.2
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	84	 bare 	0.07	-0.6183	-0.1901	160	-0.5143	38.4615	-0.3177	13.2865	2285.7143	1.3333
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	85	 urban 	2.97	0.7832	-0.1109	1940	1.5278	87.5	0.1892	104.2874	653.1987	2.7714
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	86	 forest 	18.53	0.2987	0.314	4440	1.1456	94.2857	0.9011	208.7659	239.6114	2.5517
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	87	 bare 	1.35	1.8634	-0.1552	1120	1.3847	92.3077	-0.0443	71.648	829.6296	2.3333
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	88	 bare 	0.04	-0.6764	-0.1909	100	-0.633	30.7692	-0.3348	8.0902	2500	1.25
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	89	 urban 	0.42	-0.7085	-0.1806	520	-0.3978	37.5	-0.2152	33.1493	1238.0952	2
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	90	 bare 	0.02	-0.7152	-0.1915	60	-0.7121	15.3846	-0.3462	5	3000	1
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	91	 grassland 	2.79	-0.1595	-0.1158	1600	0.0128	81.25	0.0924	83.7987	573.4767	2.3529
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	92	 bare 	0.11	-0.5407	-0.189	180	-0.4748	46.1538	-0.312	13.4756	1636.3636	1.2857
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	93	 water 	0.55	-0.481	-0.177	420	-0.2814	53.3333	-0.2437	38.8745	763.6364	1.4
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	94	 bare 	1.69	2.5226	-0.1459	880	0.9099	88.4615	-0.1127	58.0051	520.7101	1.6923
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	95	 forest 	0.47	-0.2268	-0.1792	360	-0.3356	28.5714	-0.2607	27.529	765.9574	1.2857
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	96	 grassland 	0.39	-0.36	-0.1814	420	-0.3546	50	-0.2437	28.5599	1076.9231	1.6154
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	97	 forest 	0.56	-0.2242	-0.1767	360	-0.3356	28.5714	-0.2607	31.0793	642.8571	1.2
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	98	 bare 	0.16	-0.4438	-0.1877	200	-0.4352	50	-0.3063	15.3193	1250	1.25
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	99	 bare 	0.26	-0.2499	-0.1849	440	0.0396	69.2308	-0.238	28.0167	1692.3077	2
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	100	 urban 	0.16	-0.8606	-0.1877	200	-0.8317	25	-0.3063	16.6996	1250	1.25
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	101	 grassland 	0.25	-0.3717	-0.1852	340	-0.3796	43.75	-0.2664	23.9212	1360	1.7
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	102	 grassland 	1.33	-0.2815	-0.1557	1060	-0.1553	75	-0.0614	73.3714	796.9925	2.2083
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	103	 urban 	4.23	1.5203	-0.0765	2240	1.9346	100	0.2746	154.2082	529.5508	2.6667
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	104	 bare 	0.4	0.0215	-0.1811	500	0.1583	73.0769	-0.2209	38.6682	1250	1.9231
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	105	 forest 	0.5	-0.2259	-0.1784	460	-0.2993	54.2857	-0.2323	32.1694	920	1.5333
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	106	 forest 	0.63	-0.2221	-0.1748	400	-0.3211	45.7143	-0.2494	31.0211	634.9206	1.25
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	107	 bare 	0.67	0.545	-0.1737	700	0.5539	76.9231	-0.1639	73.3576	1044.7761	2.0588
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	108	 bare 	0.41	0.0409	-0.1808	420	0	65.3846	-0.2437	34.3227	1024.3902	1.6154
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	109	 forest 	4.3	-0.1153	-0.0746	1160	-0.0452	85.7143	-0.0329	86.1559	269.7674	1.381
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	110	 forest 	0.25	-0.2332	-0.1852	360	-0.3356	28.5714	-0.2607	29.1085	1440	1.8
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	111	 water 	0.31	-0.6886	-0.1836	360	-0.4615	33.3333	-0.2607	27.8989	1161.2903	1.5
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	112	 forest 	2.49	-0.168	-0.124	1200	-0.0307	88.5714	-0.0215	76.1584	481.9277	1.875
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	113	 forest 	1.28	-0.2032	-0.1571	1020	-0.096	80	-0.0728	53.0798	796.875	2.2174
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	114	 forest 	0.24	-0.2335	-0.1855	340	-0.3429	25.7143	-0.2664	32.8164	1416.6667	1.7
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	115	 bare 	0.64	0.4869	-0.1746	700	0.5539	76.9231	-0.1639	49.589	1093.75	2.1875
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	116	 bare 	0.28	-0.2111	-0.1844	240	-0.3561	53.8462	-0.2949	20.3575	857.1429	1.0909
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	117	 forest 	0.01	-0.2402	-0.1918	40	-0.4518	0	-0.3519	5	4000	1
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	118	 forest 	0.16	-0.2358	-0.1877	200	-0.3937	17.1429	-0.3063	16.7369	1250	1.25
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	119	 forest 	0.01	-0.2402	-0.1918	40	-0.4518	0	-0.3519	5	4000	1
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	120	 bare 	0.19	-0.3856	-0.1868	360	-0.1187	61.5385	-0.2607	35.672	1894.7368	2
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	121	 arable 	3.95	-0.4417	-0.0842	1060	-0.4206	50	-0.0614	103.317	268.3544	1.325
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	122	 bare 	0.02	-0.7152	-0.1915	60	-0.7121	15.3846	-0.3462	5	3000	1
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	123	 bare 	0.01	-0.7346	-0.1918	40	-0.7517	0	-0.3519	5	4000	1
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	124	 bare 	0.01	-0.7346	-0.1918	40	-0.7517	0	-0.3519	5	4000	1
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	125	 grassland 	0.11	-0.3834	-0.189	140	-0.4418	18.75	-0.3234	12.5309	1272.7273	1
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	126	 grassland 	0.08	-0.3859	-0.1898	140	-0.4418	18.75	-0.3234	11.0824	1750	1.1667
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	127	 arable 	0.09	-0.4734	-0.1896	200	-0.5015	16.6667	-0.3063	19.3788	2222.2222	1.6667
-C:\Users\JetteR\ownCloud\Bibs\Fragstats\300x300Beispiel\Agroscapelab_10m_300x300_gerastert_Fragstats.asc 	128	 arable 	0.02	-0.4739	-0.1915	60	-0.5147	0	-0.3462	5	3000	1
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	1	 grassland 	43.6	4.48	1.2144	7680	3.1644	98.2143	2.3074	396.9377	176.1468	2.8657
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	2	 forest 	0.52	-0.1741	-0.139	520	-0.1293	74.5455	-0.1144	46.7034	1000	1.625
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	3	 forest 	0.08	-0.19	-0.1528	120	-0.3198	27.2727	-0.2497	10	1500	1
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	4	 forest 	204	7.2024	6.2536	11440	5.0724	100	3.5791	579.2626	56.0784	2
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	5	 grassland 	3.6	0.095	-0.0423	800	-0.0293	78.5714	-0.0197	74.4368	222.2222	1.0526
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	6	 arable 	0.2	-0.5511	-0.1491	200	-0.5695	25	-0.2226	16.9862	1000	1
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	7	 arable 	372.32	1.9952	11.5416	33240	1.9927	100	10.9527	1081.7561	89.278	4.3057
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	8	 grassland 	0.12	-0.2865	-0.1516	160	-0.3264	44.6429	-0.2362	12.8979	1333.3333	1
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	9	 urban 	4.36	1.5087	-0.0184	1040	0.2619	71.4286	0.0615	87.7889	238.5321	1.2381
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	10	 grassland 	1.64	-0.1199	-0.1038	880	0.0078	82.1429	0.0074	77.9927	536.5854	1.6923
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	11	 grassland 	0.08	-0.2909	-0.1528	120	-0.345	28.5714	-0.2497	10	1500	1
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	12	 urban 	1	-0.4989	-0.1239	560	-0.4365	57.1429	-0.1009	42.3384	560	1.4
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	13	 forest 	0.92	-0.1596	-0.1265	520	-0.1293	74.5455	-0.1144	39.4321	565.2174	1.3
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	14	 grassland 	0.08	-0.2909	-0.1528	120	-0.345	28.5714	-0.2497	10	1500	1
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	15	 grassland 	0.04	-0.2953	-0.1541	80	-0.3635	0	-0.2632	10	2000	1
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	16	 forest 	1.12	-0.1523	-0.1202	760	-0.015	87.2727	-0.0332	57.2372	678.5714	1.7273
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	17	 water 	0.24	-0.7391	-0.1478	200	-0.8859	0	-0.2226	18.2405	833.3333	1
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	18	 grassland 	0.4	-0.2558	-0.1428	440	-0.1964	66.0714	-0.1415	39.2175	1100	1.5714
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	19	 urban 	0.16	-1.0008	-0.1503	200	-0.9603	14.2857	-0.2226	16.1803	1250	1.25
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	20	 grassland 	0.04	-0.2953	-0.1541	80	-0.3635	0	-0.2632	10	2000	1
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	21	 forest 	0.08	-0.19	-0.1528	120	-0.3198	27.2727	-0.2497	10	1500	1
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	22	 grassland 	0.04	-0.2953	-0.1541	80	-0.3635	0	-0.2632	10	2000	1
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	23	 grassland 	0.04	-0.2953	-0.1541	80	-0.3635	0	-0.2632	10	2000	1
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	24	 forest 	0.04	-0.1915	-0.1541	80	-0.3389	0	-0.2632	10	2000	1
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	25	 grassland 	0.04	-0.2953	-0.1541	80	-0.3635	0	-0.2632	10	2000	1
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	26	 forest 	0.52	-0.1741	-0.139	400	-0.1865	67.2727	-0.155	34.6277	769.2308	1.25
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	27	 grassland 	0.12	-0.2865	-0.1516	160	-0.3264	44.6429	-0.2362	13.3333	1333.3333	1
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	28	 water 	1.24	0.1228	-0.1164	520	0.0213	66.6667	-0.1144	44.4966	419.3548	1.0833
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	29	 grassland 	0.32	-0.2646	-0.1453	320	-0.2521	58.9286	-0.1821	25.8699	1000	1.3333
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	30	 forest 	0.08	-0.19	-0.1528	120	-0.3198	27.2727	-0.2497	10	1500	1
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	31	 grassland 	1.56	-0.1286	-0.1063	960	0.045	83.9286	0.0344	54.6894	615.3846	1.8462
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	32	 forest 	0.64	-0.1697	-0.1352	520	-0.1293	74.5455	-0.1144	40.3842	812.5	1.625
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	33	 forest 	0.04	-0.1915	-0.1541	80	-0.3389	0	-0.2632	10	2000	1
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	34	 water 	0.32	-0.6701	-0.1453	280	-0.6591	20	-0.1956	22.9447	875	1.1667
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	35	 forest 	0.44	-0.177	-0.1415	320	-0.2246	52.7273	-0.1821	25.4462	727.2727	1.1429
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	36	 forest 	0.4	-0.1784	-0.1428	360	-0.2055	56.3636	-0.1685	30.0132	900	1.2857
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	37	 urban 	1.2	-0.3794	-0.1177	520	-0.4947	42.8571	-0.1144	43.8492	433.3333	1.1818
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	38	 grassland 	13.08	1.1342	0.2556	2480	0.7505	94.6429	0.5485	156.8761	189.6024	1.6757
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	39	 grassland 	1.92	-0.0892	-0.095	800	-0.0293	78.5714	-0.0197	57.2226	416.6667	1.4286
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	40	 forest 	1.48	-0.1393	-0.1089	640	-0.0721	83.6364	-0.0738	64.9735	432.4324	1.2308
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	41	 bare 	0.48	0.7118	-0.1403	320	0.3546	76.9231	-0.1821	26.6056	666.6667	1.1429
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	42	 bare 	0.64	1.2203	-0.1352	680	2.1031	92.3077	-0.0603	80	1062.5	2.125
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	43	 forest 	0.56	-0.1726	-0.1378	360	-0.2055	56.3636	-0.1685	29.3346	642.8571	1.125
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	44	 grassland 	0.04	-0.2953	-0.1541	80	-0.3635	0	-0.2632	10	2000	1
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	45	 bare 	0.48	0.7118	-0.1403	520	1.3259	87.1795	-0.1144	60	1083.3333	1.8571
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	46	 arable 	27.36	-0.3652	0.7042	3160	-0.34	75	0.7785	222.6243	115.4971	1.4906
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	47	 water 	1.12	0.0194	-0.1202	520	0.0213	66.6667	-0.1144	43.208	464.2857	1.1818
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	48	 forest 	0.28	-0.1828	-0.1466	240	-0.2627	49.0909	-0.2091	21.2313	857.1429	1
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	49	 water 	0.72	-0.3254	-0.1327	440	-0.2055	53.3333	-0.1415	36.0387	611.1111	1.2222
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	50	 water 	4.32	2.7774	-0.0196	1520	2.856	100	0.2238	107.7327	351.8519	1.8095
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	51	 water 	0.32	-0.6701	-0.1453	280	-0.6591	20	-0.1956	21.9038	875	1.1667
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	52	 grassland 	0.24	-0.2733	-0.1478	200	-0.3078	48.2143	-0.2226	18.2405	833.3333	1
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	53	 forest 	0.04	-0.1915	-0.1541	80	-0.3389	0	-0.2632	10	2000	1
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	54	 forest 	1.24	-0.148	-0.1164	560	-0.1102	80	-0.1009	44.0431	451.6129	1.1667
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	55	 grassland 	1.2	-0.1681	-0.1177	720	-0.0665	75	-0.0468	55.1339	600	1.6364
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	56	 grassland 	54.24	5.6464	1.5487	14560	6.358	100	4.6344	426.81	268.4366	4.9189
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	57	 forest 	2.68	-0.0958	-0.0712	1400	0.2899	94.5455	0.1832	119.269	522.3881	2.0588
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	58	 water 	0.2	-0.7735	-0.1491	240	-0.7725	13.3333	-0.2091	24	1200	1.2
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	59	 water 	1.96	0.7434	-0.0938	720	0.5882	86.6667	-0.0468	59.064	367.3469	1.2857
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	60	 forest 	0.12	-0.1886	-0.1516	160	-0.3008	41.8182	-0.2362	12.8979	1333.3333	1
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	61	 grassland 	5.32	0.2836	0.0118	2800	0.8991	96.4286	0.6568	138.9313	526.3158	2.9167
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	62	 grassland 	4.68	0.2134	-0.0083	2280	0.6577	92.8571	0.4809	136.6269	487.1795	2.5909
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	63	 forest 	0.92	-0.1596	-0.1265	560	-0.1102	80	-0.1009	46.9419	608.6957	1.4
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	64	 water 	3.2	1.8121	-0.0548	1160	1.8355	93.3333	0.1021	91.775	362.5	1.6111
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	65	 grassland 	0.32	-0.2646	-0.1453	280	-0.2707	53.5714	-0.1956	24.2895	875	1.1667
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	66	 grassland 	3.64	0.0994	-0.041	1320	0.2121	85.7143	0.1562	102.0465	362.6374	1.65
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	67	 forest 	0.04	-0.1915	-0.1541	80	-0.3389	0	-0.2632	10	2000	1
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	68	 water 	0.2	-0.7735	-0.1491	200	-0.8859	0	-0.2226	16.9862	1000	1
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	69	 grassland 	0.08	-0.2909	-0.1528	120	-0.345	28.5714	-0.2497	10	1500	1
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	70	 grassland 	2.72	-0.0015	-0.0699	1440	0.2678	89.2857	0.1968	111.1838	529.4118	2.1176
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	71	 forest 	0.08	-0.19	-0.1528	120	-0.3198	27.2727	-0.2497	10	1500	1
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	72	 forest 	0.08	-0.19	-0.1528	120	-0.3198	27.2727	-0.2497	10	1500	1
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	73	 bare 	0.04	-0.6864	-0.1541	80	-0.8111	0	-0.2632	10	2000	1
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	74	 water 	1.88	0.6744	-0.0963	680	0.4748	80	-0.0603	54.9265	361.7021	1.2143
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	75	 bare 	0.08	-0.5593	-0.1528	120	-0.6168	35.8974	-0.2497	10	1500	1
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	76	 bare 	0.32	0.2034	-0.1453	360	0.5488	79.4872	-0.1685	40	1125	1.5
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	77	 bare 	0.04	-0.6864	-0.1541	80	-0.8111	0	-0.2632	10	2000	1
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	78	 forest 	0.16	-0.1871	-0.1503	200	-0.2817	47.2727	-0.2226	20	1250	1.25
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	79	 forest 	45.68	1.463	1.2797	10480	4.6151	98.1818	3.2544	373.4695	229.4221	3.8529
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	80	 forest 	0.6	-0.1712	-0.1365	360	-0.2055	56.3636	-0.1685	29.9898	600	1.125
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	81	 forest 	0.04	-0.1915	-0.1541	80	-0.3389	0	-0.2632	10	2000	1
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	82	 grassland 	0.4	-0.2558	-0.1428	400	-0.215	62.5	-0.155	33.2969	1000	1.4286
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	83	 forest 	0.04	-0.1915	-0.1541	80	-0.3389	0	-0.2632	10	2000	1
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	84	 bare 	0.04	-0.6864	-0.1541	80	-0.8111	0	-0.2632	10	2000	1
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	85	 forest 	2.08	-0.1175	-0.09	960	0.0803	90.9091	0.0344	58.94	461.5385	1.6
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	86	 forest 	0.04	-0.1915	-0.1541	80	-0.3389	0	-0.2632	10	2000	1
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	87	 forest 	0.12	-0.1886	-0.1516	160	-0.3008	41.8182	-0.2362	12.8979	1333.3333	1
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	88	 bare 	0.04	-0.6864	-0.1541	80	-0.8111	0	-0.2632	10	2000	1
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	89	 grassland 	7	0.4677	0.0646	2160	0.602	91.0714	0.4403	128.9204	308.5714	2
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	90	 forest 	1.52	-0.1378	-0.1076	720	-0.034	85.4545	-0.0468	51.7783	473.6842	1.3846
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	91	 bare 	0.04	-0.6864	-0.1541	80	-0.8111	0	-0.2632	10	2000	1
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	92	 grassland 	0.08	-0.2909	-0.1528	120	-0.345	28.5714	-0.2497	10	1500	1
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	93	 grassland 	0.08	-0.2909	-0.1528	120	-0.345	28.5714	-0.2497	10	1500	1
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	94	 grassland 	0.32	-0.2646	-0.1453	360	-0.2336	60.7143	-0.1685	27.0716	1125	1.5
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	95	 grassland 	0.04	-0.2953	-0.1541	80	-0.3635	0	-0.2632	10	2000	1
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	96	 grassland 	0.08	-0.2909	-0.1528	120	-0.345	28.5714	-0.2497	10	1500	1
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	97	 forest 	0.04	-0.1915	-0.1541	80	-0.3389	0	-0.2632	10	2000	1
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	98	 bare 	0.24	-0.0508	-0.1478	280	0.1603	71.7949	-0.1956	22.8054	1166.6667	1.4
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	99	 grassland 	0.04	-0.2953	-0.1541	80	-0.3635	0	-0.2632	10	2000	1
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	100	 water 	0.56	-0.4633	-0.1378	320	-0.5457	33.3333	-0.1821	29.2107	571.4286	1
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	101	 forest 	0.44	-0.177	-0.1415	320	-0.2246	52.7273	-0.1821	27.0987	727.2727	1.1429
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	102	 grassland 	0.08	-0.2909	-0.1528	120	-0.345	28.5714	-0.2497	10	1500	1
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	103	 forest 	0.6	-0.1712	-0.1365	400	-0.1865	67.2727	-0.155	30.386	666.6667	1.25
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	104	 forest 	0.44	-0.177	-0.1415	400	-0.1865	67.2727	-0.155	32.8146	909.0909	1.4286
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	105	 grassland 	0.04	-0.2953	-0.1541	80	-0.3635	0	-0.2632	10	2000	1
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	106	 grassland 	0.04	-0.2953	-0.1541	80	-0.3635	0	-0.2632	10	2000	1
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	107	 bare 	0.04	-0.6864	-0.1541	80	-0.8111	0	-0.2632	10	2000	1
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	108	 bare 	0.16	-0.3051	-0.1503	200	-0.2283	51.2821	-0.2226	16.1803	1250	1.25
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	109	 forest 	0.04	-0.1915	-0.1541	80	-0.3389	0	-0.2632	10	2000	1
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	110	 grassland 	0.2	-0.2777	-0.1491	240	-0.2893	50	-0.2091	21.8929	1200	1.2
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	111	 bare 	0.04	-0.6864	-0.1541	80	-0.8111	0	-0.2632	10	2000	1
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	112	 forest 	0.04	-0.1915	-0.1541	80	-0.3389	0	-0.2632	10	2000	1
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	113	 bare 	0.04	-0.6864	-0.1541	80	-0.8111	0	-0.2632	10	2000	1
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	114	 bare 	0.68	1.3474	-0.134	720	2.2973	94.8718	-0.0468	60.9662	1058.8235	2
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	115	 water 	0.44	-0.5667	-0.1415	360	-0.4323	46.6667	-0.1685	27.4355	818.1818	1.2857
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	116	 forest 	0.2	-0.1857	-0.1491	240	-0.2627	49.0909	-0.2091	18.1231	1200	1.2
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	117	 bare 	0.08	-0.5593	-0.1528	120	-0.6168	35.8974	-0.2497	10	1500	1
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	118	 grassland 	0.84	-0.2076	-0.129	720	-0.0665	75	-0.0468	67.5927	857.1429	1.8
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	119	 bare 	0.04	-0.6864	-0.1541	80	-0.8111	0	-0.2632	10	2000	1
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	120	 bare 	0.04	-0.6864	-0.1541	80	-0.8111	0	-0.2632	10	2000	1
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	121	 bare 	0.04	-0.6864	-0.1541	80	-0.8111	0	-0.2632	10	2000	1
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	122	 bare 	0.04	-0.6864	-0.1541	80	-0.8111	0	-0.2632	10	2000	1
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	123	 urban 	3.16	0.7917	-0.0561	1800	1.3676	85.7143	0.3185	106.8318	569.6203	2.5
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	124	 bare 	0.24	-0.0508	-0.1478	240	-0.034	58.9744	-0.2091	19.553	1000	1.2
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	125	 forest 	21.24	0.577	0.5119	5600	2.2905	96.3636	1.6038	213.8539	263.6535	2.9787
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	126	 bare 	0.04	-0.6864	-0.1541	80	-0.8111	0	-0.2632	10	2000	1
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	127	 urban 	0.48	-0.8096	-0.1403	480	-0.5529	28.5714	-0.1279	34.448	1000	1.7143
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	128	 bare 	0.04	-0.6864	-0.1541	80	-0.8111	0	-0.2632	10	2000	1
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	129	 grassland 	2.72	-0.0015	-0.0699	1320	0.2121	85.7143	0.1562	87.1994	485.2941	1.9412
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	130	 bare 	0.12	-0.4322	-0.1516	160	-0.4226	41.0256	-0.2362	12.8979	1333.3333	1
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	131	 forest 	0.52	-0.1741	-0.139	360	-0.2055	56.3636	-0.1685	28.4042	692.3077	1.125
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	132	 grassland 	0.04	-0.2953	-0.1541	80	-0.3635	0	-0.2632	10	2000	1
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	133	 water 	0.52	-0.4977	-0.139	440	-0.2055	53.3333	-0.1415	38.7618	846.1538	1.375
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	134	 forest 	0.6	-0.1712	-0.1365	360	-0.2055	56.3636	-0.1685	32.2237	600	1.125
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	135	 bare 	0.16	-0.3051	-0.1503	200	-0.2283	51.2821	-0.2226	16.1803	1250	1.25
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	136	 bare 	1.64	4.3981	-0.1038	800	2.6859	100	-0.0197	57.772	487.8049	1.5385
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	137	 bare 	0.16	-0.3051	-0.1503	160	-0.4226	41.0256	-0.2362	14.1421	1000	1
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	138	 grassland 	0.24	-0.2733	-0.1478	280	-0.2707	53.5714	-0.1956	24.4524	1166.6667	1.4
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	139	 bare 	1.04	2.4914	-0.1227	760	2.4916	97.4359	-0.0332	54.4229	730.7692	1.7273
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	140	 bare 	0.2	-0.178	-0.1491	240	-0.034	58.9744	-0.2091	21.4459	1200	1.2
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	141	 forest 	0.08	-0.19	-0.1528	120	-0.3198	27.2727	-0.2497	10	1500	1
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	142	 grassland 	0.04	-0.2953	-0.1541	80	-0.3635	0	-0.2632	10	2000	1
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	143	 bare 	0.32	0.2034	-0.1453	360	0.5488	79.4872	-0.1685	30.251	1125	1.5
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	144	 urban 	0.12	-1.0247	-0.1516	160	-1.0185	0	-0.2362	12.8979	1333.3333	1
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	145	 grassland 	0.04	-0.2953	-0.1541	80	-0.3635	0	-0.2632	10	2000	1
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	146	 grassland 	0.24	-0.2733	-0.1478	280	-0.2707	53.5714	-0.1956	21.7346	1166.6667	1.4
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	147	 grassland 	0.68	-0.2251	-0.134	480	-0.1779	67.8571	-0.1279	45.667	705.8824	1.3333
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	148	 urban 	4.2	1.4131	-0.0234	2120	1.8332	100	0.4268	158.4681	504.7619	2.5238
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	149	 grassland 	0.92	-0.1988	-0.1265	560	-0.1407	71.4286	-0.1009	40.5146	608.6957	1.4
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	150	 grassland 	0.04	-0.2953	-0.1541	80	-0.3635	0	-0.2632	10	2000	1
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	151	 grassland 	0.72	-0.2207	-0.1327	520	-0.1593	69.6429	-0.1144	43.0976	722.2222	1.4444
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	152	 grassland 	0.04	-0.2953	-0.1541	80	-0.3635	0	-0.2632	10	2000	1
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	153	 bare 	0.24	-0.0508	-0.1478	240	-0.034	58.9744	-0.2091	21.0904	1000	1.2
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	154	 bare 	0.12	-0.4322	-0.1516	160	-0.4226	41.0256	-0.2362	12.8979	1333.3333	1
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	155	 forest 	0.52	-0.1741	-0.139	400	-0.1865	67.2727	-0.155	32.1671	769.2308	1.25
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	156	 forest 	0.64	-0.1697	-0.1352	360	-0.2055	56.3636	-0.1685	30.7303	562.5	1.125
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	157	 bare 	0.24	-0.0508	-0.1478	200	-0.2283	51.2821	-0.2226	18.2405	833.3333	1
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	158	 bare 	0.12	-0.4322	-0.1516	160	-0.4226	41.0256	-0.2362	13.3333	1333.3333	1
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	159	 forest 	4.32	-0.0363	-0.0196	1160	0.1756	92.7273	0.1021	86.7862	268.5185	1.381
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	160	 bare 	0.4	0.4576	-0.1428	400	0.7431	84.6154	-0.155	39.5915	1000	1.4286
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	161	 bare 	0.4	0.4576	-0.1428	280	0.1603	71.7949	-0.1956	24.0042	700	1
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	162	 water 	0.32	-0.6701	-0.1453	320	-0.5457	33.3333	-0.1821	26.9736	1000	1.3333
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	163	 grassland 	0.88	-0.2032	-0.1277	600	-0.1222	73.2143	-0.0873	42.3669	681.8182	1.5
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	164	 forest 	0.04	-0.1915	-0.1541	80	-0.3389	0	-0.2632	10	2000	1
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	165	 forest 	0.04	-0.1915	-0.1541	80	-0.3389	0	-0.2632	10	2000	1
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	166	 forest 	1.16	-0.1509	-0.1189	760	-0.015	87.2727	-0.0332	45.874	655.1724	1.7273
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	167	 forest 	0.04	-0.1915	-0.1541	80	-0.3389	0	-0.2632	10	2000	1
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	168	 bare 	0.64	1.2203	-0.1352	600	1.7145	89.7436	-0.0873	47.203	937.5	1.875
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	169	 forest 	0.08	-0.19	-0.1528	120	-0.3198	27.2727	-0.2497	10	1500	1
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	170	 bare 	0.28	0.0763	-0.1466	240	-0.034	58.9744	-0.2091	19.5578	857.1429	1
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	171	 forest 	0.04	-0.1915	-0.1541	80	-0.3389	0	-0.2632	10	2000	1
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	172	 forest 	0.12	-0.1886	-0.1516	160	-0.3008	41.8182	-0.2362	13.3333	1333.3333	1
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	173	 grassland 	0.2	-0.2777	-0.1491	240	-0.2893	50	-0.2091	18.1231	1200	1.2
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	174	 forest 	0.08	-0.19	-0.1528	120	-0.3198	27.2727	-0.2497	10	1500	1
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	175	 forest 	0.04	-0.1915	-0.1541	80	-0.3389	0	-0.2632	10	2000	1
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	176	 grassland 	0.04	-0.2953	-0.1541	80	-0.3635	0	-0.2632	10	2000	1
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	177	 grassland 	0.36	-0.2602	-0.144	400	-0.215	62.5	-0.155	36.1777	1111.1111	1.6667
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	178	 bare 	0.2	-0.178	-0.1491	240	-0.034	58.9744	-0.2091	24	1200	1.2
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	179	 arable 	3.76	-0.5267	-0.0372	1040	-0.5044	50	0.0615	101.6135	276.5957	1.3
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	180	 grassland 	0.08	-0.2909	-0.1528	120	-0.345	28.5714	-0.2497	10	1500	1
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	181	 arable 	0.04	-0.5522	-0.1541	80	-0.5788	0	-0.2632	10	2000	1
+C:\Users\JetteR\ownCloud\Bibs\Fragstats\150x150 Beispiel\Agroscapelab_20m_150x150_gerastert.asc 	182	 grassland 	0.08	-0.2909	-0.1528	120	-0.345	28.5714	-0.2497	10	1500	1

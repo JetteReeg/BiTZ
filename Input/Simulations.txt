@@ -1,2 +1,2 @@
-SimNb	NameFtFile	NameLandscapePatchFile	NamePatchDefFile	NameNestSuitabilityFile	NameForageSuitabilityFile	Nrep	t_max	ymax	xmax	nb_LU	TZ_width	TZ_percentage	size_order	disturbances
-7	Input/FT_Definitions.txt	Input/Agroscapelab_10m_300x300_gerastert_Fragstats_id4_2.asc	Input/Patch_ID_definitions.txt	Input/LU_FT_suitability_nest.txt	Input/LU_FT_suitability_forage.txt	1	10	300	300	7	1	0.9	descending	100
+SimNb	NameFtFile	NameLandscapePatchFile	NamePatchDefFile	NameNestSuitabilityFile	NameForageSuitabilityFile	Nrep	t_max	ymax	xmax	nb_LU	TZ_width	TZ_percentage	size_order	dispersal_tries	scaling
+11	Input/FT_Definitions.txt	Input/Agroscapelab_20m_150x150_gerastert_id4.asc	Input/Patch_ID_definitions_test.txt	Input/LU_FT_suitability_nest.txt	Input/LU_FT_suitability_forage.txt	1	30	3000	3000	7	1	0.0	descending	100	20

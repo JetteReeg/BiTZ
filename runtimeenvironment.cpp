@@ -5,6 +5,7 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <ctime>
 
 int RuntimeEnvironment::year=0;
 double RuntimeEnvironment::weather_year=1.0;
@@ -48,6 +49,11 @@ void RuntimeEnvironment::readSimDef(const string file){
             ss >> SRunPara::RunPara.TZ_percentage;
             ss >> SRunPara::RunPara.size_order;
             ss >> SRunPara::RunPara.max_search_attempts;
+            ss >> SRunPara::RunPara.scaling;
+
+            // convert to scaling
+            SRunPara::RunPara.ymax/=SRunPara::RunPara.scaling;
+            SRunPara::RunPara.xmax/=SRunPara::RunPara.scaling;
             one_run();
         }// end read simulation file
 }
@@ -116,11 +122,17 @@ void RuntimeEnvironment::one_year(){
     // get updated dispersal range grid
     cout << "Update dispersal range grid..."<<endl;
     //clear old lists
+    int start;
+    int stop;
+    start=clock();
     for (unsigned int cell_i=0; cell_i<SRunPara::RunPara.GetSumCells(); ++cell_i){
         shared_ptr<CCell> cell = CoreGrid.CellList[cell_i];
         cell->FT_pop_sizes_foraging.clear();
     }
+    stop=clock();
+    cout << "clear FT_pop_sizes_foraging took "<<(stop - start)/CLOCKS_PER_SEC<< endl;
     // iterating over all cells
+    start=clock();
     for (unsigned int cell_i=0; cell_i<SRunPara::RunPara.GetSumCells(); ++cell_i){
         // link to cell
         shared_ptr<CCell> cell = CoreGrid.CellList[cell_i];
@@ -132,7 +144,9 @@ void RuntimeEnvironment::one_year(){
             FT_pop::set_foraging_individuals(curr_Pop);
         }// end for all populations in cell
     }// end for all cells
-
+    stop=clock();
+    cout << "updating FT_pop_sizes_foraging took "<<(stop - start)/CLOCKS_PER_SEC<< endl;
+    start=clock();
     //go through the whole grid and all Pops in cell
     //iterating over cells
     for (unsigned int cell_i=0; cell_i<SRunPara::RunPara.GetSumCells(); ++cell_i){
@@ -144,6 +158,8 @@ void RuntimeEnvironment::one_year(){
                 FT_pop::growth(curr_Pop, weather_year);
             }
     }
+    stop=clock();
+    cout << "growth of populations in cell took "<<(stop - start)/CLOCKS_PER_SEC<< endl;
     cout << "growth completed!"<<endl;
 
     for (unsigned int cell_i=0; cell_i<SRunPara::RunPara.GetSumCells(); ++cell_i){

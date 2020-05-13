@@ -37,9 +37,9 @@ void GridEnvironment::readLandscape(){
 
     int index_pa;
     // loop over all gridcells to define patch IDs
-    for (int x=0; x< (int) SRunPara::RunPara.xmax; x++){
-        for (int y=0; y< (int) SRunPara::RunPara.ymax; y++){
-            index_pa=x*(int) SRunPara::RunPara.xmax+y;
+    for (int x=0; x< SRunPara::RunPara.xmax; x++){
+        for (int y=0; y< SRunPara::RunPara.ymax; y++){
+            index_pa=x*SRunPara::RunPara.xmax+y;
             //cout<<"currently at patch ID: "<<v_tmp_pa[index_pa]<<endl;
             // set patch ID in each cell object
             shared_ptr<CCell> cell = make_shared<CCell>(index_pa,x,y,v_tmp_pa[index_pa]);
@@ -71,9 +71,9 @@ void GridEnvironment::readLandscape(){
             } else {
                 cout<<"Patch ID "<<v_tmp_pa[index_pa]<<" not found!"<<endl;
                 exit(3);
-            };
-        };
-    };// end loop over all gridcells
+            }
+        }
+    }// end loop over all gridcells
 
 }
 
@@ -138,7 +138,7 @@ void GridEnvironment::calculate_TZ(){
     }
     // get nb of TZ cells do generate
     //cout<<"nb border cells "<<nb_bordercells<<endl;
-    int nb_TZ_cells=floor(nb_bordercells*SRunPara::RunPara.TZ_percentage);
+    int nb_TZ_cells=int(floor(nb_bordercells*SRunPara::RunPara.TZ_percentage));
     //cout<<"nb TZ cells "<<nb_TZ_cells<<endl;
     // get from patch id definition file the patch IDs which should be prioritized
     // select randomly a patch ID, which should get TZ
@@ -164,8 +164,8 @@ void GridEnvironment::calculate_TZ(){
                 if (nb_TZ_cells>0){
                     while (next_patch==false){
                         // select a random cell
-                        int x=floor(combinedLCG()*SRunPara::RunPara.xmax);
-                        int y=floor(combinedLCG()*SRunPara::RunPara.ymax);
+                        int x=int(floor(combinedLCG()*SRunPara::RunPara.xmax));
+                        int y=int(floor(combinedLCG()*SRunPara::RunPara.ymax));
                         shared_ptr <CCell> cell = CoreGrid.CellList[x*SRunPara::RunPara.xmax+y];
                         // if cell is border cell + PID==it->second
                         if (cell->TZ==false && cell->TZ_pot==true && cell->pa_id==it->second){
@@ -199,7 +199,7 @@ void GridEnvironment::calculate_TZ(){
                                    }
                             }
                             //cout<<"nb border in patch "<<GridEnvironment::Patch_defList.find(cell->pa_id)->second->nb_bordercells<<endl;
-                            if (GridEnvironment::Patch_defList.find(cell->pa_id)->second->nb_bordercells==0 | nb_TZ_cells==0) next_patch=true;
+                            if (GridEnvironment::Patch_defList.find(cell->pa_id)->second->nb_bordercells==0 || nb_TZ_cells==0) next_patch=true;
                         }
                     }// end while
                 }
@@ -215,8 +215,8 @@ void GridEnvironment::calculate_TZ(){
             if (nb_TZ_cells>0){
                 while (next_patch==false){
                     // select a random cell
-                    int x=floor(combinedLCG()*SRunPara::RunPara.xmax);
-                    int y=floor(combinedLCG()*SRunPara::RunPara.ymax);
+                    int x=int(floor(combinedLCG()*SRunPara::RunPara.xmax));
+                    int y=int(floor(combinedLCG()*SRunPara::RunPara.ymax));
                     shared_ptr <CCell> cell = CoreGrid.CellList[x*SRunPara::RunPara.xmax+y];
                     // if cell is border cell + PID==it->second
                     if (cell->TZ==false && cell->TZ_pot==true && cell->pa_id==it->second){
@@ -249,7 +249,7 @@ void GridEnvironment::calculate_TZ(){
                                      }
                                }
                         }
-                        if (GridEnvironment::Patch_defList.find(cell->pa_id)->second->nb_bordercells==0 | nb_TZ_cells==0) next_patch=true;
+                        if (GridEnvironment::Patch_defList.find(cell->pa_id)->second->nb_bordercells==0 || nb_TZ_cells==0) next_patch=true;
                     }
                 }// end while
             }
@@ -278,7 +278,7 @@ void GridEnvironment::calculate_TZ(){
     for (unsigned int location=0; location<SRunPara::RunPara.GetSumCells(); ++location){
         int output=0;
         if(CoreGrid.CellList[location]->TZ==true) output=1;
-        if(output==0 & CoreGrid.CellList[location]->TZ_pot==true) output=2;
+        if(output==0 && CoreGrid.CellList[location]->TZ_pot==true) output=2;
         Gridfile<<'\t'<<output;
         if(CoreGrid.CellList[location]->y==SRunPara::RunPara.ymax) Gridfile<<"\n";
     }

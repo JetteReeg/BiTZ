@@ -43,6 +43,9 @@ public:
     //! maximal search attempts
     int max_search_attempts;
 
+    //!scaling
+    int scaling;
+
     //! number of repetitions
     int Nrep;
     //! constructor

@@ -13,7 +13,7 @@
  */
 int RandomGenerator::getUniformInt(int thru)
 {
-    return floor(get01() * thru);
+    return int(floor(get01() * thru));
 }
 //---------------------------------------------------------------------------
 /**
@@ -71,7 +71,7 @@ double normcLCG(double mean,double sd){
     double u = combinedLCG() * 2 - 1;
     double v = combinedLCG() * 2 - 1;
     double r = u * u + v * v;
-    if (r == 0 || r > 1) return normcLCG(mean,sd);
+    if (r == 0.0 || r > 1.0) return normcLCG(mean,sd);
     double c = sqrt(-2 * log(r) / r);
     return (u * c)*sd + mean;
 

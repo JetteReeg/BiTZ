@@ -50,22 +50,29 @@
             <mspace width="1.0em"/>
             <mi>x</mi>
             <mspace width="1.0em"/>
-            <mi>r</mi>
+            <mi>m</mi>
             <mi>e</mi>
-            <mi>s</mi>
-            <mi>o</mi>
-            <mi>u</mi>
-            <mi>r</mi>
-            <mi>c</mi>
-            <mi>e</mi>
-            <mi>c</mi>
             <mi>a</mi>
-            <mi>p</mi>
-            <mi>a</mi>
-            <mi>c</mi>
-            <mi>i</mi>
-            <mi>t</mi>
-            <mi>y</mi>
+            <msub>
+              <mi>n</mi>
+              <msub>
+                <mrow>
+                  <mi>r</mi>
+                  <mi>e</mi>
+                  <mi>s</mi>
+                </mrow>
+                <mrow>
+                  <mi>c</mi>
+                  <mi>a</mi>
+                  <mi>p</mi>
+                  <mi>a</mi>
+                  <mi>c</mi>
+                  <mi>i</mi>
+                  <mi>t</mi>
+                  <mi>y</mi>
+                </mrow>
+              </msub>
+            </msub>
           </mrow>
         </mfenced>
         <mrow>
@@ -88,67 +95,75 @@
           <mspace width="1.0em"/>
           <mi>x</mi>
           <mspace width="1.0em"/>
-          <mo>[</mo>
-          <mfrac>
+          <msup>
             <mrow>
-              <msub>
-                <mi>N</mi>
-                <msub>
-                  <mi>t</mi>
-                  <mi>j</mi>
-                </msub>
-              </msub>
-              <mspace width="1.0em"/>
-              <mo>+</mo>
-              <mspace width="1.0em"/>
-              <munderover>
-                <mo>&#x2211;</mo>
+              <mo>[</mo>
+              <mfrac>
                 <mrow>
-                  <mi>i</mi>
-                  <mo>=</mo>
-                  <mn>1</mn>
-                </mrow>
-                <mi>n</mi>
-              </munderover>
-              <mfenced>
-                <mrow>
-                  <mn>1</mn>
+                  <msub>
+                    <mi>N</mi>
+                    <msub>
+                      <mi>t</mi>
+                      <mi>j</mi>
+                    </msub>
+                  </msub>
                   <mspace width="1.0em"/>
                   <mo>+</mo>
                   <mspace width="1.0em"/>
-                  <mrow>
-                    <mfrac>
+                  <munderover>
+                    <mo>&#x2211;</mo>
+                    <mrow>
+                      <mi>i</mi>
+                      <mo>=</mo>
+                      <mn>1</mn>
+                    </mrow>
+                    <mi>n</mi>
+                  </munderover>
+                  <mfenced>
+                    <mrow>
                       <mrow>
+                        <mfenced>
+                          <mrow>
+                            <mn>1</mn>
+                            <mspace width="1.0em"/>
+                            <mo>+</mo>
+                            <mspace width="1.0em"/>
+                            <mrow>
+                              <mfrac>
+                                <mrow>
+                                  <msub>
+                                    <mi>c</mi>
+                                    <mi>j</mi>
+                                  </msub>
+                                  <mo>&#x2212;</mo>
+                                  <msub>
+                                    <mi>c</mi>
+                                    <mi>i</mi>
+                                  </msub>
+                                </mrow>
+                                <mi>C</mi>
+                              </mfrac>
+                            </mrow>
+                          </mrow>
+                        </mfenced>
+                        <mspace width="1.0em"/>
+                        <mi>x</mi>
+                        <mspace width="1.0em"/>
                         <msub>
-                          <mi>c</mi>
-                          <mi>j</mi>
-                        </msub>
-                        <mo>&#x2212;</mo>
-                        <msub>
-                          <mi>c</mi>
+                          <mi>N</mi>
                           <mi>i</mi>
                         </msub>
                       </mrow>
-                      <mi>C</mi>
-                    </mfrac>
-                  </mrow>
-                  <mspace width="1.0em"/>
-                  <mi>x</mi>
-                  <mspace width="1.0em"/>
-                  <msub>
-                    <mi>N</mi>
-                    <mi>i</mi>
-                  </msub>
+                    </mrow>
+                  </mfenced>
                 </mrow>
-              </mfenced>
+                <msub>
+                  <mi>K</mi>
+                  <mi>j</mi>
+                </msub>
+              </mfrac>
+              <mo>]</mo>
             </mrow>
-            <msub>
-              <mi>K</mi>
-              <mi>j</mi>
-            </msub>
-          </mfrac>
-          <msup>
-            <mo>]</mo>
             <mrow>
               <msub>
                 <mi>b</mi>
@@ -413,5 +428,122 @@
       </msqrt>
     </mrow>
   </mstyle>
+</math><math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+  <mrow>
+    <msub>
+      <mrow>
+        <mi>r</mi>
+        <mi>e</mi>
+        <mi>s</mi>
+      </mrow>
+      <mrow>
+        <mi>c</mi>
+        <mi>a</mi>
+        <mi>p</mi>
+        <mi>a</mi>
+        <mi>c</mi>
+        <mi>i</mi>
+        <mi>t</mi>
+        <mi>y</mi>
+      </mrow>
+    </msub>
+    <mo>=</mo>
+    <mfrac>
+      <mrow>
+        <mo>&#x2211;</mo>
+        <mrow>
+          <msubsup>
+            <mi/>
+            <mrow>
+              <mi>i</mi>
+              <mo>=</mo>
+              <mn>1</mn>
+            </mrow>
+            <mrow>
+              <mi>n</mi>
+            </mrow>
+          </msubsup>
+        </mrow>
+        <mfenced>
+          <mrow>
+            <mrow>
+              <mfenced>
+                <mrow>
+                  <mn>1</mn>
+                  <mo>+</mo>
+                  <mrow>
+                    <mfrac>
+                      <mrow>
+                        <msub>
+                          <mi>c</mi>
+                          <mi>j</mi>
+                        </msub>
+                        <mo>&#x2212;</mo>
+                        <msub>
+                          <mi>c</mi>
+                          <mi>i</mi>
+                        </msub>
+                      </mrow>
+                      <mi>C</mi>
+                    </mfrac>
+                  </mrow>
+                </mrow>
+              </mfenced>
+              <mspace width="1.0em"/>
+              <mi>x</mi>
+              <mspace width="1.0em"/>
+              <msub>
+                <mi>N</mi>
+                <mi>i</mi>
+              </msub>
+            </mrow>
+          </mrow>
+        </mfenced>
+        <mspace width="1.0em"/>
+        <mo>+</mo>
+        <mspace width="1.0em"/>
+        <msub>
+          <mi>N</mi>
+          <mi>j</mi>
+        </msub>
+      </mrow>
+      <msub>
+        <mi>N</mi>
+        <mrow>
+          <mi>t</mi>
+          <mi>o</mi>
+          <mi>t</mi>
+          <mi>a</mi>
+          <mi>l</mi>
+        </mrow>
+      </msub>
+    </mfrac>
+    <mspace width="1.0em"/>
+    <mi>x</mi>
+    <mspace width="1.0em"/>
+    <mi>L</mi>
+    <mi>U</mi>
+    <mi>s</mi>
+    <mi>u</mi>
+    <mi>i</mi>
+    <mi>t</mi>
+    <mi>a</mi>
+    <mi>b</mi>
+    <mi>i</mi>
+    <mi>l</mi>
+    <mi>i</mi>
+    <mi>t</mi>
+    <msub>
+      <mi>y</mi>
+      <mrow>
+        <mi>f</mi>
+        <mi>o</mi>
+        <mi>r</mi>
+        <mi>a</mi>
+        <mi>g</mi>
+        <mi>e</mi>
+      </mrow>
+    </msub>
+  </mrow>
 </math></body>
 </html>
