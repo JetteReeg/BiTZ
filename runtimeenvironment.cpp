@@ -10,7 +10,7 @@
 int RuntimeEnvironment::year=0;
 double RuntimeEnvironment::weather_year=1.0;
 vector <shared_ptr<SFTout>> Output::FToutdata;
-vector <shared_ptr<SComout>> Output::Comoutdata;
+vector <shared_ptr<SLandout>> Output::Landoutdata;
 
 RuntimeEnvironment::RuntimeEnvironment():GridEnvironment ()
 {
@@ -101,7 +101,7 @@ void RuntimeEnvironment::one_run(){
         //CoreGrid.CellList.clear();
         //FT_traits::FtLinkList.clear();
         Output::FToutdata.clear();
-        Output::Comoutdata.clear();
+        Output::Landoutdata.clear();
         GridEnvironment::Patch_defList.clear();
         CoreGrid.CellList.clear();
         cout << "Clear data of repetition..."<<endl;
@@ -257,16 +257,44 @@ void RuntimeEnvironment::one_year(){
     //for each FT type ID
     for (auto var = FT_traits::FtLinkList.begin();
             var != FT_traits::FtLinkList.end(); ++var) {
-        // for each LU_ID
-        for (int lu=0;lu<SRunPara::RunPara.nb_LU;lu++) {
-            shared_ptr <SFTout> tmp=Output::GetOutput_FT(year, var->second->FT_ID, lu);
+        // for each patch ID
+        for (auto patch = GridEnvironment::Patch_defList.begin();
+                patch != GridEnvironment::Patch_defList.end(); ++patch) {
+            int patch_ID = patch->second->PID;
+            string lu = patch->second->Type;
+            int LU_id;
+            if (lu=="bare") LU_id=0;
+            if (lu=="arable") LU_id=1;
+            if (lu=="forest") LU_id=2;
+            if (lu=="grassland") LU_id=3;
+            if (lu=="urban") LU_id=4;
+            if (lu=="water") LU_id=5;
+            if (lu=="transition") LU_id=6;
+            shared_ptr <SFTout> tmp=Output::GetOutput_FT(year, var->second->FT_ID, LU_id, patch_ID);
             Output::FToutdata.push_back(tmp);
         }
+//        for (int lu=0;lu<SRunPara::RunPara.nb_LU;lu++) {
+//            shared_ptr <SFTout> tmp=Output::GetOutput_FT(year, var->second->FT_ID, lu);
+//            Output::FToutdata.push_back(tmp);
+//        }
     }
-    for (int lu=0;lu<SRunPara::RunPara.nb_LU;lu++) {
-                shared_ptr <SComout> tmp=Output::GetOutput_Com(year, lu);
-                Output::Comoutdata.push_back(tmp);
+    //only in certain years
+    if (year % 10 == 0 || year==(SRunPara::RunPara.t_max-1)){
+        for (unsigned int cell_i=0; cell_i<SRunPara::RunPara.GetSumCells(); ++cell_i) {
+            shared_ptr<CCell> cell = CoreGrid.CellList[cell_i];
+            // iterating over FT_pops in cell
+            for (unsigned pop_i=0; pop_i < cell->FT_pop_List.size(); pop_i++){
+                std::shared_ptr<FT_pop> curr_Pop=cell->FT_pop_List.at(pop_i);
+                int x = curr_Pop->xcoord;
+                int y = curr_Pop->ycoord;
+                int lu = cell->LU_id;
+                int FT_ID = curr_Pop->Traits->FT_ID;
+                shared_ptr <SLandout> tmp=Output::GetOutput_Land(curr_Pop, year, x, y, lu, FT_ID);
+                Output::Landoutdata.push_back(tmp);
             }
+        }
+    }
+
     cout<< "yearly output completed!"<<endl;
     year++;
 }
@@ -374,6 +402,7 @@ void RuntimeEnvironment::WriteOfFile(int nrep){
         myfile<<"Year\t"
                   <<"FT_ID\t"
                   <<"LU_ID\t"
+                 <<"Pa_ID\t"
                   <<"Popsize"
                   ;
             myfile<<"\n";
@@ -384,41 +413,44 @@ void RuntimeEnvironment::WriteOfFile(int nrep){
         myfile<<Output::FToutdata[i]->year
                  <<'\t'<<Output::FToutdata[i]->FT_ID
                  <<'\t'<<Output::FToutdata[i]->LU_ID
+                   <<'\t'<<Output::FToutdata[i]->patch_ID
                  <<'\t'<<Output::FToutdata[i]->popsize
               <<"\n";
     }// end for each year
     myfile.close();
-    //Comoutdata
-    //strd<<GetCurrentWorkingDir()<<"/Output/GridOut_"<<SRunPara::RunPara.SimNb<<".txt";
+
+    //Landoutdata
     strd.str(std::string());
-    strd<<"Output/ComOut_"<<SRunPara::RunPara.SimNb<<"_"<<SRunPara::RunPara.MC<<".txt";
-    string NameComOutFile=strd.str();
-    ofstream Comfile(NameComOutFile.c_str(),ios::app);
-    if (!Comfile.good()) {cerr<<("Error while opening Output File");exit(3); }
+    strd<<"Output/LandOut_"<<SRunPara::RunPara.SimNb<<"_"<<SRunPara::RunPara.MC<<".txt";
+    string NameLandOutFile=strd.str();
+    ofstream Landfile(NameLandOutFile.c_str(),ios::app);
+    if (!Landfile.good()) {cerr<<("Error while opening Output File");exit(3); }
     // write header
-    Comfile.seekp(0, ios::end);
-    long size_com=Comfile.tellp();
+    Landfile.seekp(0, ios::end);
+    long size_com=Landfile.tellp();
     // header of the file
     if (size_com==0){
-        Comfile<<"Year\t"
+        Landfile<<"Year\t"
+               <<"x\t"
+               <<"y\t"
                   <<"LU_ID\t"
-                  <<"nb_FT\t"
-                  <<"diversity\t"
-                 <<"totalN"
+                  <<"FT_ID\t"
+                  <<"popsize\t"
                   ;
-            Comfile<<"\n";
+            Landfile<<"\n";
         }
 
     // get values for each year
-    for (vector <SComout>::size_type i=0; i<Output::Comoutdata.size(); ++i){
-        Comfile<<Output::Comoutdata[i]->year
-                 <<'\t'<<Output::Comoutdata[i]->LU_ID
-                 <<'\t'<<Output::Comoutdata[i]->nb_FT
-                   <<'\t'<<Output::Comoutdata[i]->diversity
-                     <<'\t'<<Output::Comoutdata[i]->totalN
+    for (vector <SLandout>::size_type i=0; i<Output::Landoutdata.size(); ++i){
+        Landfile<<Output::Landoutdata[i]->year
+                 <<'\t'<<Output::Landoutdata[i]->x
+                 <<'\t'<<Output::Landoutdata[i]->y
+                   <<'\t'<<Output::Landoutdata[i]->LU_ID
+                     <<'\t'<<Output::Landoutdata[i]->FT_ID
+                       <<'\t'<<Output::Landoutdata[i]->popsize
               <<"\n";
     }// end for each year
-    Comfile.close();
+    Landfile.close();
 }
 
 /**
