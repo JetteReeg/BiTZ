@@ -62,15 +62,10 @@ void FT_traits::ReadNestSuitability(const string file){
     string dummi2;
     ss>>dummi;
     vector <string> nb_FT;
-    //int count=0;
     while(!ss.eof()){
         ss >> dummi2;
         nb_FT.push_back(dummi2);
-        //count++;
     }
-    // create a vector or maps for  all nb_FT
-    // int = LU; double=suitability
-
     // now insert the numbers
     while (getline(SuitabilityFile, line))
     {
@@ -113,15 +108,10 @@ void FT_traits::ReadForageSuitability(const string file){
     string dummi2;
     ss>>dummi;
     vector <string> nb_FT;
-    //int count=0;
     while(!ss.eof()){
         ss >> dummi2;
         nb_FT.push_back(dummi2);
-        //count++;
     }
-    // create a vector or maps for  all nb_FT
-    // int = LU; double=suitability
-
     // now insert the numbers
     while (getline(SuitabilityFile, line))
     {

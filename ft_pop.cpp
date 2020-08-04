@@ -31,7 +31,7 @@ FT_pop::FT_pop(shared_ptr<FT_traits> Traits, shared_ptr<CCell> cell, int n):
     set_max_nestCap(cell);
     // calculate resource capacity
     set_resCap(cell);
-    Pt=n;// nest capacity is a int value; 100 is the normal max. nest capacity
+    Pt=n;
 
 } // end constructor
 
@@ -49,6 +49,7 @@ void FT_pop::setCell(shared_ptr<CCell> cell){
 void FT_pop::set_trans_effect(shared_ptr<CCell> cell){
 
     //define if the cell is a transition zone cell
+    // todo: Check whether the res and nest effects are FT specific
     if(cell->TZ==true){
         trans_effect_res=Traits->trans_effect_res;
         trans_effect_nest=Traits->trans_effect_nest;
@@ -58,6 +59,7 @@ void FT_pop::set_trans_effect(shared_ptr<CCell> cell){
 
 void FT_pop::set_nestCap(shared_ptr<CCell> cell){
     //int x = nrand(100);
+        // todo: Check whether the res and nest effects are FT specific
     int x=int(floor(SRunPara::RunPara.scaling*SRunPara::RunPara.scaling*54.7)); //after Potts & Willmer 1997; Halictus rubicundus; per m²
     if(cell->TZ==true){
         nestCap=int(floor(x*(this->Traits->LU_suitability_nest.find(cell->LU_id)->second+trans_effect_nest)));
@@ -102,7 +104,7 @@ void FT_pop::set_resCap(shared_ptr<CCell> cell){
     int zj_start = cell->y - dispersal;
     if (zj_start<0) zj_start=0;
     int zjmax = std::min(cell->y + dispersal, SRunPara::RunPara.xmax);
-    // todo account for TZ effect
+
     for (int zi=zi_start; zi < zimax; zi++)
       for (int zj=zj_start; zj < zjmax ; zj++)
       {
@@ -113,8 +115,6 @@ void FT_pop::set_resCap(shared_ptr<CCell> cell){
               cell_area++;
           }
       }
-    //cout<<"sum of resources"<<sum_res<<endl;
-    //cout<<"cell number"<<cell_area<<endl;
     // output: sum/nb of cells --> foraging capacity in cell for the specific type
     if (cell_area!=0){
         resCap = sum_res/cell_area;
@@ -179,7 +179,9 @@ void FT_pop::growth(std::shared_ptr<FT_pop> pop, double weather_year){
     if (zj_start<0) zj_start=0; // boundary
     // end cell y of dispersal area
     int zjmax = std::min(pop->cell->y + dispersal, SRunPara::RunPara.xmax);
-
+    int start;
+    int stop;
+    start=clock();
     // loop over foraging distance
     for (int zi=zi_start; zi < zimax; zi++)
       for (int zj=zj_start; zj < zjmax ; zj++)
@@ -196,6 +198,7 @@ void FT_pop::growth(std::shared_ptr<FT_pop> pop, double weather_year){
               double uptake = pop->Traits->LU_suitability_forage.find(foraging_cell->LU_id)->second; // resource uptake without competition
                 if(foraging_cell->TZ) uptake+=pop->trans_effect_res;
               // loop over all FT_pop_sizes_foraging entries
+              // to calculate the sum of the competition coefficients (C_res) and the sum of the populations (sum_pop)
               for (auto const& it : foraging_cell->FT_pop_sizes_foraging){
                   string IDi = to_string(it.first);
                   int flying_period_j=pop->Traits->flying_period;
@@ -220,7 +223,6 @@ void FT_pop::growth(std::shared_ptr<FT_pop> pop, double weather_year){
                       break;
                 }
               }
-
               double sum_res_comp=0.0; // sum of all competition impacts; own population size with the whole factor
               // loop over all FT_pop_sizes_foraging entries
               for (auto const& it : foraging_cell->FT_pop_sizes_foraging){
@@ -258,10 +260,8 @@ void FT_pop::growth(std::shared_ptr<FT_pop> pop, double weather_year){
               }
 
               sum_res_comp/=sum_pop;
-              //cout<< "competition effect: "<<sum_res_comp<<endl;
               // resource uptake under competition
               resource_uptake+=(sum_res_comp*uptake);
-              //cout<<"resource uptake in cell: "<<resource_uptake<<endl;
               // counting the number of foraging cells
               count_cells++;
           }
@@ -324,17 +324,17 @@ void FT_pop::growth(std::shared_ptr<FT_pop> pop, double weather_year){
 
     // actual growth function
     double Nt1j=(foraging_suitability*weather_year*Ntj*Rj)/(1+((Rj-1)*pow(((sum)/K),bj))); // sum includes Nj
-    //cout << "Nt: "<<Ntj<< " and Nt+1: " <<Nt1j<<endl;
     //update Pt1 value of Pop
     pop->Pt1=max(0,int(floor(Nt1j)));
     cell->FT_pop_sizes.find(pop->Traits->FT_ID)->second=pop->Pt;
+    stop=clock();
+    cout << "growth of one population took "<<(stop - start)/CLOCKS_PER_SEC<< endl;
 }
 
 void FT_pop::dispersal(std::shared_ptr<FT_pop> pop){
     //get the number of dispering individuals
     double fract;
     double P_disp_t; //Percent of dispersing individuals
-    //int Disp_t; //number of dispersing individuals
     fract=(1.0*pop->Pt)/(1.0*pop->nestCap);
     P_disp_t=min(0.9, pop->Traits->mu*pow(fract,pop->Traits->omega));
     //Disp_t stores the number of dispersing individuals
@@ -354,7 +354,6 @@ void FT_pop::dispersal(std::shared_ptr<FT_pop> pop){
             // get a cell to disperse to
             // direction of dispersal
             double alpha=2*3.1415*combinedLCG();
-            //double random=combinedLCG();
             double d; //distance
             int dx, dy;
             int new_xcoord, new_ycoord;
@@ -388,8 +387,6 @@ void FT_pop::dispersal(std::shared_ptr<FT_pop> pop){
                     if(search == existing_FT_pop.end()){
                         int start_size = 1;
                         std::shared_ptr<FT_pop> FTpop_tmp = std::make_shared< FT_pop >(pop->Traits,cell_new,start_size);
-                        //FT_pop* FTpop_tmp = new FT_pop();
-                        //FT_pop* FTpop_tmp = new FT_pop(pop->Traits,cell_new,start_size);
                         cell_new->FT_pop_List.push_back(FTpop_tmp);
                         cell_new->FT_pop_sizes.insert(std::make_pair(FTpop_tmp->Traits->FT_ID, start_size));
                         cell_found=true;
@@ -422,8 +419,6 @@ void FT_pop::dispersal(std::shared_ptr<FT_pop> pop){
                         if(search == existing_FT_pop.end()){
                             int start_size = 1;
                             std::shared_ptr<FT_pop> FTpop_tmp = std::make_shared< FT_pop >(pop->Traits,cell_new,start_size);
-                            //FT_pop* FTpop_tmp = new FT_pop();
-                            //FT_pop* FTpop_tmp = new FT_pop(pop->Traits,cell_new,start_size);
                             cell_new->FT_pop_List.push_back(FTpop_tmp);
                             cell_new->FT_pop_sizes.insert(std::make_pair(FTpop_tmp->Traits->FT_ID, start_size));
                             cell_found=true;
@@ -464,7 +459,6 @@ void FT_pop::update_pop_dispersal(std::shared_ptr<FT_pop> pop){
 void FT_pop::disturbance(std::shared_ptr<FT_pop> pop){
     // depends on susceptibility
     pop->Pt=int(floor(pop->Pt*(1.0-pop->Traits->dist_eff)));
-    // pop->Pt=int(floor(pop->Pt*dist_prob_pop));
     shared_ptr<CCell> cell=pop->cell;
     cell->FT_pop_sizes.find(pop->Traits->FT_ID)->second=pop->Pt;
 }

@@ -34,30 +34,19 @@ public:
         // patch area
         double Area;
         //
-        double Area_CSD;
-        double Area_LSD;
-        double Perim;
-        double Perim_csd;
-        double Perim_cps;
-        double Perim_lsd;
-        double Gyrate;
-        double Para;
+        //double Area_CSD;
+        //double Area_LSD;
+        //double Perim;
+        //double Perim_csd;
+        //double Perim_cps;
+        //double Perim_lsd;
+        //double Gyrate;
+        //double Para;
         double Shape;
         int nb_bordercells;
     };
     Patch_ID_Definitions PID_def;
-    //! distance to other land use classes
-    struct min_dist_cell{
-        double dist=0.0;
-        double Area=0.0;
-        double Shape=0.0;
-        double Para=0.0;
-        double Perim=0.0;
-    };
 
-    map<int, min_dist_cell> distance_LU;
-    //! capacity
-    int sumCap;
     //! List of all FT populations in cell
     vector<std::shared_ptr<FT_pop>> FT_pop_List;
     //! Map of all population sizes of FT in cell

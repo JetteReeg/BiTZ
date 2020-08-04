@@ -13,14 +13,14 @@ struct Patch_def{
     // patch area
     double Area;
     //
-    double Area_CSD;
-    double Area_LSD;
-    double Perim;
-    double Perim_csd;
-    double Perim_cps;
-    double Perim_lsd;
-    double Gyrate;
-    double Para;
+    //double Area_CSD;
+    //double Area_LSD;
+    //double Perim;
+    //double Perim_csd;
+    //double Perim_cps;
+    //double Perim_lsd;
+    //double Gyrate;
+    //double Para;
     double Shape;
     int nb_bordercells;
     };

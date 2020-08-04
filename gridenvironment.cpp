@@ -40,7 +40,6 @@ void GridEnvironment::readLandscape(){
     for (int x=0; x< SRunPara::RunPara.xmax; x++){
         for (int y=0; y< SRunPara::RunPara.ymax; y++){
             index_pa=x*SRunPara::RunPara.xmax+y;
-            //cout<<"currently at patch ID: "<<v_tmp_pa[index_pa]<<endl;
             // set patch ID in each cell object
             shared_ptr<CCell> cell = make_shared<CCell>(index_pa,x,y,v_tmp_pa[index_pa]);
             //if patch ID exists in Patch_defList map
@@ -49,16 +48,16 @@ void GridEnvironment::readLandscape(){
                 shared_ptr<Patch_def> patch_def=GridEnvironment::Patch_defList.find(v_tmp_pa[index_pa])->second; // get the parameters of the specific patch
                 cell->PID_def.PID=patch_def->PID;
                 cell->PID_def.Area=patch_def->Area;
-                cell->PID_def.Para=patch_def->Para;
+                //cell->PID_def.Para=patch_def->Para;
                 cell->PID_def.Type=patch_def->Type;
-                cell->PID_def.Perim=patch_def->Perim;
+                //cell->PID_def.Perim=patch_def->Perim;
                 cell->PID_def.Shape=patch_def->Shape;
-                cell->PID_def.Gyrate=patch_def->Gyrate;
-                cell->PID_def.Area_CSD=patch_def->Area_CSD;
-                cell->PID_def.Area_LSD=patch_def->Area_LSD;
-                cell->PID_def.Perim_cps=patch_def->Perim_cps;
-                cell->PID_def.Perim_csd=patch_def->Perim_csd;
-                cell->PID_def.Perim_lsd=patch_def->Perim_lsd;
+                //cell->PID_def.Gyrate=patch_def->Gyrate;
+                //cell->PID_def.Area_CSD=patch_def->Area_CSD;
+                //cell->PID_def.Area_LSD=patch_def->Area_LSD;
+                //cell->PID_def.Perim_cps=patch_def->Perim_cps;
+                //cell->PID_def.Perim_csd=patch_def->Perim_csd;
+                //cell->PID_def.Perim_lsd=patch_def->Perim_lsd;
                 cell->PID_def.nb_bordercells=0;
                 CoreGrid.CellList.push_back(cell);
                 if (cell->PID_def.Type=="bare") cell->LU_id=0;
@@ -98,10 +97,10 @@ void GridEnvironment::readPatchID_def(const string file){
             // skip first column
             ss >> dummi;
             ss>> patch_def->PID >> patch_def->Type >> patch_def->Area
-                    >> patch_def->Area_CSD >> patch_def->Area_LSD
-                    >> patch_def->Perim >> patch_def->Perim_csd
-                    >> patch_def->Perim_cps >> patch_def->Perim_lsd
-                    >>  patch_def->Gyrate >> patch_def->Para
+                    //>> patch_def->Area_CSD >> patch_def->Area_LSD
+                    //>> patch_def->Perim >> patch_def->Perim_csd
+                    //>> patch_def->Perim_cps >> patch_def->Perim_lsd
+                    //>>  patch_def->Gyrate >> patch_def->Para
                     >> patch_def->Shape;
             // add a new patch ID to the list of patches
             patch_def->nb_bordercells=0;
@@ -130,16 +129,16 @@ void GridEnvironment::calculate_TZ(){
                 }
              }
         if (border_cell>0) {
-            nb_bordercells++;
-            CoreGrid.CellList[location]->TZ_pot=true;
-            //find patch ID  and count number of bordercells of this patch
-            GridEnvironment::Patch_defList.find(CoreGrid.CellList[location]->pa_id)->second->nb_bordercells++;
+            if (CoreGrid.CellList[location]->TZ_pot!=true){
+                nb_bordercells++;
+                CoreGrid.CellList[location]->TZ_pot=true;
+                //find patch ID  and count number of bordercells of this patch
+                GridEnvironment::Patch_defList.find(CoreGrid.CellList[location]->pa_id)->second->nb_bordercells++;
+            }
         }
     }
     // get nb of TZ cells do generate
-    //cout<<"nb border cells "<<nb_bordercells<<endl;
     int nb_TZ_cells=int(floor(nb_bordercells*SRunPara::RunPara.TZ_percentage));
-    //cout<<"nb TZ cells "<<nb_TZ_cells<<endl;
     // get from patch id definition file the patch IDs which should be prioritized
     // select randomly a patch ID, which should get TZ
     // go through the map of patch definitions to get prioritized IDs
@@ -161,7 +160,7 @@ void GridEnvironment::calculate_TZ(){
             for (auto it = PID_size.begin(); it!=PID_size.end(); it++){
                 // while there are still cells left
                 next_patch=false;
-                if (nb_TZ_cells>0){
+                if (nb_TZ_cells>0 & GridEnvironment::Patch_defList.find(it->second)->second->nb_bordercells>0){
                     while (next_patch==false){
                         // select a random cell
                         int x=int(floor(combinedLCG()*SRunPara::RunPara.xmax));
@@ -198,7 +197,6 @@ void GridEnvironment::calculate_TZ(){
                                          }
                                    }
                             }
-                            //cout<<"nb border in patch "<<GridEnvironment::Patch_defList.find(cell->pa_id)->second->nb_bordercells<<endl;
                             if (GridEnvironment::Patch_defList.find(cell->pa_id)->second->nb_bordercells==0 || nb_TZ_cells==0) next_patch=true;
                         }
                     }// end while
@@ -212,7 +210,7 @@ void GridEnvironment::calculate_TZ(){
         for (auto it = PID_size.rbegin(); it!=PID_size.rend(); it++){
             // while there are still cells left
             next_patch=false;
-            if (nb_TZ_cells>0){
+            if (nb_TZ_cells>0 & GridEnvironment::Patch_defList.find(it->second)->second->nb_bordercells>0){
                 while (next_patch==false){
                     // select a random cell
                     int x=int(floor(combinedLCG()*SRunPara::RunPara.xmax));

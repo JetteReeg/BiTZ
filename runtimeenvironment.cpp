@@ -95,11 +95,8 @@ void RuntimeEnvironment::one_run(){
                 }
                 cell->FT_pop_List.clear();
                 cell->FT_pop_sizes.clear();
-                cell->distance_LU.clear();
         }
 
-        //CoreGrid.CellList.clear();
-        //FT_traits::FtLinkList.clear();
         Output::FToutdata.clear();
         Output::Landoutdata.clear();
         GridEnvironment::Patch_defList.clear();
@@ -273,10 +270,6 @@ void RuntimeEnvironment::one_year(){
             shared_ptr <SFTout> tmp=Output::GetOutput_FT(year, var->second->FT_ID, LU_id, patch_ID);
             Output::FToutdata.push_back(tmp);
         }
-//        for (int lu=0;lu<SRunPara::RunPara.nb_LU;lu++) {
-//            shared_ptr <SFTout> tmp=Output::GetOutput_FT(year, var->second->FT_ID, lu);
-//            Output::FToutdata.push_back(tmp);
-//        }
     }
     //only in certain years
     if (year % 10 == 0 || year==(SRunPara::RunPara.t_max-1)){
@@ -308,8 +301,6 @@ void RuntimeEnvironment::init(){
     init_landscape();
     //initialise the functional types
     init_FTs();
-    //initialise the populations
-    //init_populations();
 }
 /**
  * @brief RuntimeEnvironment::init_landscape
@@ -343,7 +334,7 @@ void RuntimeEnvironment::init_populations(){
         // variable trait stores the trait values
         shared_ptr<FT_traits> traits=var->second;
         // init new FT populations
-        int init_pop = 100;
+        int init_pop = 1000;
         InitFTpop(traits, init_pop);
     }
 
@@ -374,7 +365,7 @@ void RuntimeEnvironment::InitFTpop(shared_ptr <FT_traits> traits, int n){
         int current_ID = traits->FT_ID;
         auto search = existing_FT_pop.find(current_ID);
         if(search == existing_FT_pop.end()){
-            int start_size = nrand(10)+1;
+            int start_size = nrand(100)+1;
             //int start_size=1;
             std::shared_ptr<FT_pop> FTpop_tmp = std::make_shared< FT_pop >(traits,cell,start_size);
             cell->FT_pop_List.push_back(FTpop_tmp);
@@ -389,7 +380,6 @@ void RuntimeEnvironment::InitFTpop(shared_ptr <FT_traits> traits, int n){
 void RuntimeEnvironment::WriteOfFile(int nrep){
     //FToutdata
     stringstream strd;
-    //strd<<GetCurrentWorkingDir()<<"/Output/GridOut_"<<SRunPara::RunPara.SimNb<<".txt";
     strd<<"Output/GridOut_"<<SRunPara::RunPara.SimNb<<"_"<<SRunPara::RunPara.MC<<".txt";
     string NameGridOutFile=strd.str();
     ofstream myfile(NameGridOutFile.c_str(),ios::app);
@@ -470,5 +460,4 @@ void RuntimeEnvironment::weather(){
     //annual weather randomly fluctuates with eps from [-0.5, 0.5]
     weather_year= 1.0;
     weather_year=weather_year*(1+eps);
-    //cout<<"weather condition: "<< weather_year << endl;
 }
