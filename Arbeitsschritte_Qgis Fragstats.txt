@@ -1,0 +1,15 @@
+# in Qgis:
+Gewünschte Landschaft als Raster generieren
+Konvertieren als .asc --> es entsteht eine Rasterdatei mit den LU Klassen
+# Datei für Fragstats vorbereiten:
+ohne die ersten Zeilen der .asc Datei
+über cmd sed "C:\Program Files (x86)\GnuWin32\bin\sed.exe" -i[1] "s/[[:space:]]//" <Datei>.asc Leerzeichen vor jeder Zeile löschen
+
+-i "1,6d" *.asc --> löscht die ersten 6 Zeilen
+
+#in Fragstats:
+Class descriptor Datei --> LU ID -> Klasse -> auswerten?
+auf Patchebene analysieren AREA , AREA_CSD , AREA_LSD , PERIM , PERIM_CSD , PERIM_CPS , PERIM_LSD , GYRATE , PARA , SHAPE
+patch ID file generieren
+
+--> Input in BiTZ

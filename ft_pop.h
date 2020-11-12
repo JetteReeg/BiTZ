@@ -16,26 +16,27 @@ protected:
 public:
     //! constructor
     FT_pop();
-    //! constructor for plant objects
+    //! constructor for bee objects
     FT_pop(shared_ptr<FT_traits> Traits, shared_ptr<CCell> cell, int n);
+
     //! FT Trait container
     shared_ptr<FT_traits> Traits;
 
-    //! current location
+    //! current location of FT population
     int xcoord;
 
-    //! current location
+    //! current location of FT population
     int ycoord;
 
     //! nest capacity for each FT population in the cell
     int nestCap;
+
+    //! maximal nest suitability within the foraging range of the FT
     double MaxNestSuitability;
 
-    //! foraging capacity for each FT population in the cell
-    double resCap;
-
-    //! transition zone effect
-    double trans_effect;
+    //! transition zone effect for resources and nesting sites
+    double trans_effect_res;
+    double trans_effect_nest;
 
     //!current population size
     int Pt;
@@ -53,9 +54,10 @@ public:
     void setCell(shared_ptr<CCell> cell);
     void set_trans_effect(shared_ptr<CCell> cell);
     void set_nestCap(shared_ptr<CCell> cell);
-    void set_resCap(shared_ptr<CCell> cell);
-    inline static int nrand(int n){return combinedLCG()*n;}
-    static void growth(std::shared_ptr<FT_pop> pop, double weather_year);
+    void set_max_nestCap(shared_ptr<CCell> cell);
+    static void set_foraging_individuals(std::shared_ptr<FT_pop> pop);
+    inline static int nrand(int n){return int(floor(combinedLCG()*n));}
+    static void growth(double weather_year);
     static void dispersal(std::shared_ptr<FT_pop> pop);
     static void update_pop(std::shared_ptr<FT_pop> pop);
     static void update_pop_dispersal(std::shared_ptr<FT_pop> pop);

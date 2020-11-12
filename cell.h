@@ -27,40 +27,27 @@ public:
 
     struct Patch_ID_Definitions
     {
-        // identifier
+        //! identifier
         int PID;
-        // patch type
+        //! patch type
         string Type;
-        // patch area
+        //! patch area
         double Area;
-        //
-        double Area_CSD;
-        double Area_LSD;
-        double Perim;
-        double Perim_csd;
-        double Perim_cps;
-        double Perim_lsd;
-        double Gyrate;
-        double Para;
-        double Shape;
+        //! number of bordercells (only considered in arable patches)
+        int nb_bordercells;
     };
     Patch_ID_Definitions PID_def;
-    //! distance to other land use classes
-    struct min_dist_cell{
-        double dist=0.0;
-        double Area=0.0;
-        double Shape=0.0;
-        double Para=0.0;
-        double Perim=0.0;
-    };
 
-    map<int, min_dist_cell> distance_LU;
-    //! capacity
-    int sumCap;
     //! List of all FT populations in cell
     vector<std::shared_ptr<FT_pop>> FT_pop_List;
     //! Map of all population sizes of FT in cell
     map <int, int> FT_pop_sizes;
+    //! population size of foraging type 1
+    map <int, int> FT_pop_sizes_foraging_1;
+    //! population size of foraging type 2
+    map <int, int> FT_pop_sizes_foraging_2;
+    //! population size of foraging type 3
+    map <int, int> FT_pop_sizes_foraging_3;
     //! constructors
     CCell();
     CCell(int index, int xx,int yy, int pa_id);

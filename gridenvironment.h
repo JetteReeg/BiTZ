@@ -6,22 +6,14 @@
 using namespace std;
 
 struct Patch_def{
-    // identifier
+    //! identifier
     int PID;
-    // patch type
+    //! patch type
     string Type;
-    // patch area
+    //! patch area
     double Area;
-    //
-    double Area_CSD;
-    double Area_LSD;
-    double Perim;
-    double Perim_csd;
-    double Perim_cps;
-    double Perim_lsd;
-    double Gyrate;
-    double Para;
-    double Shape;
+    //! number of border cells (only used in arable patches
+    int nb_bordercells;
     };
 
 class GridEnvironment: public CCell
@@ -34,10 +26,10 @@ public:
 
     //! read the lanscape
     static void readLandscape();
-    //! calculate the closest distance to other land use class
+    //! calculate the potential and realized transition zones
     static void calculate_TZ();
     //! links of Patches used
-    static map<int,shared_ptr<Patch_def>> Patch_defList; //TODO: muss es ein shared_ptr sein?
+    static map<int,shared_ptr<Patch_def>> Patch_defList;
     //! read Patch ID definition file
     static void readPatchID_def(const string file);
 };

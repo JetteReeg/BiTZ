@@ -16,6 +16,7 @@ std::string SRunPara::size_order="ascending";
 //! parameters of specific run
 SRunPara SRunPara::RunPara=SRunPara();
 
+//! constructor
 SRunPara::SRunPara():t_max(100), xmax(100),ymax(100), nb_LU(4), Nrep(1)
 {}
 

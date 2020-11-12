@@ -18,21 +18,31 @@ SFTout::SFTout():year(0),FT_ID(0), LU_ID(0), popsize(0){
 /**
  * constructor
  */
-SComout::SComout():year(0),LU_ID(0), nb_FT(0), diversity(0.0){
+SLandout::SLandout():year(0),x(0), y(0), LU_ID(0), FT_ID(0), popsize(0){
 }//end PftOut constructor
 
-shared_ptr <SFTout> Output::GetOutput_FT(int year, int FT_ID, int lu){
+/**
+ * @brief Output::GetOutput_FT: After each year, the population size on patch scale are stored in a struct.
+ * @param year
+ * @param FT_ID
+ * @param lu
+ * @param patch_ID
+ * @return
+ */
+shared_ptr <SFTout> Output::GetOutput_FT(int year, int FT_ID, int lu, int patch_ID){
             //create a new struct to add to list
             shared_ptr <SFTout> FTyear=make_shared<SFTout>();
             FTyear->year=year;
             FTyear->FT_ID=FT_ID;
+            FTyear->patch_ID=patch_ID;
             FTyear->LU_ID=lu;
-            //go through each cell
+            FTyear->popsize=0;
+            //go through each cell to summerize the population size per patch
             for (unsigned int cell_i=0; cell_i<SRunPara::RunPara.GetSumCells(); ++cell_i){
                     // link to cell
                     shared_ptr<CCell> cell = CoreGrid.CellList[cell_i];
                     //if cell LU_ID is lu
-                    if (cell->LU_id==lu){
+                    if (cell->pa_id==patch_ID){
                          map <int, int> existing_FT_pop = cell->FT_pop_sizes;
                          auto search = existing_FT_pop.find(FT_ID);
                          // if FT_ID is found - add pop size
@@ -50,55 +60,25 @@ shared_ptr <SFTout> Output::GetOutput_FT(int year, int FT_ID, int lu){
    return(FTyear);
 }// end get output
 
-shared_ptr <SComout> Output::GetOutput_Com(int year, int lu){
+/**
+ * @brief Output::GetOutput_Land: After each 10 years, the population size on cell scale is stored in a struct.
+ * @param pop
+ * @param year
+ * @param x
+ * @param y
+ * @param lu
+ * @param FT_ID
+ * @return
+ */
+shared_ptr <SLandout> Output::GetOutput_Land(std::shared_ptr<FT_pop> pop, int year, int x, int y, int lu, int FT_ID){
             //create a new struct to add to list
-            shared_ptr <SComout> Comyear=make_shared<SComout>();
-            Comyear->year=year;
-            Comyear->LU_ID=lu;
-            Comyear->nb_FT=0;
-            Comyear->diversity=0.0;
-            //go through each cell
-            int nb_cell=0;
-            int totalN=0;
-            int totalN_tmp=0;
-            for (unsigned int cell_i=0; cell_i<SRunPara::RunPara.GetSumCells(); ++cell_i){
-                    // link to cell
-                    shared_ptr<CCell> cell = CoreGrid.CellList[cell_i];
-                    //if cell LU_ID is lu
-                    if (cell->LU_id==lu){
-                        // get nb of FT in cell
-                         // total number of individuals
-                         for (unsigned pop_i=0; pop_i < cell->FT_pop_List.size(); pop_i++){
-                             if(cell->FT_pop_List.at(pop_i)->Pt>0){
-                                 Comyear->nb_FT++;
-                                 totalN=totalN+cell->FT_pop_List.at(pop_i)->Pt;
-                                 totalN_tmp=totalN_tmp+cell->FT_pop_List.at(pop_i)->Pt;
-                             }
-                         }
-                         if (totalN_tmp>0) nb_cell++;
-                         totalN_tmp=0;
-                    }
-            }// for each cell
-
-            for (unsigned int cell_i=0; cell_i<SRunPara::RunPara.GetSumCells(); ++cell_i){
-                // link to cell
-                shared_ptr<CCell> cell = CoreGrid.CellList[cell_i];
-                //if cell LU_ID is lu
-                if (cell->LU_id==lu){
-                    // get diversity index
-                    // calculate relative number of individuals in cell and sum it up
-                    for (unsigned pop_i=0; pop_i < cell->FT_pop_List.size(); pop_i++){
-                        if (cell->FT_pop_List.at(pop_i)->Pt>0){
-                            double pi = double ((1.0*cell->FT_pop_List.at(pop_i)->Pt)/(1.0*totalN));
-                            pi= pi*log(pi);
-                            Comyear->diversity=Comyear->diversity+pi;
-                            }
-                        }
-                } // end if LU_ID of cell is lu
-
-            }
-            Comyear->diversity = Comyear->diversity/nb_cell;
-            Comyear->nb_FT = Comyear->nb_FT/nb_cell;
-   return(Comyear);
+            shared_ptr <SLandout> Landyear=make_shared<SLandout>();
+            Landyear->x=x;
+            Landyear->y=y;
+            Landyear->year=year;
+            Landyear->LU_ID=lu;
+            Landyear->FT_ID=FT_ID;
+            Landyear->popsize=pop->Pt;
+   return(Landyear);
 }// end get output
 
