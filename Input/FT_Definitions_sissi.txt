@@ -27,6 +27,3 @@ Type	ID	R	b	c	mu	omega	dispsd	dispmean	flying_period	dist_eff	trans_effect_nest	
 26	26	4.5	1	4	0.1	0.5	10	100	2	0.9	1	1						
 27	27	4.5	1	4	0.1	0.5	10	100	3	0.9	1	1						
 28	28	4.5	1	4	0.1	0.5	10	100	3	0.3	1	1						
-																		
-																		
-																		

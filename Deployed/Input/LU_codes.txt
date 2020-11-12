@@ -1,0 +1,7 @@
+ID, Type
+0,bare
+1,arable
+2,forest
+3,grassland
+4,urban
+5,water
