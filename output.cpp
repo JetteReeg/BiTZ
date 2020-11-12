@@ -21,6 +21,14 @@ SFTout::SFTout():year(0),FT_ID(0), LU_ID(0), popsize(0){
 SLandout::SLandout():year(0),x(0), y(0), LU_ID(0), FT_ID(0), popsize(0){
 }//end PftOut constructor
 
+/**
+ * @brief Output::GetOutput_FT: After each year, the population size on patch scale are stored in a struct.
+ * @param year
+ * @param FT_ID
+ * @param lu
+ * @param patch_ID
+ * @return
+ */
 shared_ptr <SFTout> Output::GetOutput_FT(int year, int FT_ID, int lu, int patch_ID){
             //create a new struct to add to list
             shared_ptr <SFTout> FTyear=make_shared<SFTout>();
@@ -29,7 +37,7 @@ shared_ptr <SFTout> Output::GetOutput_FT(int year, int FT_ID, int lu, int patch_
             FTyear->patch_ID=patch_ID;
             FTyear->LU_ID=lu;
             FTyear->popsize=0;
-            //go through each cell
+            //go through each cell to summerize the population size per patch
             for (unsigned int cell_i=0; cell_i<SRunPara::RunPara.GetSumCells(); ++cell_i){
                     // link to cell
                     shared_ptr<CCell> cell = CoreGrid.CellList[cell_i];
@@ -52,6 +60,16 @@ shared_ptr <SFTout> Output::GetOutput_FT(int year, int FT_ID, int lu, int patch_
    return(FTyear);
 }// end get output
 
+/**
+ * @brief Output::GetOutput_Land: After each 10 years, the population size on cell scale is stored in a struct.
+ * @param pop
+ * @param year
+ * @param x
+ * @param y
+ * @param lu
+ * @param FT_ID
+ * @return
+ */
 shared_ptr <SLandout> Output::GetOutput_Land(std::shared_ptr<FT_pop> pop, int year, int x, int y, int lu, int FT_ID){
             //create a new struct to add to list
             shared_ptr <SLandout> Landyear=make_shared<SLandout>();

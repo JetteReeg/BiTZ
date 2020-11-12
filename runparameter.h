@@ -13,7 +13,7 @@ struct SRunPara
 public:
     static SRunPara RunPara;
 
-    //Input Files
+    //!Input Files
     //! Filename of PftTrait-File
     static std::string NameFtFile;
     //! Filename of Landscape file with patch IDs
@@ -25,7 +25,7 @@ public:
     //! Filename of patch definition file
     static std::string NamePatchDefFile;
 
-    // simulation number
+    //! simulation number
     int SimNb;
     int MC;
 
@@ -37,7 +37,9 @@ public:
     int nb_LU;
     //! width of transition zone
     int TZ_width;
+    //! percentage of potential transition zones being realised
     double TZ_percentage;
+    //! order of transition zones being realized (e.g. biggest to smallest arable fields)
     static std::string size_order;
 
     //! maximal search attempts
@@ -48,6 +50,7 @@ public:
 
     //! number of repetitions
     int Nrep;
+
     //! constructor
     SRunPara();
 

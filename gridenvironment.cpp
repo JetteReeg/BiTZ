@@ -10,14 +10,19 @@
 #include <cmath>
 
 using namespace std;
-
+//! CoreGrid stores the whole grid environment
 GridEnvironment CoreGrid;
+//! map of the patch definitions
 map< int, shared_ptr<Patch_def> > GridEnvironment::Patch_defList = map< int, shared_ptr<Patch_def> >();
-
+//! constructor
 GridEnvironment::GridEnvironment(): CCell()
 {
 }
-
+/**
+ * @brief GridEnvironment::readLandscape: Read in the landscape file as raster file of patch IDs
+ * After reading in the landscape with the information of the patch IDs,
+ * the patch IDs are translated to land use classes.
+ */
 void GridEnvironment::readLandscape(){
     //Open Landscape patch ID file
     const char* name_pa=SRunPara::NameLandscapePatchFile.c_str();
@@ -47,17 +52,7 @@ void GridEnvironment::readLandscape(){
                 // set patch_def for each cell
                 shared_ptr<Patch_def> patch_def=GridEnvironment::Patch_defList.find(v_tmp_pa[index_pa])->second; // get the parameters of the specific patch
                 cell->PID_def.PID=patch_def->PID;
-                cell->PID_def.Area=patch_def->Area;
-                //cell->PID_def.Para=patch_def->Para;
                 cell->PID_def.Type=patch_def->Type;
-                //cell->PID_def.Perim=patch_def->Perim;
-                cell->PID_def.Shape=patch_def->Shape;
-                //cell->PID_def.Gyrate=patch_def->Gyrate;
-                //cell->PID_def.Area_CSD=patch_def->Area_CSD;
-                //cell->PID_def.Area_LSD=patch_def->Area_LSD;
-                //cell->PID_def.Perim_cps=patch_def->Perim_cps;
-                //cell->PID_def.Perim_csd=patch_def->Perim_csd;
-                //cell->PID_def.Perim_lsd=patch_def->Perim_lsd;
                 cell->PID_def.nb_bordercells=0;
                 CoreGrid.CellList.push_back(cell);
                 if (cell->PID_def.Type=="bare") cell->LU_id=0;
@@ -76,6 +71,11 @@ void GridEnvironment::readLandscape(){
 
 }
 
+/**
+ * @brief GridEnvironment::readPatchID_def: Read in the patch definition file with informations on
+ * identifier, land use class/type and area. More parameters are possible but currently not needed
+ * @param file
+ */
 void GridEnvironment::readPatchID_def(const string file){
     // read patch ID definitions
     //Open InitFile
@@ -92,16 +92,13 @@ void GridEnvironment::readPatchID_def(const string file){
             // get the ID definition for each patch
             std::stringstream ss(line);
             string dummi;
+            int dummi2;
             // create a structure for the traits
             shared_ptr<Patch_def> patch_def = make_shared<Patch_def>();
             // skip first column
             ss >> dummi;
             ss>> patch_def->PID >> patch_def->Type >> patch_def->Area
-                    //>> patch_def->Area_CSD >> patch_def->Area_LSD
-                    //>> patch_def->Perim >> patch_def->Perim_csd
-                    //>> patch_def->Perim_cps >> patch_def->Perim_lsd
-                    //>>  patch_def->Gyrate >> patch_def->Para
-                    >> patch_def->Shape;
+                    >>dummi2;
             // add a new patch ID to the list of patches
             patch_def->nb_bordercells=0;
             GridEnvironment::Patch_defList.insert(std::make_pair(patch_def->PID, patch_def));
@@ -109,6 +106,19 @@ void GridEnvironment::readPatchID_def(const string file){
 
 }
 
+/**
+ * @brief GridEnvironment::calculate_TZ: Calculates the potential and realized transition zone cells in the landscape
+ * STEP 1: The function goes through all grid cells, asks whether the cell is part of an arable patch and, if so, whether it has
+ * a forest or grassland cell next to it. If so, it is set to a potential transition zone cell and the number of
+ * border cells is stored for the specific patch.
+ * STEP 2: The total number of realized transition zones are determined. Then the arable patches are ranked/prioritized
+ * by the area. Either by decreasing or ascending order, cells are
+ * marked as transition zones: A random cell is chosen, if the cell belongs the current patch and is a
+ * potential transition zone cell, it is marked as realized transition zone cell and the number of 'to be realized'
+ * transition zone cells are decreased.
+ * The resulting grid is saved for later analyses. (one only considering the TZ and one considering the land use
+ * classes.
+ */
 void GridEnvironment::calculate_TZ(){
     int nb_bordercells=0;
     // go through all cells of the grid and count nb. of border cells

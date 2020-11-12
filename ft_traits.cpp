@@ -8,14 +8,18 @@
 #include <memory>
 #include <cassert>
 #include <sstream>
-
+//! map of all FTs and the specific traits
 map< string, shared_ptr<FT_traits> > FT_traits::FtLinkList = map< string, shared_ptr<FT_traits> >();
-
+//! constructor
 FT_traits::FT_traits()
 {
 
 }
 
+/**
+ * @brief FT_traits::ReadFTDef: Reads in the FT definition file
+ * @param file
+ */
 void FT_traits::ReadFTDef(const string file){
     //Open InitFile
     ifstream FTFile(file.c_str());
@@ -45,6 +49,11 @@ void FT_traits::ReadFTDef(const string file){
         }// end read all trait data for PFTs
 }
 
+/**
+ * @brief FT_traits::ReadNestSuitability: Reads in the nest suitability file
+ * it include the nest suitability in each land use class for each FT
+ * @param file
+ */
 void FT_traits::ReadNestSuitability(const string file){
     //Open InitFile
     ifstream SuitabilityFile(file.c_str());
@@ -90,7 +99,11 @@ void FT_traits::ReadNestSuitability(const string file){
     }// end read suitability
 }
 
-
+/**
+ * @brief FT_traits::ReadForageSuitability: Reads in the resource suitability file
+ * it includes the forage suitability in each land use class for each FT
+ * @param file
+ */
 void FT_traits::ReadForageSuitability(const string file){
     //Open InitFile
     ifstream SuitabilityFile(file.c_str());

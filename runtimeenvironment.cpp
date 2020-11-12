@@ -7,16 +7,24 @@
 #include <sstream>
 #include <ctime>
 
+//! initialize global parameter @param year
 int RuntimeEnvironment::year=0;
+//! initialize global parameter @param weather_year
 double RuntimeEnvironment::weather_year=1.0;
+//! initialize vector for patch scale output
 vector <shared_ptr<SFTout>> Output::FToutdata;
+//! initialize vector for cell scale output
 vector <shared_ptr<SLandout>> Output::Landoutdata;
-
+//! constructor
 RuntimeEnvironment::RuntimeEnvironment():GridEnvironment ()
 {
 
 }
-
+/**
+ * @brief RuntimeEnvironment::readSimDef: Read in the simulation file including the simulation definition
+ * After reading in the file, the simulation run starts.
+ * @param file
+ */
 void RuntimeEnvironment::readSimDef(const string file){
     // read patch ID definitions
     //Open InitFile
@@ -66,25 +74,33 @@ void RuntimeEnvironment::readSimDef(const string file){
  */
 void RuntimeEnvironment::one_run(){
     cout<<"Start one simulation run..."<<endl;
+
     cout<<" Initialize..."<<endl;
+    //! initialize the landscape environment
     init();
     cout<<"Global initialization finished..."<<endl;
+
     int rep=0;
     while (rep<SRunPara::RunPara.Nrep){
         cout << "Start with a repetition..."<<endl;
+
         cout << "Initialize populations..."<<endl;
+        //! initialize the populations
         init_populations();
         year=0;
+
+        //! loop over the number of years to be simulated
         while(year<SRunPara::RunPara.t_max) {
             //if necessary, reset or update values for each year
-            //Popdynamics
+            // run one year
             one_year();
         }
-        //write output
+
+        //! write output
         cout << "Write output of repetition..."<<endl;
         WriteOfFile(rep);
 
-        //clear old variables
+        //! clear old variables
         for (unsigned int cell_i=0; cell_i<SRunPara::RunPara.GetSumCells(); ++cell_i){
                 // link to cell
                 shared_ptr<CCell> cell = CoreGrid.CellList[cell_i];
@@ -102,9 +118,11 @@ void RuntimeEnvironment::one_run(){
         GridEnvironment::Patch_defList.clear();
         CoreGrid.CellList.clear();
         cout << "Clear data of repetition..."<<endl;
+    //! increase the number of repetitions
     rep++;
     }
 }
+
 /**
  * @brief RuntimeEnvironment::one_year
  * This function simulates one year. Functions called within are: growth, update, dispersal
@@ -112,24 +130,23 @@ void RuntimeEnvironment::one_run(){
  * functions called: FT_pop::growth, FT_pop::update_pop, FT_pop::dispersal
  */
 void RuntimeEnvironment::one_year(){
-    // calculate current weather conditions
     cout << "current year: "<< year+1 <<endl;
+
+    //! calculate current weather conditions
     cout << "Calculate weather conditions..."<<endl;
     weather();
-    // get updated dispersal range grid
-    cout << "Update dispersal range grid..."<<endl;
-    //clear old lists
-    int start;
-    int stop;
-    start=clock();
+
+    //! get updated foraging range grid
+    cout << "Update foraging range grid..."<<endl;
+    //!clear old lists
     for (unsigned int cell_i=0; cell_i<SRunPara::RunPara.GetSumCells(); ++cell_i){
         shared_ptr<CCell> cell = CoreGrid.CellList[cell_i];
-        cell->FT_pop_sizes_foraging.clear();
+        cell->FT_pop_sizes_foraging_1.clear();
+        cell->FT_pop_sizes_foraging_2.clear();
+        cell->FT_pop_sizes_foraging_3.clear();
     }
-    stop=clock();
-    cout << "clear FT_pop_sizes_foraging took "<<(stop - start)/CLOCKS_PER_SEC<< endl;
-    // iterating over all cells
-    start=clock();
+
+    //! calculate the new foraging range grid
     for (unsigned int cell_i=0; cell_i<SRunPara::RunPara.GetSumCells(); ++cell_i){
         // link to cell
         shared_ptr<CCell> cell = CoreGrid.CellList[cell_i];
@@ -141,24 +158,12 @@ void RuntimeEnvironment::one_year(){
             FT_pop::set_foraging_individuals(curr_Pop);
         }// end for all populations in cell
     }// end for all cells
-    stop=clock();
-    cout << "updating FT_pop_sizes_foraging took "<<(stop - start)/CLOCKS_PER_SEC<< endl;
-    start=clock();
-    //go through the whole grid and all Pops in cell
-    //iterating over cells
-    for (unsigned int cell_i=0; cell_i<SRunPara::RunPara.GetSumCells(); ++cell_i){
-            // link to cell
-            shared_ptr<CCell> cell = CoreGrid.CellList[cell_i];
-            // iterating over FT_pops in cell
-            for (unsigned pop_i=0; pop_i < cell->FT_pop_List.size(); pop_i++){
-                std::shared_ptr<FT_pop> curr_Pop=cell->FT_pop_List.at(pop_i);
-                FT_pop::growth(curr_Pop, weather_year);
-            }
-    }
-    stop=clock();
-    cout << "growth of populations in cell took "<<(stop - start)/CLOCKS_PER_SEC<< endl;
+
+    //! calculate the growth of each FT population: go through the whole grid and all Pops in cell
+    FT_pop::growth(weather_year);
     cout << "growth completed!"<<endl;
 
+    //! update population sizes
     for (unsigned int cell_i=0; cell_i<SRunPara::RunPara.GetSumCells(); ++cell_i){
             // link to cell
             shared_ptr<CCell> cell = CoreGrid.CellList[cell_i];
@@ -169,7 +174,8 @@ void RuntimeEnvironment::one_year(){
             }
     }
     cout<< "update completed!"<<endl;
-    //TODO: check dispersal function!
+
+    //! calculate the dispersal of each migranting individual
     for (unsigned int cell_i=0; cell_i<SRunPara::RunPara.GetSumCells(); ++cell_i){
             // link to cell
             shared_ptr<CCell> cell = CoreGrid.CellList[cell_i];
@@ -181,6 +187,7 @@ void RuntimeEnvironment::one_year(){
     }
     cout<< "migration completed!"<<endl;
 
+    //! update the population sizes with the immigrants
     for (unsigned int cell_i=0; cell_i<SRunPara::RunPara.GetSumCells(); ++cell_i){
             // link to cell
             shared_ptr<CCell> cell = CoreGrid.CellList[cell_i];
@@ -192,23 +199,23 @@ void RuntimeEnvironment::one_year(){
     }
     cout<< "update after migration completed!"<<endl;
 
-    // disturbances
+    //! calculate the disturbances
 
-    //go through patch ids and select all patches that are being disturbed
+    //! go through patch ids and select all patches that are being disturbed
     vector<int> PID_disturbed;
     for (auto it = GridEnvironment::Patch_defList.begin(); it!=GridEnvironment::Patch_defList.end(); it++){
         shared_ptr<Patch_def> tmp = it->second;
         double probability = combinedLCG();
         // for arable patches, the probability is 90% for being disturbed within the current year
-        if (tmp->Type=="arable" && probability < 0.9){
+        if (tmp->Type=="arable" && probability < 1.0){
             PID_disturbed.push_back(tmp->PID);
         }
         // for grassland patches, the probability is 30% for being disturbed within the current year
-        if (tmp->Type=="grassland" && probability < 0.3){
+        if (tmp->Type=="grassland" && probability < 0.8){
             PID_disturbed.push_back(tmp->PID);
         }
     }
-    // go through all cells
+    //! go through all cells and check if it is disturbed
     for (unsigned int cell_i=0; cell_i<SRunPara::RunPara.GetSumCells(); ++cell_i){
         // link to cell
         shared_ptr<CCell> cell = CoreGrid.CellList[cell_i];
@@ -222,7 +229,7 @@ void RuntimeEnvironment::one_year(){
                 } // end for all populations in cell
             }// end if disturbed arable patch
             // if urban
-            if (cell->LU_id==4 && combinedLCG()<0.5){
+            if (cell->LU_id==4 && combinedLCG()<0.7){
                 for (unsigned pop_i=0; pop_i < cell->FT_pop_List.size(); pop_i++){
                     std::shared_ptr<FT_pop> curr_Pop=cell->FT_pop_List.at(pop_i);
                     FT_pop::disturbance(curr_Pop);
@@ -230,14 +237,14 @@ void RuntimeEnvironment::one_year(){
             }
 
             // if forest
-            if (cell->LU_id==2 && combinedLCG()<0.1){
+            if (cell->LU_id==2 && combinedLCG()<0.3){
                 for (unsigned pop_i=0; pop_i < cell->FT_pop_List.size(); pop_i++){
                     std::shared_ptr<FT_pop> curr_Pop=cell->FT_pop_List.at(pop_i);
                     FT_pop::disturbance(curr_Pop);
                 }
             }
             // if bare
-            if (cell->LU_id==0  && combinedLCG()<0.5){
+            if (cell->LU_id==0  && combinedLCG()<0.7){
                 for (unsigned pop_i=0; pop_i < cell->FT_pop_List.size(); pop_i++){
                     std::shared_ptr<FT_pop> curr_Pop=cell->FT_pop_List.at(pop_i);
                     FT_pop::disturbance(curr_Pop);
@@ -246,12 +253,10 @@ void RuntimeEnvironment::one_year(){
 
         }// end not TZ cell
    }
-
     cout<< "disturbance completed!"<<endl;
 
 
-    // summarize values for the year to be stored
-    //for each FT type ID
+    //! summarize values for the year to be stored for each FT on a patch scale every year
     for (auto var = FT_traits::FtLinkList.begin();
             var != FT_traits::FtLinkList.end(); ++var) {
         // for each patch ID
@@ -271,7 +276,8 @@ void RuntimeEnvironment::one_year(){
             Output::FToutdata.push_back(tmp);
         }
     }
-    //only in certain years
+
+    //! summarize values for the year to be stored for each FT on a cell scale every 10th year
     if (year % 10 == 0 || year==(SRunPara::RunPara.t_max-1)){
         for (unsigned int cell_i=0; cell_i<SRunPara::RunPara.GetSumCells(); ++cell_i) {
             shared_ptr<CCell> cell = CoreGrid.CellList[cell_i];
@@ -375,7 +381,7 @@ void RuntimeEnvironment::InitFTpop(shared_ptr <FT_traits> traits, int n){
        }//for each start population
 }
 /**
- * @brief RuntimeEnvironment::WriteOfFile
+ * @brief RuntimeEnvironment::WriteOfFile: Writing of the output file
  */
 void RuntimeEnvironment::WriteOfFile(int nrep){
     //FToutdata
@@ -444,7 +450,7 @@ void RuntimeEnvironment::WriteOfFile(int nrep){
 }
 
 /**
- * @brief RuntimeEnvironment::weather
+ * @brief RuntimeEnvironment::weather: Calculation of the yearly weather
  */
 void RuntimeEnvironment::weather(){
     // int bimodal=random(10);
@@ -460,4 +466,26 @@ void RuntimeEnvironment::weather(){
     //annual weather randomly fluctuates with eps from [-0.5, 0.5]
     weather_year= 1.0;
     weather_year=weather_year*(1+eps);
+}
+/**
+    calculates the distance between two cells in the grid
+    @param xx, yy, x, y pairs of coordinates
+  \return eucledian distance between two pairs of coordinates (xx,yy) and (x,y)
+*/
+double Distance(const double& xx, const double& yy,
+                const double& x, const double& y){
+    return sqrt((xx-x)*(xx-x) + (yy-y)*(yy-y));
+}
+
+/**
+ * @brief CompareIndexRel: Compares two integers
+ * @param i1
+ * @param i2
+ * @return
+ */
+bool CompareIndexRel(int i1, int i2)
+{
+    const int Num=SRunPara::RunPara.xmax;
+    return  Distance(i1/Num,i1%Num  ,Num/2,Num/2)
+         <Distance(i2/Num,i2%Num  ,Num/2,Num/2);
 }
