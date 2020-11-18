@@ -1,3 +1,6 @@
+/**\file
+ * \brief gridenvironment.cpp Landscape specific functions: Read in the landscape and calculate the transition zones
+*/
 #include "gridenvironment.h"
 #include "runparameter.h"
 #include "runtimeenvironment.h"

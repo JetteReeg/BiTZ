@@ -1,3 +1,6 @@
+/**\file
+ * \brief ft_pop.cpp Population processes and functions of FTs in a cell
+*/
 #include "ft_pop.h"
 #include "cell.h"
 #include "runparameter.h"

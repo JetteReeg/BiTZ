@@ -1,3 +1,6 @@
+/**\file
+ * \brief runparameter.cpp general run parameters
+*/
 #include "runparameter.h"
 
 //! trait file for functional types

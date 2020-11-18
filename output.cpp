@@ -1,3 +1,6 @@
+/**\file
+ * \brief output.cpp Output constructions
+*/
 #include "output.h"
 #include "runparameter.h"
 #include "ft_traits.h"

@@ -1,3 +1,6 @@
+/**\file
+ * \brief ft_traits.cpp Trait definitions of the FTs
+*/
 #include "ft_traits.h"
 #include "runparameter.h"
 

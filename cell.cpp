@@ -1,3 +1,6 @@
+/**\file
+ * \brief cell.cpp Cell constructor
+*/
 #include "cell.h"
 #include "gridenvironment.h"
 

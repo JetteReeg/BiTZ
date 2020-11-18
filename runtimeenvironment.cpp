@@ -1,3 +1,6 @@
+/**\file
+ * \brief runtimeenvironment.cpp Initialisation and temporal sequence of processes according to the flowchart
+*/
 #include "runtimeenvironment.h"
 #include "gridenvironment.h"
 #include <vector>

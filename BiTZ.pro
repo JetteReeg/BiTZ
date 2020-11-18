@@ -22,7 +22,8 @@ SOURCES += \
         lcg.cpp \
         main.cpp \
         runparameter.cpp \
-        runtimeenvironment.cpp
+        runtimeenvironment.cpp \
+        output.cpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -36,4 +37,5 @@ HEADERS += \
     gridenvironment.h \
     lcg.h \
     runparameter.h \
-    runtimeenvironment.h
+    runtimeenvironment.h \
+    output.h

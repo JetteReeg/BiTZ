@@ -1,3 +1,6 @@
+/**\file
+ * \brief main.cpp Read in the simulation file and start a simulation run
+*/
 #include <iostream>
 #include <sstream>
 #include "runparameter.h"
