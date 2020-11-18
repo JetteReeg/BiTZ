@@ -430,7 +430,7 @@ void FT_pop::growth(double weather_year){
 
 /**
  * @brief FT_pop::dispersal: Simulate the dispersal of individuals.
- * For each population, at least 10%, but max. Pt/nestCap^omega of the individuals of each FT pop are dispersing.
+ * For each population, maximal 90%, but at least Pt/nestCap^omega of the individuals of each FT pop are dispersing.
  * Each dispersing individuals tries to find the cell with the maximal nest capacity in the foraging range.
  * But with increasing search attempts, the probability increases that it will choose a less suitable cell.
  * @param pop
