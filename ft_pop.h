@@ -50,9 +50,11 @@ public:
     //! immigrants
     int Immigrants;
 
+    int year;
+
     //! functions
     void setCell(shared_ptr<CCell> cell);
-    void set_trans_effect(shared_ptr<CCell> cell);
+    void set_trans_effect(shared_ptr<CCell> cell, int year = 0);
     void set_nestCap(shared_ptr<CCell> cell);
     void set_max_nestCap(shared_ptr<CCell> cell);
     static void set_foraging_individuals(std::shared_ptr<FT_pop> pop);

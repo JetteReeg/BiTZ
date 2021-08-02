@@ -62,12 +62,25 @@ void FT_pop::setCell(shared_ptr<CCell> cell){
  * transition zone effects on resources and nesting are defined
  * @param cell
  */
-void FT_pop::set_trans_effect(shared_ptr<CCell> cell){
+void FT_pop::set_trans_effect(shared_ptr<CCell> cell, int year){
     //! define if the cell is a transition zone cell
     //! only if the cell is defined as a realized transition zone cell
     if(cell->TZ==true){
-        trans_effect_res=Traits->trans_effect_res;
-        trans_effect_nest=Traits->trans_effect_nest;
+        if(year<=SRunPara::RunPara.qlossstart){
+            trans_effect_res=Traits->trans_effect_res;
+            trans_effect_nest=Traits->trans_effect_nest;
+            cout << "set_trans_effect without qloss year:" << year <<endl;
+            //system("pause");
+             cout << "This is the transition zone effect for resources without quality loss" << trans_effect_res <<endl;
+        }else{
+            trans_effect_res=std::max(0.0,(Traits->trans_effect_res)* (1-((year - SRunPara::RunPara.qlossstart)* SRunPara::RunPara.qloss_trans_res)));
+            trans_effect_nest=std::max(0.0,(Traits->trans_effect_nest)* (1-((year - SRunPara::RunPara.qlossstart)* SRunPara::RunPara.qloss_trans_nest)));
+            cout << "set_trans_effect with qloss year:" << year <<endl;
+            //system("pause");
+
+        }
+        cout << "This is the transition zone effect for resources with quality loss" << trans_effect_res <<endl;
+
     }
 
 }
@@ -81,9 +94,11 @@ void FT_pop::set_trans_effect(shared_ptr<CCell> cell){
  */
 void FT_pop::set_nestCap(shared_ptr<CCell> cell){
     int x=int(floor(SRunPara::RunPara.scaling*SRunPara::RunPara.scaling*54.7));
+
     if(cell->TZ==true){
         nestCap=int(floor(x*(this->Traits->LU_suitability_nest.find(cell->LU_id)->second+trans_effect_nest)));
     } else nestCap=int(floor(x*this->Traits->LU_suitability_nest.find(cell->LU_id)->second));
+
 }
 
 /**

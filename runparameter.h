@@ -51,6 +51,10 @@ public:
     //! number of repetitions
     int Nrep;
 
+    int qlossstart;
+    double qloss_trans_res;
+    double qloss_trans_nest;
+
     //! constructor
     SRunPara();
 

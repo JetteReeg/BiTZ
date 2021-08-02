@@ -20,7 +20,7 @@ std::string SRunPara::size_order="ascending";
 SRunPara SRunPara::RunPara=SRunPara();
 
 //! constructor
-SRunPara::SRunPara():t_max(100), xmax(100),ymax(100), nb_LU(4), Nrep(1)
+SRunPara::SRunPara():t_max(100), xmax(100),ymax(100), nb_LU(4), Nrep(1), qlossstart(15), qloss_trans_res(0.05), qloss_trans_nest(0.05)
 {}
 
 //eof  ---------------------------------------------------------------------

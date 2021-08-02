@@ -96,6 +96,20 @@ void RuntimeEnvironment::one_run(){
         while(year<SRunPara::RunPara.t_max) {
             //if necessary, reset or update values for each year
             // run one year
+            /**
+             * ACHTUNG Anpassungen Lea
+             */
+            if (year>SRunPara::RunPara.qlossstart) {
+                cout << "Qloss started year:" << year <<endl;
+                //system("pause");
+                for (unsigned int cell_i=0; cell_i<SRunPara::RunPara.GetSumCells(); ++cell_i){
+                    shared_ptr<CCell> cell = CoreGrid.CellList[cell_i];
+                    for (unsigned pop_i=0; pop_i < cell->FT_pop_List.size(); pop_i++){
+                        std::shared_ptr<FT_pop> curr_Pop=cell->FT_pop_List.at(pop_i);
+                        curr_Pop->set_trans_effect(cell, year);
+                    }
+                }
+             }
             one_year();
         }
 
