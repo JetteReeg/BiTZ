@@ -6,6 +6,9 @@ require(gifski)
 require(data.table)
 require(vegan)
 # set working directory
+#home_work_dir <- "C:/Users/least/OneDrive/Dokumente/GitHub/BiTZ/Output/Neu"
+#setwd(home_work_dir)
+
 # next step: automatically go through each folder
 directories <- list.dirs(recursive=F)
 # for (dir in directories){
@@ -327,6 +330,7 @@ for (dir in c("./1c", "./1f", "./2c", "./2h",
     rm(data.list.pa, NFT.list.pa, data.list.lu, NFT.list.lu, data.list.land, NFT.list.land)
     # go back to basis working directory
     setwd('..')
+  
   }
 
   # if each scenario has its own simulation number
@@ -525,9 +529,11 @@ for (dir in c("./1c", "./1f", "./2c", "./2h",
     rm(data.list.pa, NFT.list.pa, data.list.lu, NFT.list.lu, data.list.land, NFT.list.land)
     # go back to basis working directory
     setwd('..')
+
   }
   ##### change working directory
   setwd('..')
+
 }
 
 # land use class level only selected patches
@@ -564,8 +570,10 @@ for (dir in c("./1c", "./1f", "./2c", "./2h",
   pop.all.land<-rbindlist(l)
   l<-list(NFT.all.land, NFT.list.land)
   NFT.all.land<-rbindlist(l)
-  setwd('..')
-  setwd('..')
+   setwd('..')
+   setwd('..')
+  
+ 
 }
 
 fwrite(pop.all.lu.pa, paste("pop.all.lu.pa.txt", sep=""), sep="\t")

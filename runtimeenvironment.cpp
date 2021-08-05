@@ -97,7 +97,7 @@ void RuntimeEnvironment::one_run(){
             //if necessary, reset or update values for each year
             // run one year
             /**
-             * ACHTUNG Anpassungen Lea
+             * Deterioration scenario adaption
              */
             if (year>SRunPara::RunPara.qlossstart) {
                 cout << "Qloss started year:" << year <<endl;

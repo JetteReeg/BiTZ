@@ -75,8 +75,17 @@ void FT_pop::set_trans_effect(shared_ptr<CCell> cell, int year){
         }else{
             trans_effect_res=std::max(0.0,(Traits->trans_effect_res)* (1-((year - SRunPara::RunPara.qlossstart)* SRunPara::RunPara.qloss_trans_res)));
             trans_effect_nest=std::max(0.0,(Traits->trans_effect_nest)* (1-((year - SRunPara::RunPara.qlossstart)* SRunPara::RunPara.qloss_trans_nest)));
+
+           if((SRunPara::RunPara.refresh_measures==true)){
+            if(year%SRunPara::RunPara.refresh_frequency==0){
+                trans_effect_res=SRunPara::RunPara.refresh_trans_effect_res;
+                trans_effect_nest=SRunPara::RunPara.refresh_trans_effect_nest;
+                cout<<"transition zones refreshed in year"<<year<<"with trans_effect_res"<<trans_effect_res<<"and trans_effect_nest"<<trans_effect_nest<<endl;
+            }
+            }
             cout << "set_trans_effect with qloss year:" << year <<endl;
             //system("pause");
+
 
         }
         cout << "This is the transition zone effect for resources with quality loss" << trans_effect_res <<endl;

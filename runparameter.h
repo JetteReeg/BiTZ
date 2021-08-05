@@ -54,7 +54,10 @@ public:
     int qlossstart;
     double qloss_trans_res;
     double qloss_trans_nest;
-
+    double refresh_trans_effect_res;
+    double refresh_trans_effect_nest;
+    int refresh_frequency;
+    bool refresh_measures;
     //! constructor
     SRunPara();
 

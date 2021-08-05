@@ -6,6 +6,7 @@ require(gifski)
 require(data.table)
 require(vegan)
 # set working directory
+
 # next step: automatically go through each folder
 directories <- list.dirs(recursive=F)
 # for (dir in directories){
