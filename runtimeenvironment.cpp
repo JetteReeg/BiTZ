@@ -1,8 +1,10 @@
 /**\file
  * \brief runtimeenvironment.cpp Initialisation and temporal sequence of processes according to the flowchart
 */
+
 #include "runtimeenvironment.h"
 #include "gridenvironment.h"
+//#include "ft_pop.h"
 #include <vector>
 #include <algorithm>
 #include <iostream>
@@ -61,6 +63,12 @@ void RuntimeEnvironment::readSimDef(const string file){
             ss >> SRunPara::RunPara.size_order;
             ss >> SRunPara::RunPara.max_search_attempts;
             ss >> SRunPara::RunPara.scaling;
+            ss >> SRunPara::RunPara.qloss_trans_res;
+            ss >> SRunPara::RunPara.qloss_trans_nest;
+            ss >> SRunPara::RunPara.refresh_trans_effect_res;
+            ss >> SRunPara::RunPara.refresh_trans_effect_nest;
+            ss >> SRunPara::RunPara.refresh_frequency;
+            ss >> SRunPara::RunPara.refresh_measures;
 
             // convert to scaling
             SRunPara::RunPara.ymax/=SRunPara::RunPara.scaling;
@@ -107,6 +115,9 @@ void RuntimeEnvironment::one_run(){
                     for (unsigned pop_i=0; pop_i < cell->FT_pop_List.size(); pop_i++){
                         std::shared_ptr<FT_pop> curr_Pop=cell->FT_pop_List.at(pop_i);
                         curr_Pop->set_trans_effect(cell, year);
+                        //call again set_nestCap and set_max_nestCap to give adapted values to all populations
+                        curr_Pop->set_nestCap(cell);
+                        curr_Pop->set_max_nestCap(cell);
                     }
                 }
              }

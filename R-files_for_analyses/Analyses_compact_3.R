@@ -6,8 +6,7 @@ require(gifski)
 require(data.table)
 require(vegan)
 # set working directory
-#home_work_dir <- "C:/Users/least/OneDrive/Dokumente/GitHub/BiTZ/Output/Neu"
-#setwd(home_work_dir)
+setwd("C:/Users/least/OneDrive/Dokumente/GitHub/BiTZ/Reeg_et_al_2021")
 
 # next step: automatically go through each folder
 directories <- list.dirs(recursive=F)
@@ -38,6 +37,7 @@ for (dir in c("./1c", "./1f", "./2c", "./2h",
   scenarios <- fread("Simulations.txt")
   # if there is more than one scenario in at least one simulation number (duplicated Simnb.)
   if (any(duplicated(scenarios$SimNb))){
+    
     Scenario <- 1
     analysed_patches<-fread("Analyse_patches.txt")[,2]
     Patch_def <- fread(paste("Input/Patch_ID_definitions_150x150_", unlist(strsplit(dir,"./"))[2], ".txt", sep=""), sep="\t")
@@ -550,7 +550,7 @@ for (dir in c("./1c", "./1f", "./2c", "./2h",
               "./2j", "./3a", "./3c", "./7a", 
               "./6e", "./8e", "./7g")){
   setwd(dir)
-  setwd("Output")
+  setwd("Output") 
   data.list.lu.pa<-fread("data.list.lu.pa.txt", sep="\t")
   NFT.list.lu.pa<-fread("NFT.list.lu.pa.txt", sep="\t")
   data.list.lu<-fread("data.list.lu.txt", sep="\t")
