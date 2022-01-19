@@ -583,7 +583,7 @@ void FT_pop::update_pop_dispersal(std::shared_ptr<FT_pop> pop){
  */
 void FT_pop::disturbance(std::shared_ptr<FT_pop> pop){
     // depends on susceptibility
-    pop->Pt=int(floor(pop->Pt*(1.0-pop->Traits->dist_eff)));
+    pop->Pt=int(max(0.0,floor(pop->Pt*(1.0-pop->Traits->dist_eff))));
     shared_ptr<CCell> cell=pop->cell;
     cell->FT_pop_sizes.find(pop->Traits->FT_ID)->second=pop->Pt;
 }
