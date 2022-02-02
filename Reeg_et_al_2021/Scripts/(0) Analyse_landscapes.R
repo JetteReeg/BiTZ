@@ -13,6 +13,7 @@
 require(ggplot2)
 require(ggthemes)
 require(data.table)
+require(factoextra)
 require(FactoMineR)
 require(RColorBrewer)
 require(pca3d)
@@ -91,6 +92,25 @@ col[col==4]<-brewer.pal(n = 4, name = "Dark2")[4]
 col
 pca3d(res.pca3d, group=gr, col=col)
 snapshotPCA3d(file="FigB1.png")
+
+# Figure B2
+brewer.pal(n = 4, name = "Dark2")
+
+plot.PCA <- fviz_pca_biplot(res.pca,
+                            axes=c(1,2),
+                            geom.ind = "point", # show points only (nbut not "text")
+                            col.ind = factor(parameters$Cluster), # color by groups
+                            palette = c("grey95", brewer.pal(n = 4, name = "Dark2")),
+                            ggtheme = theme_few(),
+                            repel=T,
+                            addEllipses = FALSE, # Concentration ellipses
+                            legend.title = "Landscape\ncluster",
+                            title = ""
+)
+
+jpeg("Fig_B2.jpeg", width=140, height=140, units="mm", res=300)
+plot.PCA
+dev.off()
 
 #####
 # Figure B2
