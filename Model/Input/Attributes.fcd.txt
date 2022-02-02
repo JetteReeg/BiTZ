@@ -1,0 +1,7 @@
+ID, Name, Enabled, IsBackground
+0,bare,false,false
+1,arable,true,false
+2,forest,true,false
+3,grassland,true,false
+4,urban,true,false
+5,water,true,false
