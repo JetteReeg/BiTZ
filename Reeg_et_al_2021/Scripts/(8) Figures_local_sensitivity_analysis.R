@@ -106,6 +106,39 @@ Landscape_mean$Parameter <- factor(Landscape_mean$Parameter,
                                               'disturbance_eff',
                                               'trans_effect_nest', 'trans_effect_res', 'trans_effect_nest_res'))
 
+# Rename
+Landscape_mean[Parameter=="weather_std"]$Parameter <- "standard deviation \n weather"
+Landscape_mean[Parameter=="disturbance_prob"]$Parameter <- "disturbance \n probability"
+Landscape_mean[Parameter=="dispersal_tries"]$Parameter <- "dispersal \n tries"
+Landscape_mean[Parameter=="competition_strength"]$Parameter <- "competition \n strength"
+Landscape_mean[Parameter=="growth_rate"]$Parameter <- "growth rate"
+Landscape_mean[Parameter=="nest_suitability"]$Parameter <- "nesting site \n suitability"
+Landscape_mean[Parameter=="res_suitability"]$Parameter <- "resource \n suitability"
+Landscape_mean[Parameter=="dispersal_mean"]$Parameter <- "mean dispersal"
+Landscape_mean[Parameter=="dispersal_sd"]$Parameter <- "standard deviation \n dispersal"
+Landscape_mean[Parameter=="emigration_mu"]$Parameter <- "emigration \n parameter mu"
+Landscape_mean[Parameter=="emigration_omega"]$Parameter <- "emigration \n parameter omega"
+Landscape_mean[Parameter=="disturbance_eff"]$Parameter <- "disturbance \n effect"
+Landscape_mean[Parameter=="trans_effect_nest"]$Parameter <- "effect of ABZs \n on nesting site"
+Landscape_mean[Parameter=="trans_effect_res"]$Parameter <- "effect of ABZs  \n on resources"
+Landscape_mean[Parameter=="trans_effect_nest_res"]$Parameter <- "effect of ABZs \n on nesting site \n and resources"
+
+Landscape_Shannon_all[Parameter=="weather_std"]$Parameter <- "standard deviation \n weather"
+Landscape_Shannon_all[Parameter=="disturbance_prob"]$Parameter <- "disturbance \n probability"
+Landscape_Shannon_all[Parameter=="dispersal_tries"]$Parameter <- "dispersal \n tries"
+Landscape_Shannon_all[Parameter=="competition_strength"]$Parameter <- "competition \n strength"
+Landscape_Shannon_all[Parameter=="growth_rate"]$Parameter <- "growth rate"
+Landscape_Shannon_all[Parameter=="nest_suitability"]$Parameter <- "nesting site \n suitability"
+Landscape_Shannon_all[Parameter=="res_suitability"]$Parameter <- "resource \n suitability"
+Landscape_Shannon_all[Parameter=="dispersal_Shannon_all"]$Parameter <- "mean dispersal"
+Landscape_Shannon_all[Parameter=="dispersal_sd"]$Parameter <- "standard deviation \n dispersal"
+Landscape_Shannon_all[Parameter=="emigration_mu"]$Parameter <- "emigration \n parameter mu"
+Landscape_Shannon_all[Parameter=="emigration_omega"]$Parameter <- "emigration \n parameter omega"
+Landscape_Shannon_all[Parameter=="disturbance_eff"]$Parameter <- "disturbance \n effect"
+Landscape_Shannon_all[Parameter=="trans_effect_nest"]$Parameter <- "effect of ABZs \n on nesting site"
+Landscape_Shannon_all[Parameter=="trans_effect_res"]$Parameter <- "effect of ABZs  \n on resources"
+Landscape_Shannon_all[Parameter=="trans_effect_nest_res"]$Parameter <- "effect of ABZs \n on nesting site \n and resources"
+
 
 #####
 # Figure F.3

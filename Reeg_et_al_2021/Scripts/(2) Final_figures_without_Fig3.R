@@ -403,3 +403,48 @@ dev.off()
 # This figure was generated within the BiTZ SA R-project (file "(2) Figures")
 #
 #####
+
+#####
+#
+# Statistical analyses of quasi extinction risk
+# using an ANOVA
+#
+#####
+
+extinction_risk$TZ<-factor(extinction_risk$TZ)
+extinction_risk$Cluster<-factor(extinction_risk$Cluster)
+
+# summary(extinction_risk)
+
+two.way <- aov(ext.prob ~ TZ + Cluster, data = extinction_risk)
+kruskal1 <- kruskal.test(ext.prob ~ TZ, data = extinction_risk[Cluster==1])
+kruskal2 <- kruskal.test(ext.prob ~ TZ, data = extinction_risk[Cluster==2])
+kruskal3 <- kruskal.test(ext.prob ~ TZ, data = extinction_risk[Cluster==3])
+kruskal4 <- kruskal.test(ext.prob ~ TZ, data = extinction_risk[Cluster==4])
+
+Cl1 <- extinction_risk[Cluster==1]
+pairwise.wilcox.test(Cl1$ext.prob, Cl1$TZ,
+                     p.adjust.method = "BH")
+
+one.way <- aov(ext.prob ~ TZ, data = extinction_risk[Cluster==1])
+
+# multiple linear regression
+model <- lm(ext.prob~TZ+Cluster,data=extinction_risk)
+summary(model)
+
+hist(rstandard(model))
+hist(residuals(model))
+qqnorm(rstandard(model))
+qqline(rstandard(model))
+shapiro.test(rstandard(model))
+
+
+#1
+plot(model, 1)
+
+#2
+plot(fitted.values(model), rstandard(model))
+
+par(mfrow=c(2,2))
+plot(two.way)
+par(mfrow=c(1,1))
