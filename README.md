@@ -11,7 +11,7 @@ You can find the cmd commands in the file Model/BuildBiTZ.txt as a reference.
 A detailed model description following the ODD protocol can be found in the folder Model_description together with a doxygen documentation.
 
 # Manuscripts
-The folder Reeg_et_al_2021 includes all files necessary for reproducing the results of the manuscript. Please check the corresponding README.txt in the folder for further information.
+The folder Reeg_et_al_2022 includes all files necessary for reproducing the results of the manuscript. Please check the corresponding README.txt in the folder for further information.
 
 # Licence
 Bitz is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or	(at your option) any later version.
